@@ -1,4 +1,0 @@
-{
-   "command" : "xbuild",
-   "args": ["Hello.sln"]
-}

@@ -15,31 +15,26 @@ namespace pOmmes
         [STAThread]
         static void Main()
         {
-            ParseObject.RegisterSubclass<Company>();
-            ParseClient.Initialize("gcB3bvLRmFS2uRur2UZKrAvvycyFA59lyrQ7VqZW", "5dXJZXLGYMWs9lv1ZkkdEQZhm8lI42Bt9IjgUyO7");
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (ParseUser.CurrentUser == null)
-            {
-                LoginForm loginForm = new LoginForm();
-                DialogResult result = loginForm.ShowDialog();
-                switch (result)
-                {
-                    case DialogResult.OK:
-                        break;
-                    case DialogResult.Cancel:
-                    default:
-                        return;
-                }
-            }
+            MainForm frm = new MainForm();
 
-            if (ParseUser.CurrentUser != null)
-            {
-                MainForm frm =  new MainForm();
-                Application.Run(frm);
-            }
+            ParseObject.RegisterSubclass<ParseArticle>();
+            ParseObject.RegisterSubclass<ParseFoodToOption>();
+            ParseObject.RegisterSubclass<ParseFoodToSize>();
+            ParseObject.RegisterSubclass<ParseCategory>();
+            ParseObject.RegisterSubclass<ParseCompany>();
+            ParseObject.RegisterSubclass<ParseEvent>();
+            ParseObject.RegisterSubclass<ParseOption>();
+            ParseObject.RegisterSubclass<ParseOrder>();
+            ParseObject.RegisterSubclass<ParseOrderPosition>();
+            ParseObject.RegisterSubclass<ParseRestaurant>();
+            ParseObject.RegisterSubclass<ParseSize>();
+            ParseObject.RegisterSubclass<ParseVote>();
+            ParseClient.Initialize("gcB3bvLRmFS2uRur2UZKrAvvycyFA59lyrQ7VqZW", "5dXJZXLGYMWs9lv1ZkkdEQZhm8lI42Bt9IjgUyO7");
+
+            Application.Run(frm);
         }
     }
 }

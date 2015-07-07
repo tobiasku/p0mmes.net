@@ -24,31 +24,20 @@ namespace pOmmes
             LoadCompanyComboBox();
         }
 
-        private void LoadCompanyComboBox()
+        private async void LoadCompanyComboBox()
         {
-            Company.Query(new State(
-                new WaitCallback(x =>
+            ParseQuery<ParseCompany> companyQuery = new ParseQuery<ParseCompany>();
+            Collection<ParseCompany> companyCollection = new Collection<ParseCompany>((await companyQuery.FindAsync()).ToList<ParseCompany>());
+            if (companyCollection != null)
+            {
+                this.BeginInvoke(new Action(delegate()
                 {
-                    State state = x as State;
-                    if (state != null)
-                    {
-                        Collection<Company> collection = state.Data as Collection<Company>;
-                        if (collection != null)
-                        {
-                            this.BeginInvoke(new Action(delegate()
-                            {
-                                mcmb_Company.DataSource = collection;
-                                mcmb_Company.DisplayMember = "Name";
-                                //mcmb_Company.ValueMember = "ObjectId";
-                            }));
+                    mcmb_Company.DataSource = companyCollection;
+                    mcmb_Company.DisplayMember = "Name";
+                    //mcmb_Company.ValueMember = "ObjectId";
+                }));
 
-                        }
-                    }
-                }),
-                new WaitCallback(x =>
-                {
-                })
-            ));
+            }
         }
 
         private async void mbtn_Register_Click(object sender, EventArgs e)
@@ -63,17 +52,15 @@ namespace pOmmes
                     !string.IsNullOrEmpty(mtxt_Password.Text) &&
                     !string.IsNullOrEmpty(mtxt_RetypePassword.Text))
                 {
-                    var user = new ParseUser()
-                    {
-                        Username = mtxt_UserName.Text,
-                        Password = mtxt_Password.Text,
-                        Email = mtxt_Email.Text
-                    };
+                    ParseUser user = new ParseUser();
 
-                    // other fields can be set just like with ParseObject
+                    user.Username = mtxt_UserName.Text;
+                    user.Password = mtxt_Password.Text;
+                    user.Email = mtxt_Email.Text;
+
                     user["ForeName"] = mtxt_ForeName.Text;
                     user["SurName"] = mtxt_SurName.Text;
-                    user["CompanyId"] = mcmb_Company.SelectedValue;
+                    user["Company"] = (ParseCompany)mcmb_Company.SelectedValue;
 
                     await user.SignUpAsync();
                     if (ParseUser.CurrentUser != null)

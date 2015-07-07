@@ -12,13 +12,28 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -35,21 +50,23 @@
   <ItemGroup>
     <Reference Include="MetroFramework, Version=1.3.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\MetroFramework.dll</HintPath>
+      <HintPath>..\packages\MetroModernUI.1.3.0.0\lib\net\MetroFramework.dll</HintPath>
     </Reference>
     <Reference Include="MetroFramework.Design, Version=1.3.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\MetroFramework.Design.dll</HintPath>
+      <HintPath>..\packages\MetroModernUI.1.3.0.0\lib\net\MetroFramework.Design.dll</HintPath>
     </Reference>
     <Reference Include="MetroFramework.Fonts, Version=1.3.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\MetroFramework.Fonts.dll</HintPath>
+      <HintPath>..\packages\MetroModernUI.1.3.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
     </Reference>
-    <Reference Include="Parse">
-      <HintPath>..\..\..\Lib\Parse.dll</HintPath>
+    <Reference Include="Parse, Version=1.5.2.0, Culture=neutral, PublicKeyToken=ba48c3a442de616e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\parse.1.5.2\lib\net45\Parse.dll</HintPath>
     </Reference>
-    <Reference Include="Parse.NetFx45">
-      <HintPath>..\..\..\Lib\Parse.NetFx45.dll</HintPath>
+    <Reference Include="Parse.NetFx45, Version=1.5.2.0, Culture=neutral, PublicKeyToken=ba48c3a442de616e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\parse.1.5.2\lib\net45\Parse.NetFx45.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -63,7 +80,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="common\Callback.cs" />
+    <Compile Include="classes\ParseArticle.cs" />
+    <Compile Include="classes\ParseCategory.cs" />
+    <Compile Include="classes\ParseCompany.cs" />
+    <Compile Include="classes\ParseEvent.cs" />
+    <Compile Include="classes\ParseFoodToSize.cs" />
+    <Compile Include="classes\ParseFoodToOption.cs" />
+    <Compile Include="classes\ParseOption.cs" />
+    <Compile Include="classes\ParseOrder.cs" />
+    <Compile Include="classes\ParseOrderPosition.cs" />
+    <Compile Include="classes\ParseRestaurant.cs" />
+    <Compile Include="classes\ParseSize.cs" />
+    <Compile Include="classes\ParseVote.cs" />
+    <Compile Include="EventBus.cs" />
     <Compile Include="form\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,7 +105,6 @@
     <Compile Include="form\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="parseclasses\Company.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="form\RegisterForm.cs">
@@ -91,10 +119,50 @@
     <Compile Include="form\ResetPasswordForm.Designer.cs">
       <DependentUpon>ResetPasswordForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="common\State.cs" />
-    <EmbeddedResource Include="form\LoginForm.resx">
-      <DependentUpon>LoginForm.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="FoodDetailChangeEvent.cs" />
+    <Compile Include="UserControlChangeEvent.cs" />
+    <Compile Include="userControl\EventList\EventUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="userControl\EventList\EventUserControl.Designer.cs">
+      <DependentUpon>EventUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="userControl\FoodList\FoodDetailUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="userControl\FoodList\FoodDetailUserControl.Designer.cs">
+      <DependentUpon>FoodDetailUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="userControl\FoodList\FoodListUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="userControl\FoodList\FoodListUserControl.Designer.cs">
+      <DependentUpon>FoodListUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="userControl\FoodList\FoodUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="userControl\FoodList\FoodUserControl.Designer.cs">
+      <DependentUpon>FoodUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="userControl\RestaurantList\RestaurantListUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="userControl\RestaurantList\RestaurantListUserControl.Designer.cs">
+      <DependentUpon>RestaurantListUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="userControl\EventList\EventListUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="userControl\EventList\EventListUserControl.Designer.cs">
+      <DependentUpon>EventListUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="userControl\RestaurantList\RestaurantUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="userControl\RestaurantList\RestaurantUserControl.Designer.cs">
+      <DependentUpon>RestaurantUserControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="form\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -108,11 +176,26 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="form\RegisterForm.resx">
-      <DependentUpon>RegisterForm.cs</DependentUpon>
+    <EmbeddedResource Include="userControl\EventList\EventListUserControl.resx">
+      <DependentUpon>EventListUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="form\ResetPasswordForm.resx">
-      <DependentUpon>ResetPasswordForm.cs</DependentUpon>
+    <EmbeddedResource Include="userControl\EventList\EventUserControl.resx">
+      <DependentUpon>EventUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="userControl\FoodList\FoodDetailUserControl.resx">
+      <DependentUpon>FoodDetailUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="userControl\FoodList\FoodListUserControl.resx">
+      <DependentUpon>FoodListUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="userControl\FoodList\FoodUserControl.resx">
+      <DependentUpon>FoodUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="userControl\RestaurantList\RestaurantListUserControl.resx">
+      <DependentUpon>RestaurantListUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="userControl\RestaurantList\RestaurantUserControl.resx">
+      <DependentUpon>RestaurantUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -130,6 +213,56 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ic_launcher.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_beenhere_black_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_account_circle_black_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_announcement_black_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_create_black_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_markunread_black_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_input_black_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_done_black_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_block_black_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\pOmmes_Common\pOmmes_Common.csproj">
+      <Project>{55682c30-67b5-4f08-9391-c9aac70ccb34}</Project>
+      <Name>pOmmes_Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\ic_shopping_cart_white_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

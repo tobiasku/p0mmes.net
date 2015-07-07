@@ -1,0 +1,5 @@
+/Users/Tobias/dev/C#/pOmmes_Bitbucket/src/pOmmes_Data_Parse/obj/Debug/.NETFramework,Version=v4.5.1.AssemblyAttribute.cs
+/Users/Tobias/dev/C#/pOmmes_Bitbucket/src/pOmmes_Data_Parse/bin/Debug/pOmmes_Common.dll
+/Users/Tobias/dev/C#/pOmmes_Bitbucket/src/pOmmes_Data_Parse/bin/Debug/pOmmes_Common.dll.mdb
+/Users/Tobias/dev/C#/pOmmes_Bitbucket/src/pOmmes_Data_Parse/bin/Debug/pOmmes_Data.dll
+/Users/Tobias/dev/C#/pOmmes_Bitbucket/src/pOmmes_Data_Parse/bin/Debug/pOmmes_Data.dll.mdb

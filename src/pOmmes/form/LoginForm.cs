@@ -32,7 +32,6 @@ namespace pOmmes
                         this.DialogResult = DialogResult.OK;
                         this.Close();
                     }
-                    // Login was successful.
                 }
                 else
                 {
@@ -41,7 +40,6 @@ namespace pOmmes
             }
             catch (Exception ex)
             {
-                // The login failed. Check the error to see why.
                 MetroMessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

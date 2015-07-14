@@ -21,6 +21,8 @@ namespace pOmmes
         public ParseFoodToSize size;
         public Collection<ParseFoodToOption> options = new Collection<ParseFoodToOption>();
 
+        private Collection<ParseFoodToOption> aviableOptions = new Collection<ParseFoodToOption>();
+
         public FoodDetailUserControl(ParseArticle article)
         {
             InitializeComponent();
@@ -48,8 +50,9 @@ namespace pOmmes
         private async void SetFoodDetailOptions()
         {
             Collection<ParseFoodToOption> options = new Collection<ParseFoodToOption>();
+            aviableOptions = (await article.GetFoodOptions());
 
-            foreach (ParseFoodToOption option in (await article.GetFoodOptions()))
+            foreach (ParseFoodToOption option in aviableOptions)
             {
                 if (option.Size == null || option.Size.ObjectId == size.Size.ObjectId)
                 {

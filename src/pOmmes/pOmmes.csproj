@@ -60,13 +60,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MetroModernUI.1.3.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
     </Reference>
-    <Reference Include="Parse, Version=1.5.2.0, Culture=neutral, PublicKeyToken=ba48c3a442de616e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\parse.1.5.2\lib\net45\Parse.dll</HintPath>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\MongoDB.Bson.2.0.1\lib\net45\MongoDB.Bson.dll</HintPath>
     </Reference>
-    <Reference Include="Parse.NetFx45, Version=1.5.2.0, Culture=neutral, PublicKeyToken=ba48c3a442de616e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\parse.1.5.2\lib\net45\Parse.NetFx45.dll</HintPath>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\MongoDB.Driver.2.0.1\lib\net45\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.0.1\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Legacy">
+      <HintPath>..\packages\mongocsharpdriver.2.0.1\lib\net45\MongoDB.Driver.Legacy.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -80,18 +84,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="classes\ParseArticle.cs" />
-    <Compile Include="classes\ParseCategory.cs" />
-    <Compile Include="classes\ParseCompany.cs" />
-    <Compile Include="classes\ParseEvent.cs" />
-    <Compile Include="classes\ParseFoodToSize.cs" />
-    <Compile Include="classes\ParseFoodToOption.cs" />
-    <Compile Include="classes\ParseOption.cs" />
-    <Compile Include="classes\ParseOrder.cs" />
-    <Compile Include="classes\ParseOrderPosition.cs" />
-    <Compile Include="classes\ParseRestaurant.cs" />
-    <Compile Include="classes\ParseSize.cs" />
-    <Compile Include="classes\ParseVote.cs" />
     <Compile Include="EventBus.cs" />
     <Compile Include="form\LoginForm.cs">
       <SubType>Form</SubType>
@@ -242,6 +234,10 @@
     <ProjectReference Include="..\pOmmes_Common\pOmmes_Common.csproj">
       <Project>{55682c30-67b5-4f08-9391-c9aac70ccb34}</Project>
       <Name>pOmmes_Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\pOmmes_Data\pOmmes_Data.csproj">
+      <Project>{7f0253e5-2e85-4ffd-bb4d-75a09f959c78}</Project>
+      <Name>pOmmes_Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

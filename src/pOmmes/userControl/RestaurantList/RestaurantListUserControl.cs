@@ -9,14 +9,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using pOmmes_Common;
 using MetroFramework.Controls;
+using pOmmes_Data;
 
 namespace pOmmes
 {
     public partial class RestaurantListUserControl : MetroUserControl
     {
-        private ParseRestaurant restaurant;
+        private Restaurant restaurant;
 
-        public RestaurantListUserControl(ParseRestaurant restaurant)
+        public RestaurantListUserControl(Restaurant restaurant)
         {
             this.restaurant = restaurant;
 

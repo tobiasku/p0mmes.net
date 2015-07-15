@@ -1,12 +1,16 @@
-# README #
+# pOmmes #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Application for ordering meals with your friends.
+
+
+
+
+
 
 ### What is this repository for? ###
 
 * Quick summary
 * Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###
 

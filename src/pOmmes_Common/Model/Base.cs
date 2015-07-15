@@ -9,7 +9,7 @@ namespace pOmmes.Common
 {
     public abstract class Base
     {
-        public string ObjectId
+        public string _id
         {
             get;
             private set;

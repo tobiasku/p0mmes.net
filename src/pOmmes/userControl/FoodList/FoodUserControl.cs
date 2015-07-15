@@ -34,29 +34,29 @@ namespace pOmmes
         private void FillFoodList()
         {
             IpOmmesDataBL pOmmesDataBL = Dic.Get<IpOmmesDataBL>();
-            Collection<Article> articleCollection = pOmmesDataBL.Get<Article>("restaurantId = " + restaurant.ObjectId);
+            Collection<Article> articleCollection = pOmmesDataBL.Get<Article>("restaurantId = " + restaurant._id);
 
             Dictionary<string, int> locationDic = new Dictionary<string, int>();
 
             foreach (Article article in articleCollection)
             {
-                if (!mtc_FoodList.TabPages.ContainsKey(article.Category.ObjectId))
+                if (!mtc_FoodList.TabPages.ContainsKey(article.Category._id))
                 {
-                    locationDic.Add(article.Category.ObjectId, 0);
-                    mtc_FoodList.TabPages.Add(article.Category.ObjectId, article.Category.Name);
+                    locationDic.Add(article.Category._id, 0);
+                    mtc_FoodList.TabPages.Add(article.Category._id, article.Category.Name);
                 }
 
                 FoodListUserControl contr = new FoodListUserControl(article);
-                contr.Location = new Point(0, locationDic[article.Category.ObjectId]);
-                this.mtc_FoodList.TabPages[article.Category.ObjectId].Controls.Add(contr);
+                contr.Location = new Point(0, locationDic[article.Category._id]);
+                this.mtc_FoodList.TabPages[article.Category._id].Controls.Add(contr);
 
-                locationDic[article.Category.ObjectId] += contr.Size.Height;
+                locationDic[article.Category._id] += contr.Size.Height;
             }
         }
 
 
         FoodDetailUserControl actualFoodDetailUserControl;
-        string actualFoodObjectId;
+        string actualFoodObject;
 
         public void OnEvent(FoodDetailChangeEvent e)
         {
@@ -81,9 +81,9 @@ namespace pOmmes
             if (control != null)
             {
                 control.Location = new Point((this.Size.Width / 2 - control.Size.Width / 2), (this.Size.Height / 2 - control.Size.Height / 2));
-                this.mtc_FoodList.TabPages[control.article.Category.ObjectId].Controls.Add(control);
+                this.mtc_FoodList.TabPages[control.article.Category._id].Controls.Add(control);
                 control.BringToFront();
-                this.actualFoodObjectId = control.article.Category.ObjectId;
+                this.actualFoodObject = control.article.Category._id;
                 this.actualFoodDetailUserControl = control;
             }
         }
@@ -92,11 +92,11 @@ namespace pOmmes
         {
             if (actualFoodDetailUserControl != null)
             {
-                this.mtc_FoodList.TabPages[actualFoodObjectId].Controls.Remove(actualFoodDetailUserControl);
+                this.mtc_FoodList.TabPages[actualFoodObject].Controls.Remove(actualFoodDetailUserControl);
             }
             actualFoodDetailUserControl.Dispose();
             actualFoodDetailUserControl = null;
-            actualFoodObjectId = null;
+            actualFoodObject = null;
         }
     }
 }

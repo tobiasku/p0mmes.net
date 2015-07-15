@@ -1,6 +1,7 @@
-﻿using pOmmes.Common.Dic;
+﻿using pOmmes.Common;
+using pOmmes.Common.Dic;
 using pOmmes.Data;
-using pOmmes.Data.MongoDB;
+using pOmmes.Data.Mongo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,13 @@ namespace pOmmes
 
             Dic.Put<IpOmmesDataBL, pOmmesDataBL>();
             Dic.Put<IpOmmesDataDL, pOmmesDataDL>();
+
+            Restaurant res = new Restaurant();
+            res.Name = "DAFABIO";
+            res.PhoneNumber = "02563";
+            Dic.Get<IpOmmesDataBL>().Post<Restaurant>(new System.Collections.ObjectModel.Collection<Restaurant>() {res});
+
+            System.Collections.ObjectModel.Collection<Restaurant> result = Dic.Get<IpOmmesDataBL>().Get<Restaurant>();
 
             MainForm frm = new MainForm();
             Application.Run(frm);

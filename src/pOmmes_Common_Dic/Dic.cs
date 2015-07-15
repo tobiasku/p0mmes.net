@@ -18,7 +18,7 @@ namespace pOmmes.Common.Dic
        
         public static void Put<T,G>() where G : T
         {
-            container.Register<T,G>();
+            container.Register<T,G>(Reuse.Singleton);
         }
     }
 }

@@ -48,7 +48,7 @@ namespace pOmmes
         {
             foreach (Tuple<Option, pOmmes.Common.Size, Double> option in article.Options)
             {
-                if (option.Item2 == null || option.Item2.ObjectId == size.ObjectId)
+                if (option.Item2 == null || option.Item2._id == size._id)
                 {
                     if (!options.Contains(option.Item1))
                     {

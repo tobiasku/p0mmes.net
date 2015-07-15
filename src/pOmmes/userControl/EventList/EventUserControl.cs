@@ -38,7 +38,7 @@ namespace pOmmes.userControl.EventList
                 switch (poEvent.EventState)
                 {
                     case EventState.Closed:
-                        if (poEvent.UserCreated.ObjectId == User.CurrentUser.ObjectId)
+                        if (poEvent.UserCreated._id == User.CurrentUser._id)
                         {
                             goto default;
                         }

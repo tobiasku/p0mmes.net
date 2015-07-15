@@ -1,6 +1,6 @@
 ﻿using MetroFramework;
 using MetroFramework.Forms;
-using Parse;
+using pOmmes.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,13 +21,13 @@ namespace pOmmes
         }
 
 
-        private async void mbtn_ResetPassword_Click(object sender, EventArgs e)
+        private void mbtn_ResetPassword_Click(object sender, EventArgs e)
         {
             try
             {
                 if (!string.IsNullOrEmpty(mtxt_Email.Text))
                 {
-                    await ParseUser.RequestPasswordResetAsync(mtxt_Email.Text);
+                    User.RequestPasswordReset(mtxt_Email.Text);
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }

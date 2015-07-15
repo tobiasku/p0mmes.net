@@ -1,6 +1,6 @@
 ﻿using MetroFramework;
 using MetroFramework.Forms;
-using Parse;
+using pOmmes.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,14 +20,14 @@ namespace pOmmes
             InitializeComponent();
         }
 
-        private async void mbtn_Login_Click(object sender, EventArgs e)
+        private void mbtn_Login_Click(object sender, EventArgs e)
         {
             try
             {
                 if (!string.IsNullOrEmpty(mtxt_Password.Text) && !string.IsNullOrEmpty(mtxt_UserName.Text))
                 {
-                    await ParseUser.LogInAsync(mtxt_UserName.Text, mtxt_Password.Text);
-                    if (ParseUser.CurrentUser != null)
+                    User.Login(mtxt_UserName.Text, mtxt_Password.Text);
+                    if (User.CurrentUser != null)
                     {
                         this.DialogResult = DialogResult.OK;
                         this.Close();
@@ -58,7 +58,7 @@ namespace pOmmes
             switch (result)
             {
                 case DialogResult.OK:
-                    if (ParseUser.CurrentUser != null)
+                    if (User.CurrentUser != null)
                     {
                         this.DialogResult = DialogResult.OK;
                         this.Close();

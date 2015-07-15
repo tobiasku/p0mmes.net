@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using pOmmes_Common;
+using pOmmes.Common;
 using MetroFramework.Controls;
 using System.Collections.ObjectModel;
 
@@ -15,9 +15,9 @@ namespace pOmmes
 {
     public partial class FoodListUserControl : MetroUserControl
     {
-        ParseArticle article;
+        Article article;
 
-        public FoodListUserControl(ParseArticle article)
+        public FoodListUserControl(Article article)
         {
             this.article = article;
 
@@ -29,7 +29,7 @@ namespace pOmmes
             SetFoodListItem();
         }
 
-        private async void SetFoodListItem()
+        private void SetFoodListItem()
         {
             mlbl_name.Text = article.Name;
             mlbl_description.Text = article.Description;

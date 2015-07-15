@@ -8,9 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
-using Parse;
-using pOmmes_Common;
+using pOmmes.Common;
 using MetroFramework.Controls;
+using pOmmes.Data;
+using pOmmes.Common.Dic;
 
 namespace pOmmes.userControl.EventList
 {
@@ -26,18 +27,18 @@ namespace pOmmes.userControl.EventList
 
         }
 
-        private async void FillEventList()
+        private void FillEventList()
         {
-            ParseQuery<ParseEvent> eventQuery = new ParseQuery<ParseEvent>();
-            Collection<ParseEvent> eventCollection = new Collection<ParseEvent>((await eventQuery.FindAsync()).ToList<ParseEvent>());
+            IpOmmesDataBL pOmmesDataBL = Dic.Get<IpOmmesDataBL>();
+            Collection<Event> eventCollection = pOmmesDataBL.Get<Event>();
 
             int location = 0;
-            foreach (ParseEvent poEvent in eventCollection)
+            foreach (Event poEvent in eventCollection)
             {
                 switch (poEvent.EventState)
                 {
                     case EventState.Closed:
-                        if (poEvent.UserCreated.ObjectId == ParseUser.CurrentUser.ObjectId)
+                        if (poEvent.UserCreated.ObjectId == User.CurrentUser.ObjectId)
                         {
                             goto default;
                         }

@@ -7,9 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Parse;
 using System.Collections.ObjectModel;
 using MetroFramework.Controls;
+using pOmmes.Common;
+using pOmmes.Data;
+using pOmmes.Common.Dic;
 
 namespace pOmmes
 {
@@ -25,13 +27,13 @@ namespace pOmmes
             FillRestaurantList();
         }
 
-        private async void FillRestaurantList()
+        private void FillRestaurantList()
         {
-            ParseQuery<ParseRestaurant> restaurantQuery = new ParseQuery<ParseRestaurant>();
-            Collection<ParseRestaurant> restaurantCollection = new Collection<ParseRestaurant>((await restaurantQuery.FindAsync()).ToList<ParseRestaurant>());
+            IpOmmesDataBL pOmmesDataBL = Dic.Get<IpOmmesDataBL>();
+            Collection<Restaurant> restaurantCollection = pOmmesDataBL.Get<Restaurant>();
 
             int location = 0;
-            foreach (ParseRestaurant poRestaurant in restaurantCollection)
+            foreach (Restaurant poRestaurant in restaurantCollection)
             {
                 RestaurantListUserControl contr = new RestaurantListUserControl(poRestaurant);
                 contr.Location = new Point(0, location);

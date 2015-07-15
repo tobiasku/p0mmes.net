@@ -7,18 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Parse;
 using System.Collections.ObjectModel;
-using pOmmes_Common;
+using pOmmes.Common;
 using MetroFramework.Controls;
+using pOmmes.Data;
+using pOmmes.Common.Dic;
 
 namespace pOmmes
 {
     public partial class FoodUserControl : MetroUserControl
     {
-        ParseRestaurant restaurant;
+        Restaurant restaurant;
 
-        public FoodUserControl(ParseRestaurant restaurant)
+        public FoodUserControl(Restaurant restaurant)
         {
             this.restaurant = restaurant;
             InitializeComponent();
@@ -30,19 +31,17 @@ namespace pOmmes
             FillFoodList();
         }
 
-        private async void FillFoodList()
+        private void FillFoodList()
         {
-            ParseQuery<ParseArticle> articleQuery = new ParseQuery<ParseArticle>().WhereEqualTo("restaurantId", restaurant);
-            Collection<ParseArticle> articleCollection = new Collection<ParseArticle>((await articleQuery.FindAsync()).ToList<ParseArticle>());
+            IpOmmesDataBL pOmmesDataBL = Dic.Get<IpOmmesDataBL>();
+            Collection<Article> articleCollection = pOmmesDataBL.Get<Article>("restaurantId = " + restaurant.ObjectId);
 
             Dictionary<string, int> locationDic = new Dictionary<string, int>();
 
-            foreach (ParseArticle article in articleCollection)
+            foreach (Article article in articleCollection)
             {
                 if (!mtc_FoodList.TabPages.ContainsKey(article.Category.ObjectId))
                 {
-                    await article.Category.FetchIfNeededAsync();
-
                     locationDic.Add(article.Category.ObjectId, 0);
                     mtc_FoodList.TabPages.Add(article.Category.ObjectId, article.Category.Name);
                 }

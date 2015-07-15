@@ -1,4 +1,6 @@
-﻿using Parse;
+﻿using pOmmes.Common.Dic;
+using pOmmes.Data;
+using pOmmes.Data.MongoDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,9 @@ namespace pOmmes
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            Dic.Put<IpOmmesDataBL, pOmmesDataBL>();
+            Dic.Put<IpOmmesDataDL, pOmmesDataDL>();
 
             MainForm frm = new MainForm();
             Application.Run(frm);

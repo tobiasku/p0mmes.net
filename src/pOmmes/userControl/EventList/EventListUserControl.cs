@@ -7,16 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using pOmmes_Common;
+using pOmmes.Common;
 using MetroFramework.Controls;
 
 namespace pOmmes
 {
     public partial class EventListUserControl : MetroUserControl
     {
-        private ParseEvent pevent;
+        private Event pevent;
 
-        public EventListUserControl(ParseEvent pevent)
+        public EventListUserControl(Event pevent)
         {
             this.pevent = pevent;
 

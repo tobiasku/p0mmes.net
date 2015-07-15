@@ -7,8 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using pOmmes_Common;
-using Parse;
+using pOmmes.Common;
 using MetroFramework.Controls;
 using System.Collections.ObjectModel;
 
@@ -16,14 +15,12 @@ namespace pOmmes
 {
     public partial class FoodDetailUserControl : MetroUserControl
     {
-        public ParseArticle article;
+        public Article article;
         public int quantity = 1;
-        public ParseFoodToSize size;
-        public Collection<ParseFoodToOption> options = new Collection<ParseFoodToOption>();
+        public pOmmes.Common.Size size;
+        public Collection<Option> options = new Collection<Option>();
 
-        private Collection<ParseFoodToOption> aviableOptions = new Collection<ParseFoodToOption>();
-
-        public FoodDetailUserControl(ParseArticle article)
+        public FoodDetailUserControl(Article article)
         {
             InitializeComponent();
             this.article = article;
@@ -42,23 +39,20 @@ namespace pOmmes
             mlbl_description.Text = article.Description;
         }
 
-        private async void SetFoodDetailSizes()
+        private void SetFoodDetailSizes()
         {
-            mcmb_sizes.DataSource = (await article.GetFoodSizes());
+            mcmb_sizes.DataSource = article.Sizes.Keys;
         }
 
-        private async void SetFoodDetailOptions()
+        private void SetFoodDetailOptions()
         {
-            Collection<ParseFoodToOption> options = new Collection<ParseFoodToOption>();
-            aviableOptions = (await article.GetFoodOptions());
-
-            foreach (ParseFoodToOption option in aviableOptions)
+            foreach (Tuple<Option, pOmmes.Common.Size, Double> option in article.Options)
             {
-                if (option.Size == null || option.Size.ObjectId == size.Size.ObjectId)
+                if (option.Item2 == null || option.Item2.ObjectId == size.ObjectId)
                 {
-                    if (!options.Contains(option))
+                    if (!options.Contains(option.Item1))
                     {
-                        options.Add(option);
+                        options.Add(option.Item1);
                     }
                 }
             }
@@ -69,10 +63,10 @@ namespace pOmmes
 
         private void SetPrice()
         {
-            double price = size.Price;
-            foreach (ParseFoodToOption option in options)
+            double price = article.Sizes[size];
+            foreach (Option option in options)
             {
-                price += option.Price;
+                price += article.Options.FirstOrDefault(x => x.Item1 == option && x.Item2 == size).Item3;
             }
             price = price * quantity;
             mlbl_price.Text = "Preis: " + price.ToString("0.00") + " €";
@@ -80,7 +74,7 @@ namespace pOmmes
 
         private void mcmb_sizes_SelectedValueChanged(object sender, EventArgs e)
         {
-            size = (ParseFoodToSize)mcmb_sizes.SelectedValue;
+            size = (pOmmes.Common.Size)mcmb_sizes.SelectedValue;
 
             SetFoodDetailOptions();
             SetPrice();
@@ -91,7 +85,7 @@ namespace pOmmes
             options.Clear();
             foreach (object selected in clb_Options.CheckedItems)
             {
-                ParseFoodToOption option = (ParseFoodToOption)selected;
+                Option option = (Option)selected;
                 options.Add(option);
             }
 

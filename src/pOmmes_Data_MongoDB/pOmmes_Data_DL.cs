@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Bson.Serialization;
+using Newtonsoft.Json;
 
 namespace pOmmes.Data.Mongo
 {
@@ -85,9 +86,15 @@ namespace pOmmes.Data.Mongo
 
             foreach (T value in collectionToPost)
             {
-                documents.Add(value.ToBsonDocument());
+                if (value._id == null)
+                {
+                    value._id = ObjectId.GenerateNewId(DateTime.Now).ToString();
+                }
             }
-            await collection.InsertManyAsync(documents);
+
+            //var bsonDoc = BsonArray.Parse(JsonConvert.SerializeObject(collectionToPost));
+
+            //await collection.InsertManyAsync(bsonDoc);
         }
 
         public void Delete<T>(Collection<T> collectionToDelete) where T : Base

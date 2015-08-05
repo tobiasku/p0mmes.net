@@ -12,7 +12,7 @@ namespace pOmmes.Common
         public string _id
         {
             get;
-            private set;
+            set;
         }
 
         public DateTime? UpdatedAt

@@ -44,10 +44,9 @@
             this.mlbl_name.FontWeight = MetroFramework.MetroLabelWeight.Bold;
             this.mlbl_name.Location = new System.Drawing.Point(89, 3);
             this.mlbl_name.Name = "mlbl_name";
-            this.mlbl_name.Size = new System.Drawing.Size(174, 25);
+            this.mlbl_name.Size = new System.Drawing.Size(0, 0);
             this.mlbl_name.Style = MetroFramework.MetroColorStyle.Silver;
             this.mlbl_name.TabIndex = 0;
-            this.mlbl_name.Text = "Ristorante DaFabio";
             this.mlbl_name.UseStyleColors = true;
             this.mlbl_name.Click += new System.EventHandler(this.RestaurantListUserControl_Click);
             // 

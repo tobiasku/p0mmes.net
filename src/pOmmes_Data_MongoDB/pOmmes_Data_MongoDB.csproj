@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -56,17 +56,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\pOmmes_Common\pOmmes_Common.csproj">
       <Project>{55682c30-67b5-4f08-9391-c9aac70ccb34}</Project>
       <Name>pOmmes_Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\pOmmes_Common_Dic\pOmmes_Common_Dic.csproj">
+      <Project>{72cb499b-f345-4ba1-9453-39000055d4fe}</Project>
+      <Name>pOmmes_Common_Dic</Name>
     </ProjectReference>
     <ProjectReference Include="..\pOmmes_Data\pOmmes_Data.csproj">
       <Project>{7f0253e5-2e85-4ffd-bb4d-75a09f959c78}</Project>
       <Name>pOmmes_Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

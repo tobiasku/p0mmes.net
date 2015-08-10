@@ -34,7 +34,11 @@ namespace pOmmes
         private void FillFoodList()
         {
             IpOmmesDataBL pOmmesDataBL = Dic.Get<IpOmmesDataBL>();
-            Collection<Article> articleCollection = pOmmesDataBL.Get<Article>("restaurantId = " + restaurant._id);
+
+            Dictionary<string, object> filter = new Dictionary<string, object>();
+            filter.Add("restaurant", restaurant._id);
+
+            Collection<Article> articleCollection = pOmmesDataBL.Get<Article>(filter);
 
             Dictionary<string, int> locationDic = new Dictionary<string, int>();
 

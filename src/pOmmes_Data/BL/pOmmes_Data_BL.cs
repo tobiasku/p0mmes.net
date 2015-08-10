@@ -27,9 +27,9 @@ namespace pOmmes.Data
             return pOmmesDataDL.Get<T>();
         }
 
-        public Collection<T> Get<T>(string filterString) where T : Base
+        public Collection<T> Get<T>(Dictionary<string, object> filter) where T : Base
         {
-            return pOmmesDataDL.Get<T>();
+            return pOmmesDataDL.Get<T>(filter);
         }
 
         public T Find<T>(string objectId) where T : Base

@@ -1,5 +1,7 @@
 ﻿using MetroFramework.Forms;
 using pOmmes.Common;
+using pOmmes.Common.Dic;
+using pOmmes.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -68,31 +70,31 @@ namespace pOmmes
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            if (User.CurrentUser == null)
-            {
-                this.Hide();
+            //if (User.CurrentUser == null)
+            //{
+            //    this.Hide();
 
-                LoginForm loginForm = new LoginForm();
-                DialogResult result = loginForm.ShowDialog();
-                switch (result)
-                {
-                    case DialogResult.OK:
-                        this.Show();
-                        break;
-                    case DialogResult.Cancel:
-                    default:
-                        this.Close();
-                        return;
-                }
-            }
-            if (User.CurrentUser != null)
-            {
-                mlink_CurrentUser.Text = "Logged in as " + User.CurrentUser.UserName;
+            //    LoginForm loginForm = new LoginForm();
+            //    DialogResult result = loginForm.ShowDialog();
+            //    switch (result)
+            //    {
+            //        case DialogResult.OK:
+            //            this.Show();
+            //            break;
+            //        case DialogResult.Cancel:
+            //        default:
+            //            this.Close();
+            //            return;
+            //    }
+            //}
+            //if (User.CurrentUser != null)
+            //{
+            //    mlink_CurrentUser.Text = "Logged in as " + User.CurrentUser.UserName;
                 
                 
                 EventBus.Instance.PostEvent(new UserControlChangeEvent(new RestaurantUserControl(),UserControlChangeState.Push));
 
-            }
+            //}
         }
 
         private void mlink_CurrentUser_Click(object sender, EventArgs e)

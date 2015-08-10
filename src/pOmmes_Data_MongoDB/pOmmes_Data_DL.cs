@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace pOmmes.Data.Mongo
 {
-    public class pOmmesDataDL : IpOmmesDataDL
+    public class pOmmesDataDL : IpOmmesDataDL, IDisposable
     {
         //--------------------------------------------------------------------------
         //-- Fields
@@ -28,7 +28,7 @@ namespace pOmmes.Data.Mongo
         //--------------------------------------------------------------------------
         public pOmmesDataDL()
         {
-            _client = new MongoClient();
+            _client = new MongoClient("mongodb://localhost:27017");
             _database = _client.GetDatabase("pOmmes");
         }
 
@@ -42,37 +42,61 @@ namespace pOmmes.Data.Mongo
             return GetObjects<T>().Result;
         }
 
+        public Collection<T> Get<T>(Dictionary<string, object> filter) where T : Base
+        {
+            var builder = Builders<BsonDocument>.Filter;
+            FilterDefinition<BsonDocument> filterDefinition = null;
+
+            //foreach (KeyValuePair<string, object> value in filter)
+            //{
+            //    if (filterDefinition != null)
+            //    {
+            //        filter = filter & builder.Eq(value.Key, value.Value);
+            //            }
+            //    else
+            //    {
+
+            //    }
+            //}
+
+            return null;
+        }
+
         private async Task<Collection<T>> GetObjects<T>() where T : Base
         {
             Collection<T> result = new Collection<T>();
 
-
             var collection = GetCollection<T>();
-            var filter = new BsonDocument();
-            var count = 0;
-            using (var cursor = await collection.FindAsync(filter))
-            {
-                while (await cursor.MoveNextAsync())
-                {
-                    var batch = cursor.Current;
-                    foreach (var document in batch)
-                    {
-                        result.Add(BsonSerializer.Deserialize<T>(document));
-                        count++;
-                    }
-                }
-            }
-            return result;
-        }
 
-        public Collection<T> Get<T>(string filterString) where T : Base
-        {
-            return null;
+            var filter = new BsonDocument();
+            var docs = await collection.Find(filter).ToListAsync();
+
+            foreach (var doc in docs)
+            {
+                string json = doc.ToJson();
+                result.Add((T)JsonConvert.DeserializeObject(json, typeof(T), new JsonConverter[] { new CustomJsonSerializer() }));
+            }
+
+            return result;
         }
 
         public T Find<T>(string objectId) where T : Base
         {
-            return null;
+            return FindObject<T>(objectId).Result;
+        }
+
+        private async Task<T> FindObject<T>(string objectId) where T : Base
+        {
+            T result = Activator.CreateInstance<T>();
+
+            var collection = GetCollection<T>();
+
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", objectId);
+
+            var document = await collection.Find(filter).FirstAsync();
+
+            string json = document.ToJson();
+            return (T)JsonConvert.DeserializeObject(json, typeof(T), new JsonConverter[] { new CustomJsonSerializer() });
         }
 
         public void Put<T>(Collection<T> collectionToPut) where T : Base
@@ -90,11 +114,17 @@ namespace pOmmes.Data.Mongo
                 {
                     value._id = ObjectId.GenerateNewId(DateTime.Now).ToString();
                 }
+
+
+
+                string jsonString = JsonConvert.SerializeObject(value, new JsonConverter[] { new CustomJsonSerializer() });
+
+                BsonDocument bsonDoc = BsonDocument.Parse(jsonString);
+
+                documents.Add(bsonDoc);
             }
 
-            //var bsonDoc = BsonArray.Parse(JsonConvert.SerializeObject(collectionToPost));
-
-            //await collection.InsertManyAsync(bsonDoc);
+            await collection.InsertManyAsync(documents);
         }
 
         public void Delete<T>(Collection<T> collectionToDelete) where T : Base
@@ -111,6 +141,10 @@ namespace pOmmes.Data.Mongo
         public async void DeleteAll<T>() where T : Base
         {
             await _database.DropCollectionAsync(typeof(T).Name);
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

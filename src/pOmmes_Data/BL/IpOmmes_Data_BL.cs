@@ -15,7 +15,7 @@ namespace pOmmes.Data
         //--------------------------------------------------------------------------
         Collection<T> Get<T>() where T : Base;
 
-        Collection<T> Get<T>(string filterString) where T : Base;
+        Collection<T> Get<T>(Dictionary<string, object> filter) where T : Base;
 
         T Find<T>(string objectId) where T : Base;
 

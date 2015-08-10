@@ -12,14 +12,19 @@ using MetroFramework.Controls;
 using pOmmes.Common;
 using pOmmes.Data;
 using pOmmes.Common.Dic;
+using System.Threading;
 
 namespace pOmmes
 {
     public partial class RestaurantUserControl : MetroUserControl
     {
+        private IpOmmesDataBL pOmmesData = null;
+
         public RestaurantUserControl()
         {
             InitializeComponent();
+
+            this.pOmmesData = Dic.Get<IpOmmesDataBL>();
         }
 
         private void RestaurantUserControl_Load(object sender, EventArgs e)
@@ -29,18 +34,23 @@ namespace pOmmes
 
         private void FillRestaurantList()
         {
-            IpOmmesDataBL pOmmesDataBL = Dic.Get<IpOmmesDataBL>();
-            Collection<Restaurant> restaurantCollection = pOmmesDataBL.Get<Restaurant>();
-
-            int location = 0;
-            foreach (Restaurant poRestaurant in restaurantCollection)
+            ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
             {
-                RestaurantListUserControl contr = new RestaurantListUserControl(poRestaurant);
-                contr.Location = new Point(0, location);
-                this.mtp_RestaurantList.Controls.Add(contr);
+                Collection<Restaurant> restaurantCollection = pOmmesData.Get<Restaurant>();
 
-                location += contr.Size.Height;
-            }
+                int location = 0;
+                foreach (Restaurant poRestaurant in restaurantCollection)
+                {
+                    this.mtp_RestaurantList.Invoke(new Action(delegate ()
+                    {
+                        RestaurantListUserControl contr = new RestaurantListUserControl(poRestaurant);
+                        contr.Location = new Point(0, location);
+                        this.mtp_RestaurantList.Controls.Add(contr);
+
+                        location += contr.Size.Height;
+                    }));
+                }
+            }));
         }
     }
 }

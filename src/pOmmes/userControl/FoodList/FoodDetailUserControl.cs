@@ -16,9 +16,10 @@ namespace pOmmes
     public partial class FoodDetailUserControl : MetroUserControl
     {
         public Article article;
+
         public int quantity = 1;
-        public pOmmes.Common.Size size;
-        public Collection<Option> options = new Collection<Option>();
+        public ArticleToSize size;
+        public Collection<ArticleToOption> options = new Collection<ArticleToOption>();
 
         public FoodDetailUserControl(Article article)
         {
@@ -41,18 +42,19 @@ namespace pOmmes
 
         private void SetFoodDetailSizes()
         {
-            mcmb_sizes.DataSource = article.Sizes.Keys;
+            mcmb_sizes.DataSource = article.Sizes;
+            mcmb_sizes.DisplayMember = "Size";
         }
 
         private void SetFoodDetailOptions()
         {
-            foreach (Tuple<Option, pOmmes.Common.Size, Double> option in article.Options)
+            foreach (ArticleToOption option in article.Options)
             {
-                if (option.Item2 == null || option.Item2._id == size._id)
+                if (option.Size == null || option.Size._id == size._id)
                 {
-                    if (!options.Contains(option.Item1))
+                    if (!options.Contains(option))
                     {
-                        options.Add(option.Item1);
+                        options.Add(option);
                     }
                 }
             }
@@ -63,29 +65,31 @@ namespace pOmmes
 
         private void SetPrice()
         {
-            double price = article.Sizes[size];
-            foreach (Option option in options)
+            double price = size.Price;
+
+            foreach (ArticleToOption option in options)
             {
-                price += article.Options.FirstOrDefault(x => x.Item1 == option && x.Item2 == size).Item3;
+                price += option.Price;
             }
+
             price = price * quantity;
             mlbl_price.Text = "Preis: " + price.ToString("0.00") + " €";
         }
 
         private void mcmb_sizes_SelectedValueChanged(object sender, EventArgs e)
         {
-            size = (pOmmes.Common.Size)mcmb_sizes.SelectedValue;
+            size = (ArticleToSize)mcmb_sizes.SelectedValue;
 
             SetFoodDetailOptions();
             SetPrice();
         }
 
-        private void checkedListBox1_SelectedValueChanged(object sender, EventArgs e)
+        private void clb_Options_SelectedValueChanged(object sender, EventArgs e)
         {
             options.Clear();
             foreach (object selected in clb_Options.CheckedItems)
             {
-                Option option = (Option)selected;
+                ArticleToOption option = (ArticleToOption)selected;
                 options.Add(option);
             }
 

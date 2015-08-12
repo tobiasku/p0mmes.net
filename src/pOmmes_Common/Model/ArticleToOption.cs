@@ -6,48 +6,24 @@ using System.Text;
 
 namespace pOmmes.Common
 {
-    public class Article : Base
+    public class ArticleToOption : Base
     {
         //--------------------------------------------------------------------------
         //-- Fields
         //--------------------------------------------------------------------------
-        public string Name
+        public double Price
         {
             get;
             set;
         }
 
-        public int Number
+        public Size Size
         {
             get;
             set;
         }
 
-        public Restaurant Restaurant
-        {
-            get;
-            set;
-        }
-
-        public string Description
-        {
-            get;
-            set;
-        }
-
-        public Category Category
-        {
-            get;
-            set;
-        }
-
-        public Collection<ArticleToSize> Sizes
-        {
-            get;
-            set;
-        }
-
-        public Collection<ArticleToOption> Options
+        public Option Option
         {
             get;
             set;

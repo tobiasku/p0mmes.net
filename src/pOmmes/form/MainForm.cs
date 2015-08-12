@@ -29,7 +29,7 @@ namespace pOmmes
 
         public void OnEvent(UserControlChangeEvent e)
         {
-            switch(e.State)
+            switch (e.State)
             {
                 case UserControlChangeState.Pop:
                     PopUserControl();
@@ -90,11 +90,39 @@ namespace pOmmes
             //if (User.CurrentUser != null)
             //{
             //    mlink_CurrentUser.Text = "Logged in as " + User.CurrentUser.UserName;
-                
-                
-                EventBus.Instance.PostEvent(new UserControlChangeEvent(new RestaurantUserControl(),UserControlChangeState.Push));
+
+
+            EventBus.Instance.PostEvent(new UserControlChangeEvent(new RestaurantUserControl(), UserControlChangeState.Push));
 
             //}
+
+
+
+
+
+            //ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
+            //{
+            //    Article article = new Article();
+            //    article.Name = "Döner";
+            //    article.Description = "mit Fladenbrot, Fleisch, Eisbergsalat, Krautsalat, Tomaten, Weichkäse, Peperoni, Tzatiki oder Salatsauce";
+            //    article.Category = new Category() { Name = "Grillgerichte" };
+
+            //    Dictionary<string, object> filter = new Dictionary<string, object>();
+            //    filter.Add("_id", "55bf5e25851dfc122c395c82");
+            //    article.Restaurant = Dic.Get<IpOmmesDataBL>().Get<Restaurant>(filter).First();
+
+            //    Collection<ArticleToSize> sizes = new Collection<ArticleToSize>();
+            //    sizes.Add(new ArticleToSize() { Size = new Common.Size() { Name = "Klein" }, Price = 3.50 });
+            //    sizes.Add(new ArticleToSize() { Size = new Common.Size() { Name = "Groß" }, Price = 6.00 });
+            //    article.Sizes = sizes;
+
+            //    Collection<ArticleToOption> options = new Collection<ArticleToOption>();
+            //    options.Add(new ArticleToOption() { Option = new Option() { Name = "Ananas" }, Price = 3.50 });
+            //    article.Options = options;
+
+            //    Dic.Get<IpOmmesDataBL>().Post<Article>(new Collection<Article>() { article });
+            //}));
+
         }
 
         private void mlink_CurrentUser_Click(object sender, EventArgs e)

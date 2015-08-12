@@ -12,6 +12,7 @@ using pOmmes.Common;
 using MetroFramework.Controls;
 using pOmmes.Data;
 using pOmmes.Common.Dic;
+using System.Threading;
 
 namespace pOmmes
 {
@@ -33,29 +34,32 @@ namespace pOmmes
 
         private void FillFoodList()
         {
-            IpOmmesDataBL pOmmesDataBL = Dic.Get<IpOmmesDataBL>();
-
-            Dictionary<string, object> filter = new Dictionary<string, object>();
-            filter.Add("restaurant", restaurant._id);
-
-            Collection<Article> articleCollection = pOmmesDataBL.Get<Article>(filter);
-
-            Dictionary<string, int> locationDic = new Dictionary<string, int>();
-
-            foreach (Article article in articleCollection)
+            ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
             {
-                if (!mtc_FoodList.TabPages.ContainsKey(article.Category._id))
+                Dictionary<string, object> filter = new Dictionary<string, object>();
+                filter.Add("Restaurant", restaurant._id);
+                Collection<Article> articleCollection = Dic.Get<IpOmmesDataBL>().Get<Article>(filter);
+
+                Dictionary<string, int> locationDic = new Dictionary<string, int>();
+
+                foreach (Article article in articleCollection)
                 {
-                    locationDic.Add(article.Category._id, 0);
-                    mtc_FoodList.TabPages.Add(article.Category._id, article.Category.Name);
+                    this.mtc_FoodList.Invoke(new Action(delegate ()
+                    {
+                        if (!mtc_FoodList.TabPages.ContainsKey(article.Category._id))
+                        {
+                            locationDic.Add(article.Category._id, 0);
+                            mtc_FoodList.TabPages.Add(article.Category._id, article.Category.Name);
+                        }
+
+                        FoodListUserControl contr = new FoodListUserControl(article);
+                        contr.Location = new Point(0, locationDic[article.Category._id]);
+                        this.mtc_FoodList.TabPages[article.Category._id].Controls.Add(contr);
+
+                        locationDic[article.Category._id] += contr.Size.Height;
+                    }));
                 }
-
-                FoodListUserControl contr = new FoodListUserControl(article);
-                contr.Location = new Point(0, locationDic[article.Category._id]);
-                this.mtc_FoodList.TabPages[article.Category._id].Controls.Add(contr);
-
-                locationDic[article.Category._id] += contr.Size.Height;
-            }
+            }));
         }
 
 

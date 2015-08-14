@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using pOmmes.Common;
 using MetroFramework.Controls;
 using System.Collections.ObjectModel;
+using pOmmes.Common.Dic;
+using pOmmes.Data;
 
 namespace pOmmes
 {
@@ -19,7 +21,10 @@ namespace pOmmes
 
         public int quantity = 1;
         public ArticleToSize size;
-        public Collection<ArticleToOption> options = new Collection<ArticleToOption>();
+
+        public Collection<ArticleToOption> shownOptions = new Collection<ArticleToOption>();
+
+        public Collection<ArticleToOption> selectedOptions = new Collection<ArticleToOption>();
 
         public FoodDetailUserControl(Article article)
         {
@@ -43,31 +48,32 @@ namespace pOmmes
         private void SetFoodDetailSizes()
         {
             mcmb_sizes.DataSource = article.Sizes;
-            mcmb_sizes.DisplayMember = "Size";
         }
 
         private void SetFoodDetailOptions()
         {
+            shownOptions.Clear();
+
             foreach (ArticleToOption option in article.Options)
             {
-                if (option.Size == null || option.Size._id == size._id)
+                if (option.Size != null && option.Size._id == size.Size._id)
                 {
-                    if (!options.Contains(option))
+                    if (!shownOptions.Contains(option))
                     {
-                        options.Add(option);
+                        shownOptions.Add(option);
                     }
                 }
             }
 
-            clb_Options.DataSource = options;
-            SetPrice();
+            clb_Options.DataSource = null;
+            clb_Options.DataSource = shownOptions;
         }
 
         private void SetPrice()
         {
             double price = size.Price;
 
-            foreach (ArticleToOption option in options)
+            foreach (ArticleToOption option in selectedOptions)
             {
                 price += option.Price;
             }
@@ -86,11 +92,12 @@ namespace pOmmes
 
         private void clb_Options_SelectedValueChanged(object sender, EventArgs e)
         {
-            options.Clear();
+            selectedOptions.Clear();
+
             foreach (object selected in clb_Options.CheckedItems)
             {
                 ArticleToOption option = (ArticleToOption)selected;
-                options.Add(option);
+                selectedOptions.Add(option);
             }
 
             SetPrice();

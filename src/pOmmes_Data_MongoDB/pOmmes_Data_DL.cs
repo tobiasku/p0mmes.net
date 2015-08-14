@@ -80,7 +80,14 @@ namespace pOmmes.Data.Mongo
         #region Find
         public T Find<T>(string objectId) where T : Base
         {
-            return FindObject<T>(objectId).Result;
+            if (!string.IsNullOrEmpty(objectId))
+            {
+                return FindObject<T>(objectId).Result;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private async Task<T> FindObject<T>(string objectId) where T : Base

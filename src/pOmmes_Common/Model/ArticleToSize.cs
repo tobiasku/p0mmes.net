@@ -22,5 +22,17 @@ namespace pOmmes.Common
             get;
             set;
         }
+
+        public override string ToString()
+        {
+            if (Size != null)
+            {
+                return Size.Name + " (+ " + Price.ToString("0.00") + " €)";
+            }
+            else
+            {
+                return base.ToString();
+            }
+        }
     }
 }

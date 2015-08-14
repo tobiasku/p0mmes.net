@@ -38,7 +38,7 @@
             // metroStyleManager
             // 
             this.metroStyleManager.Owner = this;
-            this.metroStyleManager.Style = MetroFramework.MetroColorStyle.Red;
+            this.metroStyleManager.Style = MetroFramework.MetroColorStyle.Silver;
             // 
             // mlink_CurrentUser
             // 
@@ -83,7 +83,7 @@
             this.Name = "MainForm";
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
-            this.Style = MetroFramework.MetroColorStyle.Red;
+            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.StyleManager = this.metroStyleManager;
             this.Text = "pOmmes";
             this.Load += new System.EventHandler(this.MainForm_Load);

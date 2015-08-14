@@ -37,7 +37,6 @@ C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.csprojResolveAsse
 C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.MainForm.resources
 C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.Properties.Resources.resources
 C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.EventListUserControl.resources
-C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.userControl.EventList.EventUserControl.resources
 C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.FoodDetailUserControl.resources
 C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.FoodListUserControl.resources
 C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.FoodUserControl.resources
@@ -46,3 +45,4 @@ C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.RestaurantUserCon
 C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.csproj.GenerateResource.Cache
 C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.exe
 C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.pdb
+C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.EventUserControl.resources

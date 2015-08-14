@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using pOmmes.Common;
+using pOmmes.Common.Dic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -68,35 +69,13 @@ namespace pOmmes.Data
             List<PropertyInfo> props = GetPropertyInfoByType(objectType);
             var result = Activator.CreateInstance(objectType);
 
-            while (reader.TokenType != JsonToken.None && reader.TokenType != JsonToken.Null)
-            {
-                switch (reader.TokenType)
-                {
-                    case JsonToken.StartObject:
-                        existingValue = Activator.CreateInstance(objectType);
-                        break;
-                    case JsonToken.EndObject:
-                        return existingValue;
-
-                        case StartArray
-                }
-
-                reader.Read();
-            }
-
-
-
-
-
-
-
             reader.Read();
 
             do
             {
                 if (reader.TokenType != JsonToken.PropertyName && reader.TokenType != JsonToken.None && reader.TokenType != JsonToken.Null)
                 {
-                    if (reader.Value != null && !string.IsNullOrEmpty(reader.Path))
+                    if (!string.IsNullOrEmpty(reader.Path))
                     {
                         PropertyInfo prop = props.FirstOrDefault(x => x.Name == reader.Path);
 
@@ -105,41 +84,102 @@ namespace pOmmes.Data
                             if (prop.PropertyType.BaseType == typeof(Base))
                             {
                                 Base baseObject = Activator.CreateInstance(prop.PropertyType) as Base;
-                                baseObject._id = reader.Value.ToString();
-
-                                prop.SetValue(result, baseObject);
-                            }
-                            else if (prop.PropertyType == typeof(Collection<ArticleToSize>))
-                            {
-                                Collection<string> idList = (Collection<string>)reader.Value;
-                                Collection<ArticleToSize> sizes = new Collection<ArticleToSize>();
-
-                                foreach (string item in idList)
+                                if (reader.Value != null)
                                 {
-                                    ArticleToSize size = Activator.CreateInstance(typeof(ArticleToSize)) as ArticleToSize;
-                                    size._id = item;
-                                    sizes.Add(size);
+                                    switch (prop.PropertyType.Name)
+                                    {
+                                        case "Article":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<Article>(reader.Value.ToString());
+                                            break;
+                                        case "ArticleToOption":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<ArticleToOption>(reader.Value.ToString());
+                                            break;
+                                        case "ArticleToSize":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<ArticleToSize>(reader.Value.ToString());
+                                            break;
+                                        case "Category":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<Category>(reader.Value.ToString());
+                                            break;
+                                        case "Company":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<Company>(reader.Value.ToString());
+                                            break;
+                                        case "Event":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<Event>(reader.Value.ToString());
+                                            break;
+                                        case "Option":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<Option>(reader.Value.ToString());
+                                            break;
+                                        case "Order":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<Order>(reader.Value.ToString());
+                                            break;
+                                        case "OrderPosition":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<OrderPosition>(reader.Value.ToString());
+                                            break;
+                                        case "Restaurant":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<Restaurant>(reader.Value.ToString());
+                                            break;
+                                        case "Role":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<Role>(reader.Value.ToString());
+                                            break;
+                                        case "Size":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<Size>(reader.Value.ToString());
+                                            break;
+                                        case "User":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<User>(reader.Value.ToString());
+                                            break;
+                                        case "Vote":
+                                            baseObject = Dic.Get<IpOmmesDataBL>().Find<Vote>(reader.Value.ToString());
+                                            break;
+                                    }
+
+                                    prop.SetValue(result, baseObject);
                                 }
-
-                                prop.SetValue(result, sizes);
                             }
-                            else if (prop.PropertyType == typeof(Collection<ArticleToOption>))
+                            else if (reader.TokenType == JsonToken.StartArray)
                             {
-                                Collection<string> idList = (Collection<string>)reader.Value;
-                                Collection<ArticleToOption> options = new Collection<ArticleToOption>();
-
-                                foreach (string item in idList)
+                                if (reader.Path == "Sizes")
                                 {
-                                    ArticleToOption option = Activator.CreateInstance(typeof(ArticleToOption)) as ArticleToOption;
-                                    option._id = item;
-                                    options.Add(option);
-                                }
+                                    Collection<ArticleToSize> sizes = new Collection<ArticleToSize>();
+                                    reader.Read();
 
-                                prop.SetValue(result, options);
+                                    while (reader.TokenType != JsonToken.EndArray)
+                                    {
+                                        ArticleToSize size = Activator.CreateInstance(typeof(ArticleToSize)) as ArticleToSize;
+                                        size = Dic.Get<IpOmmesDataBL>().Find<ArticleToSize>(reader.Value.ToString());
+                                        sizes.Add(size);
+
+                                        reader.Read();
+                                    }
+                                    prop.SetValue(result, sizes);
+                                }
+                                else if (reader.Path == "Options")
+                                {
+                                    Collection<ArticleToOption> options = new Collection<ArticleToOption>();
+                                    reader.Read();
+
+                                    while (reader.TokenType != JsonToken.EndArray)
+                                    {
+                                        ArticleToOption option = Activator.CreateInstance(typeof(ArticleToOption)) as ArticleToOption;
+                                        option = Dic.Get<IpOmmesDataBL>().Find<ArticleToOption>(reader.Value.ToString());
+                                        options.Add(option);
+
+                                        reader.Read();
+                                    }
+
+                                    prop.SetValue(result, options);
+                                }
                             }
-                            else if (prop.PropertyType == typeof(Int32))
+                            //else if (prop.PropertyType == typeof(Int32))
+                            //{
+                            //    prop.SetValue(result, Convert.ToInt32(reader.Value));
+                            //}
+                            else if (prop.PropertyType == typeof(EventType))
                             {
-                                prop.SetValue(result, Convert.ToInt32(reader.Value));
+                                prop.SetValue(result, (EventType)Convert.ToInt32(reader.Value));
+                            }
+                            else if (prop.PropertyType == typeof(EventState))
+                            {
+                                prop.SetValue(result, (EventState)Convert.ToInt32(reader.Value));
                             }
                             else
                             {

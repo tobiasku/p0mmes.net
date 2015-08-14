@@ -39,9 +39,19 @@ namespace pOmmes
             }
         }
 
+        public event EventHandler<RestaurantUserControlEventArgs> RestaurantListUserControl_Clicked;
+
+        private void ThrowRestaurantListUserControl_Clicked()
+        {
+            if (RestaurantListUserControl_Clicked != null)
+            {
+                this.RestaurantListUserControl_Clicked(this, new RestaurantUserControlEventArgs(this.restaurant));
+            }
+        }
+
         private void RestaurantListUserControl_Click(object sender, EventArgs e)
         {
-            EventBus.Instance.PostEvent(new UserControlChangeEvent(new FoodUserControl(restaurant), UserControlChangeState.Push));
+            ThrowRestaurantListUserControl_Clicked();
         }
     }
 }

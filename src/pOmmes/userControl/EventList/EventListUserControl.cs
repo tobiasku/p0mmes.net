@@ -31,7 +31,10 @@ namespace pOmmes
         private void SetEventListItem()
         {
             mlbl_name.Text = pevent.Name;
-            mlbl_restaurant.Text = pevent.Restaurant.Name;
+            if (pevent.Restaurant != null)
+            {
+                mlbl_restaurant.Text = pevent.Restaurant.Name;
+            }
 
             switch (pevent.EventState)
             {
@@ -49,7 +52,7 @@ namespace pOmmes
                     break;
                 case EventState.ReadyToSent:
                     pic_state.Image = global::pOmmes.Properties.Resources.ic_input_black_48dp;
-                    mlbl_description.Text = "Please order at restaurant";
+                    mlbl_description.Text = "Please place order at restaurant";
                     break;
                 case EventState.Sent:
                     pic_state.Image = global::pOmmes.Properties.Resources.ic_done_black_48dp;
@@ -64,6 +67,21 @@ namespace pOmmes
                     mlbl_description.Text = "";
                     break;
             }
+        }
+
+        public event EventHandler<EventUserControlEventArgs> EventListUserControl_Clicked;
+
+        private void ThrowEventListUserControl_Clicked()
+        {
+            if (EventListUserControl_Clicked != null)
+            {
+                this.EventListUserControl_Clicked(this, new EventUserControlEventArgs(this.pevent));
+            }
+        }
+
+        private void EventListUserControl_Click(object sender, EventArgs e)
+        {
+            ThrowEventListUserControl_Clicked();
         }
     }
 }

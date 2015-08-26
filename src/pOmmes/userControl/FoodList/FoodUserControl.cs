@@ -19,6 +19,7 @@ namespace pOmmes
     public partial class FoodUserControl : MetroUserControl
     {
         Restaurant restaurant;
+        private Collection<OrderPosition> orderPositions = new Collection<OrderPosition>();
 
         public FoodUserControl(Restaurant restaurant)
         {
@@ -34,6 +35,8 @@ namespace pOmmes
 
         private void FillFoodList()
         {
+            mlbl_Restaurant.Text = restaurant.Name;
+
             ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
             {
                 Dictionary<string, object> filter = new Dictionary<string, object>();
@@ -53,6 +56,7 @@ namespace pOmmes
                         }
 
                         FoodListUserControl contr = new FoodListUserControl(article);
+                        contr.FoodDetailUserControl_Select += Contr_FoodDetailUserControl_Select;
                         contr.Location = new Point(0, locationDic[article.Category._id]);
                         this.mtc_FoodList.TabPages[article.Category._id].Controls.Add(contr);
 
@@ -62,6 +66,24 @@ namespace pOmmes
             }));
         }
 
+        private void Contr_FoodDetailUserControl_Select(object sender, FoodDetailUserControlEventArgs e)
+        {
+            if (orderPositions != null)
+            {
+                orderPositions.Add(e.OrderPosition);
+            }
+
+            if (orderPositions.Count > 0)
+            {
+                mbtn_order.Visible = true;
+                mbtn_order.Text = orderPositions.Count.ToString();
+            }
+            else
+            {
+                mbtn_order.Visible = false;
+                mbtn_order.Text = "";
+            }
+        }
 
         FoodDetailUserControl actualFoodDetailUserControl;
         string actualFoodObject;
@@ -105,6 +127,11 @@ namespace pOmmes
             actualFoodDetailUserControl.Dispose();
             actualFoodDetailUserControl = null;
             actualFoodObject = null;
+        }
+
+        private void mbtn_order_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

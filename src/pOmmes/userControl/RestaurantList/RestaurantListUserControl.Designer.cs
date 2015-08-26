@@ -45,9 +45,7 @@
             this.mlbl_name.Location = new System.Drawing.Point(89, 3);
             this.mlbl_name.Name = "mlbl_name";
             this.mlbl_name.Size = new System.Drawing.Size(0, 0);
-            this.mlbl_name.Style = MetroFramework.MetroColorStyle.Silver;
             this.mlbl_name.TabIndex = 0;
-            this.mlbl_name.UseStyleColors = true;
             this.mlbl_name.Click += new System.EventHandler(this.RestaurantListUserControl_Click);
             // 
             // mpnl_main
@@ -64,7 +62,6 @@
             this.mpnl_main.Location = new System.Drawing.Point(0, 0);
             this.mpnl_main.Name = "mpnl_main";
             this.mpnl_main.Size = new System.Drawing.Size(392, 90);
-            this.mpnl_main.Style = MetroFramework.MetroColorStyle.Silver;
             this.mpnl_main.TabIndex = 1;
             this.mpnl_main.VerticalScrollbarBarColor = false;
             this.mpnl_main.VerticalScrollbarHighlightOnWheel = false;
@@ -82,7 +79,6 @@
             this.mpnl_hairline.Margin = new System.Windows.Forms.Padding(0);
             this.mpnl_hairline.Name = "mpnl_hairline";
             this.mpnl_hairline.Size = new System.Drawing.Size(372, 1);
-            this.mpnl_hairline.Style = MetroFramework.MetroColorStyle.Silver;
             this.mpnl_hairline.TabIndex = 6;
             this.mpnl_hairline.UseCustomBackColor = true;
             this.mpnl_hairline.VerticalScrollbarBarColor = true;
@@ -98,9 +94,7 @@
             this.mlbl_phone.Location = new System.Drawing.Point(89, 48);
             this.mlbl_phone.Name = "mlbl_phone";
             this.mlbl_phone.Size = new System.Drawing.Size(0, 0);
-            this.mlbl_phone.Style = MetroFramework.MetroColorStyle.Silver;
             this.mlbl_phone.TabIndex = 5;
-            this.mlbl_phone.UseStyleColors = true;
             this.mlbl_phone.Click += new System.EventHandler(this.RestaurantListUserControl_Click);
             // 
             // pic_state

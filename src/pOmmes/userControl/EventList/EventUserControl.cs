@@ -68,8 +68,19 @@ namespace pOmmes
                 case EventState.Edit:
                     break;
                 case EventState.Vote:
+                    if (e.Event != null)
+                    {
+                        RestaurantUserControl restaurantUserControl = new RestaurantUserControl(e.Event);
+                        restaurantUserControl.RestaurantUserControl_Select += RestaurantUserControl_RestaurantUserControl_Select1;
+                        EventBus.Instance.PostEvent(new UserControlChangeEvent(restaurantUserControl, UserControlChangeState.Push));
+                    }
                     break;
                 case EventState.Order:
+                    if (e.Event.Restaurant != null)
+                    {
+                        FoodUserControl foodUserControl = new FoodUserControl(e.Event.Restaurant);
+                        EventBus.Instance.PostEvent(new UserControlChangeEvent(foodUserControl, UserControlChangeState.Push));
+                    }
                     break;
                 case EventState.ReadyToSent:
                     break;
@@ -80,6 +91,27 @@ namespace pOmmes
             }
 
             ThrowEventUserControl_Select(e);
+        }
+
+        private void RestaurantUserControl_RestaurantUserControl_Select1(object sender, RestaurantUserControlEventArgs e)
+        {
+            if (e.Event != null)
+            {
+                if (e.Event.Votes == null)
+                {
+                    e.Event.Votes = new Collection<Vote>();
+                }
+                Vote vote = new Vote();
+                vote.Restaurant = e.Restaurant;
+                //TODO: User
+                vote.User = null;
+
+                Dic.Get<IpOmmesDataBL>().Post<Vote>(new Collection<Vote>() { vote });
+
+                e.Event.Votes.Add(vote);
+
+                Dic.Get<IpOmmesDataBL>().Put<Event>(new Collection<Event>() { e.Event });
+            }
         }
 
         public event EventHandler<EventUserControlEventArgs> EventUserControl_Select;

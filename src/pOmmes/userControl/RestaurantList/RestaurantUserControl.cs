@@ -21,11 +21,14 @@ namespace pOmmes
     {
         private IpOmmesDataBL pOmmesData = null;
 
-        public RestaurantUserControl()
+        private Event pEvent;
+
+        public RestaurantUserControl(Event pEvent)
         {
             InitializeComponent();
 
             this.pOmmesData = Dic.Get<IpOmmesDataBL>();
+            this.pEvent = pEvent;
         }
 
         private void RestaurantUserControl_Load(object sender, EventArgs e)
@@ -44,9 +47,9 @@ namespace pOmmes
                 {
                     this.mtp_RestaurantList.Invoke(new Action(delegate ()
                     {
-                        RestaurantListUserControl contr = new RestaurantListUserControl(poRestaurant);
+                        RestaurantListUserControl contr = new RestaurantListUserControl(poRestaurant, pEvent);
                         contr.Location = new Point(0, location);
-                        contr.RestaurantListUserControl_Clicked += Contr_RestaurantListUserControl_Clicked;
+                        contr.RestaurantListUserControl_Clicked += RestaurantListUserControl_Clicked;
                         this.mtp_RestaurantList.Controls.Add(contr);
 
                         location += contr.Size.Height;
@@ -55,14 +58,15 @@ namespace pOmmes
             }));
         }
 
-        private void Contr_RestaurantListUserControl_Clicked(object sender, RestaurantUserControlEventArgs e)
+        private void RestaurantListUserControl_Clicked(object sender, RestaurantUserControlEventArgs e)
         {
             DialogResult result = MetroMessageBox.Show(this.Parent.Parent, "Möchten sie für " + e.Restaurant.Name + " stimmen?", "Abstimmung", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             switch (result)
             {
                 case DialogResult.OK:
-                    EventBus.Instance.PostEvent(new UserControlChangeEvent(null, UserControlChangeState.Pop));
+                    //TODO:REMOVE                   
                     ThrowRestaurantUserControl_Select(e);
+                    //EventBus.Instance.PostEvent(new UserControlChangeEvent(null, UserControlChangeState.Pop));
                     break;
                 case DialogResult.Cancel:
                     break;

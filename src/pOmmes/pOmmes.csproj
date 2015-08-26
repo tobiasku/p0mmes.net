@@ -104,6 +104,7 @@
       <DependentUpon>EventUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="userControl\EventList\EventUserControlEventArgs.cs" />
+    <Compile Include="userControl\FoodList\FoodDetailUserControlEventArgs.cs" />
     <Compile Include="userControl\FoodList\FoodDetailUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -143,6 +144,7 @@
     <Compile Include="userControl\RestaurantList\RestaurantUserControlEventArgs.cs" />
     <EmbeddedResource Include="form\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

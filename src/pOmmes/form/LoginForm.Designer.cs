@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.metroStyleManager = new MetroFramework.Components.MetroStyleManager(this.components);
             this.mtxt_UserName = new MetroFramework.Controls.MetroTextBox();
             this.mlbl_desc_UserName = new MetroFramework.Controls.MetroLabel();
             this.mlbl_desc_Password = new MetroFramework.Controls.MetroLabel();
@@ -38,13 +37,7 @@
             this.mbtn_Cancel = new MetroFramework.Controls.MetroButton();
             this.mlink_Register = new MetroFramework.Controls.MetroLink();
             this.mlink_ForgotPassword = new MetroFramework.Controls.MetroLink();
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).BeginInit();
             this.SuspendLayout();
-            // 
-            // metroStyleManager
-            // 
-            this.metroStyleManager.Owner = this;
-            this.metroStyleManager.Style = MetroFramework.MetroColorStyle.Silver;
             // 
             // mtxt_UserName
             // 
@@ -65,7 +58,6 @@
             this.mlbl_desc_UserName.Location = new System.Drawing.Point(23, 60);
             this.mlbl_desc_UserName.Name = "mlbl_desc_UserName";
             this.mlbl_desc_UserName.Size = new System.Drawing.Size(71, 19);
-            this.mlbl_desc_UserName.Style = MetroFramework.MetroColorStyle.Lime;
             this.mlbl_desc_UserName.TabIndex = 1;
             this.mlbl_desc_UserName.Text = "Username:";
             // 
@@ -161,18 +153,14 @@
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.StyleManager = this.metroStyleManager;
             this.Text = "Login";
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private MetroFramework.Components.MetroStyleManager metroStyleManager;
+        
         private MetroFramework.Controls.MetroButton mbtn_Login;
         private MetroFramework.Controls.MetroLabel mlbl_desc_Password;
         private MetroFramework.Controls.MetroTextBox mtxt_Password;

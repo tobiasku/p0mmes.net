@@ -29,14 +29,16 @@
         private void InitializeComponent()
         {
             this.mpnl_Main = new MetroFramework.Controls.MetroPanel();
+            this.mlbl_desc_UserName = new MetroFramework.Controls.MetroLabel();
+            this.mtxt_ExtraWishes = new MetroFramework.Controls.MetroTextBox();
             this.clb_Options = new System.Windows.Forms.CheckedListBox();
             this.mlink_Close = new MetroFramework.Controls.MetroLink();
             this.mcmb_sizes = new MetroFramework.Controls.MetroComboBox();
             this.mlbl_price = new MetroFramework.Controls.MetroLabel();
             this.mbtn_order = new MetroFramework.Controls.MetroButton();
-            this.mlbl_description = new MetroFramework.Controls.MetroLabel();
             this.mlbl_name = new MetroFramework.Controls.MetroLabel();
             this.mtxt_Count = new MetroFramework.Controls.MetroTextBox();
+            this.mlbl_description = new MetroFramework.Controls.MetroLabel();
             this.mpnl_Main.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,12 +46,14 @@
             // 
             this.mpnl_Main.BackColor = System.Drawing.Color.Black;
             this.mpnl_Main.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mpnl_Main.Controls.Add(this.mlbl_description);
+            this.mpnl_Main.Controls.Add(this.mlbl_desc_UserName);
+            this.mpnl_Main.Controls.Add(this.mtxt_ExtraWishes);
             this.mpnl_Main.Controls.Add(this.clb_Options);
             this.mpnl_Main.Controls.Add(this.mlink_Close);
             this.mpnl_Main.Controls.Add(this.mcmb_sizes);
             this.mpnl_Main.Controls.Add(this.mlbl_price);
             this.mpnl_Main.Controls.Add(this.mbtn_order);
-            this.mpnl_Main.Controls.Add(this.mlbl_description);
             this.mpnl_Main.Controls.Add(this.mlbl_name);
             this.mpnl_Main.Controls.Add(this.mtxt_Count);
             this.mpnl_Main.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -58,11 +62,34 @@
             this.mpnl_Main.HorizontalScrollbarSize = 10;
             this.mpnl_Main.Location = new System.Drawing.Point(0, 0);
             this.mpnl_Main.Name = "mpnl_Main";
-            this.mpnl_Main.Size = new System.Drawing.Size(280, 300);
+            this.mpnl_Main.Size = new System.Drawing.Size(280, 380);
             this.mpnl_Main.TabIndex = 0;
             this.mpnl_Main.VerticalScrollbarBarColor = true;
             this.mpnl_Main.VerticalScrollbarHighlightOnWheel = false;
             this.mpnl_Main.VerticalScrollbarSize = 10;
+            // 
+            // mlbl_desc_UserName
+            // 
+            this.mlbl_desc_UserName.AutoSize = true;
+            this.mlbl_desc_UserName.Location = new System.Drawing.Point(22, 244);
+            this.mlbl_desc_UserName.Name = "mlbl_desc_UserName";
+            this.mlbl_desc_UserName.Size = new System.Drawing.Size(113, 19);
+            this.mlbl_desc_UserName.TabIndex = 12;
+            this.mlbl_desc_UserName.Text = "Extra Information:";
+            // 
+            // mtxt_ExtraWishes
+            // 
+            this.mtxt_ExtraWishes.Lines = new string[0];
+            this.mtxt_ExtraWishes.Location = new System.Drawing.Point(22, 266);
+            this.mtxt_ExtraWishes.MaxLength = 32767;
+            this.mtxt_ExtraWishes.Multiline = true;
+            this.mtxt_ExtraWishes.Name = "mtxt_ExtraWishes";
+            this.mtxt_ExtraWishes.PasswordChar = '\0';
+            this.mtxt_ExtraWishes.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.mtxt_ExtraWishes.SelectedText = "";
+            this.mtxt_ExtraWishes.Size = new System.Drawing.Size(253, 62);
+            this.mtxt_ExtraWishes.TabIndex = 11;
+            this.mtxt_ExtraWishes.UseSelectable = true;
             // 
             // clb_Options
             // 
@@ -100,31 +127,23 @@
             // 
             // mlbl_price
             // 
-            this.mlbl_price.AutoSize = true;
             this.mlbl_price.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.mlbl_price.Location = new System.Drawing.Point(22, 249);
+            this.mlbl_price.Location = new System.Drawing.Point(22, 334);
             this.mlbl_price.Name = "mlbl_price";
-            this.mlbl_price.Size = new System.Drawing.Size(0, 0);
+            this.mlbl_price.Size = new System.Drawing.Size(152, 41);
             this.mlbl_price.TabIndex = 6;
             // 
             // mbtn_order
             // 
-            this.mbtn_order.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(156)))), ((int)(((byte)(219)))));
+            this.mbtn_order.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(6)))), ((int)(((byte)(19)))));
             this.mbtn_order.BackgroundImage = global::pOmmes.Properties.Resources.ic_shopping_cart_white_48dp;
             this.mbtn_order.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.mbtn_order.Location = new System.Drawing.Point(179, 249);
+            this.mbtn_order.Location = new System.Drawing.Point(180, 334);
             this.mbtn_order.Name = "mbtn_order";
             this.mbtn_order.Size = new System.Drawing.Size(96, 41);
             this.mbtn_order.TabIndex = 5;
             this.mbtn_order.UseSelectable = true;
-            // 
-            // mlbl_description
-            // 
-            this.mlbl_description.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.mlbl_description.Location = new System.Drawing.Point(66, 43);
-            this.mlbl_description.Name = "mlbl_description";
-            this.mlbl_description.Size = new System.Drawing.Size(209, 41);
-            this.mlbl_description.TabIndex = 4;
+            this.mbtn_order.Click += new System.EventHandler(this.mbtn_order_Click);
             // 
             // mlbl_name
             // 
@@ -155,13 +174,21 @@
             this.mtxt_Count.TextChanged += new System.EventHandler(this.mtxt_Count_TextChanged);
             this.mtxt_Count.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.mtxt_Count_KeyPress);
             // 
+            // mlbl_description
+            // 
+            this.mlbl_description.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.mlbl_description.Location = new System.Drawing.Point(66, 38);
+            this.mlbl_description.Name = "mlbl_description";
+            this.mlbl_description.Size = new System.Drawing.Size(209, 46);
+            this.mlbl_description.TabIndex = 14;
+            // 
             // FoodDetailUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.mpnl_Main);
             this.Name = "FoodDetailUserControl";
-            this.Size = new System.Drawing.Size(280, 300);
+            this.Size = new System.Drawing.Size(280, 380);
             this.Load += new System.EventHandler(this.FoodDetailUserControl_Load);
             this.mpnl_Main.ResumeLayout(false);
             this.mpnl_Main.PerformLayout();
@@ -172,7 +199,6 @@
         #endregion
 
         private MetroFramework.Controls.MetroPanel mpnl_Main;
-        private MetroFramework.Controls.MetroLabel mlbl_description;
         private MetroFramework.Controls.MetroLabel mlbl_name;
         private MetroFramework.Controls.MetroTextBox mtxt_Count;
         private MetroFramework.Controls.MetroLabel mlbl_price;
@@ -180,5 +206,8 @@
         private MetroFramework.Controls.MetroComboBox mcmb_sizes;
         private MetroFramework.Controls.MetroLink mlink_Close;
         private System.Windows.Forms.CheckedListBox clb_Options;
+        private MetroFramework.Controls.MetroTextBox mtxt_ExtraWishes;
+        private MetroFramework.Controls.MetroLabel mlbl_desc_UserName;
+        private MetroFramework.Controls.MetroLabel mlbl_description;
     }
 }

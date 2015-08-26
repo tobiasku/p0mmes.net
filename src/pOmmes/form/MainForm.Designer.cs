@@ -29,16 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.metroStyleManager = new MetroFramework.Components.MetroStyleManager(this.components);
             this.mlink_CurrentUser = new MetroFramework.Controls.MetroLink();
             this.mpnl_Main = new MetroFramework.Controls.MetroPanel();
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).BeginInit();
             this.SuspendLayout();
-            // 
-            // metroStyleManager
-            // 
-            this.metroStyleManager.Owner = this;
-            this.metroStyleManager.Style = MetroFramework.MetroColorStyle.Silver;
             // 
             // mlink_CurrentUser
             // 
@@ -83,19 +76,15 @@
             this.Name = "MainForm";
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.StyleManager = this.metroStyleManager;
             this.Text = "pOmmes";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private MetroFramework.Components.MetroStyleManager metroStyleManager;
+        
         private MetroFramework.Controls.MetroLink mlink_CurrentUser;
         private MetroFramework.Controls.MetroPanel mpnl_Main;
     }

@@ -17,13 +17,13 @@ namespace pOmmes.Common
             set;
         }
 
-        public Size Size
+        public ArticleToSize Size
         {
             get;
             set;
         }
 
-        public Collection<Option> Options
+        public Collection<ArticleToOption> Options
         {
             get;
             set;

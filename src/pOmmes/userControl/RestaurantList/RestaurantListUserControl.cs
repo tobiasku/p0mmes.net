@@ -16,10 +16,12 @@ namespace pOmmes
     public partial class RestaurantListUserControl : MetroUserControl
     {
         private Restaurant restaurant;
+        private Event pEvent;
 
-        public RestaurantListUserControl(Restaurant restaurant)
+        public RestaurantListUserControl(Restaurant restaurant, Event pEvent)
         {
             this.restaurant = restaurant;
+            this.pEvent = pEvent;
 
             InitializeComponent();
         }
@@ -45,7 +47,7 @@ namespace pOmmes
         {
             if (RestaurantListUserControl_Clicked != null)
             {
-                this.RestaurantListUserControl_Clicked(this, new RestaurantUserControlEventArgs(this.restaurant));
+                this.RestaurantListUserControl_Clicked(this, new RestaurantUserControlEventArgs(this.restaurant, this.pEvent));
             }
         }
 

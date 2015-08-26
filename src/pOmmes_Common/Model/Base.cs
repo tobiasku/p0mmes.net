@@ -18,13 +18,13 @@ namespace pOmmes.Common
         public DateTime? UpdatedAt
         {
             get;
-            private set;
+            set;
         }
 
         public DateTime? CreatedAt
         {
             get;
-            private set;
+            set;
         }
     }
 }

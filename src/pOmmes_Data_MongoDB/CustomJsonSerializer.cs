@@ -58,6 +58,18 @@ namespace pOmmes.Data
 
                         jObject[prop.Name] = JToken.FromObject(result);
                     }
+                    else if (prop.PropertyType == typeof(Collection<Vote>))
+                    {
+                        Collection<Vote> votes = prop.GetValue(value) as Collection<Vote>;
+
+                        Collection<string> result = new Collection<string>();
+                        foreach (Vote vote in votes)
+                        {
+                            result.Add(vote._id);
+                        }
+
+                        jObject[prop.Name] = JToken.FromObject(result);
+                    }
                 }
             }
 
@@ -168,11 +180,27 @@ namespace pOmmes.Data
 
                                     prop.SetValue(result, options);
                                 }
+                                else if (reader.Path == "Votes")
+                                {
+                                    Collection<Vote> votes = new Collection<Vote>();
+                                    reader.Read();
+
+                                    while (reader.TokenType != JsonToken.EndArray)
+                                    {
+                                        Vote vote = Activator.CreateInstance(typeof(Vote)) as Vote;
+                                        vote = Dic.Get<IpOmmesDataBL>().Find<Vote>(reader.Value.ToString());
+                                        votes.Add(vote);
+
+                                        reader.Read();
+                                    }
+
+                                    prop.SetValue(result, votes);
+                                }
                             }
-                            //else if (prop.PropertyType == typeof(Int32))
-                            //{
-                            //    prop.SetValue(result, Convert.ToInt32(reader.Value));
-                            //}
+                            else if (prop.PropertyType == typeof(Int32))
+                            {
+                                prop.SetValue(result, Convert.ToInt32(reader.Value));
+                            }
                             else if (prop.PropertyType == typeof(EventType))
                             {
                                 prop.SetValue(result, (EventType)Convert.ToInt32(reader.Value));

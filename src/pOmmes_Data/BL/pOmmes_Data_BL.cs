@@ -39,11 +39,21 @@ namespace pOmmes.Data
 
         public void Put<T>(Collection<T> collectionToPut) where T : Base
         {
+            foreach (var toPut in collectionToPut)
+            {
+                toPut.UpdatedAt = DateTime.Now;
+            }
+
             pOmmesDataDL.Put<T>(collectionToPut);
         }
 
         public void Post<T>(Collection<T> collectionToPost) where T : Base
         {
+            foreach (var toPost in collectionToPost)
+            {
+                toPost.CreatedAt = DateTime.Now;
+            }
+
             pOmmesDataDL.Post<T>(collectionToPost);
         }
 

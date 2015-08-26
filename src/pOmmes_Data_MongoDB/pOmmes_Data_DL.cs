@@ -21,9 +21,7 @@ namespace pOmmes.Data.Mongo
         //--------------------------------------------------------------------------
         protected static IMongoClient _client;
         protected static IMongoDatabase _database;
-
-
-
+        
         //--------------------------------------------------------------------------
         //-- Methods
         //--------------------------------------------------------------------------
@@ -69,7 +67,7 @@ namespace pOmmes.Data.Mongo
             foreach (var doc in docs)
             {
                 string json = doc.ToJson();
-                var result =(T)JsonConvert.DeserializeObject(json, typeof(T), new JsonConverter[] { new CustomJsonSerializer() });
+                var result = (T)JsonConvert.DeserializeObject(json, typeof(T), new JsonConverter[] { new CustomJsonSerializer() });
                 resultCollection.Add(result);
             }
 
@@ -108,6 +106,18 @@ namespace pOmmes.Data.Mongo
         #region Put
         public async void Put<T>(Collection<T> collectionToPut) where T : Base
         {
+            var collection = GetCollection(collectionToPut.First().GetType());
+
+            foreach (T value in collectionToPut)
+            {
+                var builder = Builders<BsonDocument>.Filter;
+                FilterDefinition<BsonDocument> filterDefinition = builder.Eq("_id", value._id);
+
+                string jsonString = JsonConvert.SerializeObject(value, new JsonConverter[] { new CustomJsonSerializer() });
+                BsonDocument bsonDoc = BsonDocument.Parse(jsonString);
+
+                await collection.ReplaceOneAsync(filterDefinition, bsonDoc);
+            }
         }
         #endregion
 
@@ -119,43 +129,51 @@ namespace pOmmes.Data.Mongo
 
             foreach (T value in collectionToPost)
             {
-                List<PropertyInfo> props = GetPropertyInfoByType(typeof(T)).Where(x => x.PropertyType.BaseType == typeof(Base)).ToList<PropertyInfo>();
-                foreach (PropertyInfo prop in props)
-                {
-                    Base baseItem = (Base)prop.GetValue(value);
-                    if (baseItem != null)
-                    {
-                        if (baseItem._id == null)
-                        {
-                            baseItem._id = ObjectId.GenerateNewId(DateTime.Now).ToString();
+                //List<PropertyInfo> props = GetPropertyInfoByType(typeof(T)).Where(x => x.PropertyType.BaseType == typeof(Base)).ToList<PropertyInfo>();
+                //foreach (PropertyInfo prop in props)
+                //{
+                //    Base baseItem = (Base)prop.GetValue(value);
+                //    if (baseItem != null)
+                //    {
+                //        if (baseItem._id == null)
+                //        {
+                //            baseItem._id = ObjectId.GenerateNewId(DateTime.Now).ToString();
 
-                            Post(new Collection<Base>() { prop.GetValue(value) as Base });
-                        }
-                    }
-                }
+                //            Post(new Collection<Base>() { prop.GetValue(value) as Base });
+                //        }
+                //    }
+                //}
 
-                List<PropertyInfo> props1 = GetPropertyInfoByType(typeof(T)).Where(x => x.PropertyType == typeof(Collection<ArticleToSize>)).ToList<PropertyInfo>();
-                foreach (PropertyInfo prop in props1)
-                {
-                    Collection<ArticleToSize> articles = prop.GetValue(value) as Collection<ArticleToSize>;
+                //List<PropertyInfo> props1 = GetPropertyInfoByType(typeof(T)).Where(x => x.PropertyType == typeof(Collection<ArticleToSize>)).ToList<PropertyInfo>();
+                //foreach (PropertyInfo prop in props1)
+                //{
+                //    Collection<ArticleToSize> articles = prop.GetValue(value) as Collection<ArticleToSize>;
 
-                    Post<ArticleToSize>(articles);
-                }
+                //    Post<ArticleToSize>(articles);
+                //}
 
-                List<PropertyInfo> props2 = GetPropertyInfoByType(typeof(T)).Where(x => x.PropertyType == typeof(Collection<ArticleToOption>)).ToList<PropertyInfo>();
-                foreach (PropertyInfo prop in props2)
-                {
-                    Collection<ArticleToOption> options = prop.GetValue(value) as Collection<ArticleToOption>;
+                //List<PropertyInfo> props2 = GetPropertyInfoByType(typeof(T)).Where(x => x.PropertyType == typeof(Collection<ArticleToOption>)).ToList<PropertyInfo>();
+                //foreach (PropertyInfo prop in props2)
+                //{
+                //    Collection<ArticleToOption> options = prop.GetValue(value) as Collection<ArticleToOption>;
 
-                    Post<ArticleToOption>(options);
-                }
+                //    Post<ArticleToOption>(options);
+                //}
+
+                //List<PropertyInfo> props3 = GetPropertyInfoByType(typeof(T)).Where(x => x.PropertyType == typeof(Collection<Vote>)).ToList<PropertyInfo>();
+                //foreach (PropertyInfo prop in props3)
+                //{
+                //    Collection<Vote> votes = prop.GetValue(value) as Collection<Vote>;
+
+                //    Post<Vote>(votes);
+                //}
+
+                value.CreatedAt = DateTime.Now;
 
                 if (value._id == null)
                 {
                     value._id = ObjectId.GenerateNewId(DateTime.Now).ToString();
                 }
-
-
 
                 string jsonString = JsonConvert.SerializeObject(value, new JsonConverter[] { new CustomJsonSerializer() });
 
@@ -202,6 +220,7 @@ namespace pOmmes.Data.Mongo
         {
             return _database.GetCollection<BsonDocument>(type.Name);
         }
+
         private static List<PropertyInfo> GetPropertyInfoByType(Type type)
         {
             List<PropertyInfo> props = new List<PropertyInfo>();

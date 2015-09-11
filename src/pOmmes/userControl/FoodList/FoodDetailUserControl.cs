@@ -7,23 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using pOmmes_Common;
-using Parse;
+using pOmmes.Common;
 using MetroFramework.Controls;
 using System.Collections.ObjectModel;
+using pOmmes.Common.Dic;
+using pOmmes.Data;
 
 namespace pOmmes
 {
     public partial class FoodDetailUserControl : MetroUserControl
     {
-        public ParseArticle article;
+        public Article article;
+
         public int quantity = 1;
-        public ParseFoodToSize size;
-        public Collection<ParseFoodToOption> options = new Collection<ParseFoodToOption>();
+        public ArticleToSize size;
 
-        private Collection<ParseFoodToOption> aviableOptions = new Collection<ParseFoodToOption>();
+        public Collection<ArticleToOption> shownOptions = new Collection<ArticleToOption>();
 
-        public FoodDetailUserControl(ParseArticle article)
+        public Collection<ArticleToOption> selectedOptions = new Collection<ArticleToOption>();
+
+        public FoodDetailUserControl(Article article)
         {
             InitializeComponent();
             this.article = article;
@@ -42,57 +45,59 @@ namespace pOmmes
             mlbl_description.Text = article.Description;
         }
 
-        private async void SetFoodDetailSizes()
+        private void SetFoodDetailSizes()
         {
-            mcmb_sizes.DataSource = (await article.GetFoodSizes());
+            mcmb_sizes.DataSource = article.Sizes;
         }
 
-        private async void SetFoodDetailOptions()
+        private void SetFoodDetailOptions()
         {
-            Collection<ParseFoodToOption> options = new Collection<ParseFoodToOption>();
-            aviableOptions = (await article.GetFoodOptions());
+            shownOptions.Clear();
 
-            foreach (ParseFoodToOption option in aviableOptions)
+            foreach (ArticleToOption option in article.Options)
             {
-                if (option.Size == null || option.Size.ObjectId == size.Size.ObjectId)
+                if (option.Size != null && option.Size._id == size.Size._id)
                 {
-                    if (!options.Contains(option))
+                    if (!shownOptions.Contains(option))
                     {
-                        options.Add(option);
+                        shownOptions.Add(option);
                     }
                 }
             }
 
-            clb_Options.DataSource = options;
-            SetPrice();
+            clb_Options.DataSource = null;
+            clb_Options.DataSource = shownOptions;
         }
 
         private void SetPrice()
         {
             double price = size.Price;
-            foreach (ParseFoodToOption option in options)
+
+            foreach (ArticleToOption option in selectedOptions)
             {
                 price += option.Price;
             }
+
             price = price * quantity;
             mlbl_price.Text = "Preis: " + price.ToString("0.00") + " €";
         }
 
         private void mcmb_sizes_SelectedValueChanged(object sender, EventArgs e)
         {
-            size = (ParseFoodToSize)mcmb_sizes.SelectedValue;
+            size = (ArticleToSize)mcmb_sizes.SelectedValue;
 
             SetFoodDetailOptions();
             SetPrice();
         }
 
-        private void checkedListBox1_SelectedValueChanged(object sender, EventArgs e)
+        private void clb_Options_SelectedValueChanged(object sender, EventArgs e)
         {
-            options.Clear();
+            selectedOptions.Clear();
+
             foreach (object selected in clb_Options.CheckedItems)
             {
-                ParseFoodToOption option = (ParseFoodToOption)selected;
-                options.Add(option);
+                ArticleToOption option = (ArticleToOption)selected;
+                selectedOptions.Add(option);
             }
 
             SetPrice();
@@ -121,6 +126,29 @@ namespace pOmmes
         private void mlink_Close_Click(object sender, EventArgs e)
         {
             EventBus.Instance.PostEvent(new FoodDetailChangeEvent(this, UserControlChangeState.Pop));
+        }
+
+        private void mbtn_order_Click(object sender, EventArgs e)
+        {
+            OrderPosition orderPosition = new OrderPosition();
+
+            orderPosition.Article = article;
+            orderPosition.Options = selectedOptions;
+            orderPosition.Size = size;
+            orderPosition.ExtraInformation = mtxt_ExtraWishes.Text;
+
+            ThrowFoodDetailUserControl_Select(new FoodDetailUserControlEventArgs(orderPosition));
+            EventBus.Instance.PostEvent(new FoodDetailChangeEvent(this, UserControlChangeState.Pop));
+        }
+
+        public event EventHandler<FoodDetailUserControlEventArgs> FoodDetailUserControl_Select;
+
+        private void ThrowFoodDetailUserControl_Select(FoodDetailUserControlEventArgs eventArgs)
+        {
+            if (FoodDetailUserControl_Select != null)
+            {
+                this.FoodDetailUserControl_Select(this, eventArgs);
+            }
         }
     }
 }

@@ -29,18 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.metroStyleManager = new MetroFramework.Components.MetroStyleManager(this.components);
             this.mlbl_desc_Email = new MetroFramework.Controls.MetroLabel();
             this.mtxt_Email = new MetroFramework.Controls.MetroTextBox();
             this.mbtn_Cancel = new MetroFramework.Controls.MetroButton();
             this.mbtn_ResetPassword = new MetroFramework.Controls.MetroButton();
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).BeginInit();
             this.SuspendLayout();
-            // 
-            // metroStyleManager
-            // 
-            this.metroStyleManager.Owner = null;
-            this.metroStyleManager.Style = MetroFramework.MetroColorStyle.Silver;
             // 
             // mlbl_desc_Email
             // 
@@ -48,7 +41,6 @@
             this.mlbl_desc_Email.Location = new System.Drawing.Point(23, 60);
             this.mlbl_desc_Email.Name = "mlbl_desc_Email";
             this.mlbl_desc_Email.Size = new System.Drawing.Size(44, 19);
-            this.mlbl_desc_Email.Style = MetroFramework.MetroColorStyle.Lime;
             this.mlbl_desc_Email.TabIndex = 3;
             this.mlbl_desc_Email.Text = "Email:";
             // 
@@ -109,18 +101,14 @@
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.StyleManager = this.metroStyleManager;
             this.Text = "Reset Password";
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private MetroFramework.Components.MetroStyleManager metroStyleManager;
+        
         private MetroFramework.Controls.MetroLabel mlbl_desc_Email;
         private MetroFramework.Controls.MetroTextBox mtxt_Email;
         private MetroFramework.Controls.MetroButton mbtn_Cancel;

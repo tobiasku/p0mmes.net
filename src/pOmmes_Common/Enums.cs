@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pOmmes_Common
+namespace pOmmes.Common
 {
     public enum EventType
     {

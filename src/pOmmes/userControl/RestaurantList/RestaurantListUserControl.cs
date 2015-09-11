@@ -7,18 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using pOmmes_Common;
+using pOmmes.Common;
 using MetroFramework.Controls;
+using pOmmes.Data;
 
 namespace pOmmes
 {
     public partial class RestaurantListUserControl : MetroUserControl
     {
-        private ParseRestaurant restaurant;
+        private Restaurant restaurant;
+        private Event pEvent;
 
-        public RestaurantListUserControl(ParseRestaurant restaurant)
+        public RestaurantListUserControl(Restaurant restaurant, Event pEvent)
         {
             this.restaurant = restaurant;
+            this.pEvent = pEvent;
 
             InitializeComponent();
         }
@@ -38,9 +41,19 @@ namespace pOmmes
             }
         }
 
+        public event EventHandler<RestaurantUserControlEventArgs> RestaurantListUserControl_Clicked;
+
+        private void ThrowRestaurantListUserControl_Clicked()
+        {
+            if (RestaurantListUserControl_Clicked != null)
+            {
+                this.RestaurantListUserControl_Clicked(this, new RestaurantUserControlEventArgs(this.restaurant, this.pEvent));
+            }
+        }
+
         private void RestaurantListUserControl_Click(object sender, EventArgs e)
         {
-            EventBus.Instance.PostEvent(new UserControlChangeEvent(new FoodUserControl(restaurant), UserControlChangeState.Push));
+            ThrowRestaurantListUserControl_Clicked();
         }
     }
 }

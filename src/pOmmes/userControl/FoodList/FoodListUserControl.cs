@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using pOmmes_Common;
+using pOmmes.Common;
 using MetroFramework.Controls;
 using System.Collections.ObjectModel;
 
@@ -15,9 +15,9 @@ namespace pOmmes
 {
     public partial class FoodListUserControl : MetroUserControl
     {
-        ParseArticle article;
+        Article article;
 
-        public FoodListUserControl(ParseArticle article)
+        public FoodListUserControl(Article article)
         {
             this.article = article;
 
@@ -29,15 +29,33 @@ namespace pOmmes
             SetFoodListItem();
         }
 
-        private async void SetFoodListItem()
+        private void SetFoodListItem()
         {
             mlbl_name.Text = article.Name;
             mlbl_description.Text = article.Description;
+            mlbl_price.Text = "ab " + article.Sizes.Min(x => x.Price).ToString("0.00") + " €";
         }
 
         private void FoodListUserControl_Click(object sender, EventArgs e)
         {
-            EventBus.Instance.PostEvent(new FoodDetailChangeEvent(new FoodDetailUserControl(article), UserControlChangeState.Push));
+            FoodDetailUserControl foodDetailUserControl = new FoodDetailUserControl(article);
+            foodDetailUserControl.FoodDetailUserControl_Select += FoodDetailUserControl_FoodDetailUserControl_Select;
+            EventBus.Instance.PostEvent(new FoodDetailChangeEvent(foodDetailUserControl, UserControlChangeState.Push));
+        }
+
+        private void FoodDetailUserControl_FoodDetailUserControl_Select(object sender, FoodDetailUserControlEventArgs e)
+        {
+            ThrowFoodDetailUserControl_Select(e);
+        }
+
+        public event EventHandler<FoodDetailUserControlEventArgs> FoodDetailUserControl_Select;
+
+        private void ThrowFoodDetailUserControl_Select(FoodDetailUserControlEventArgs eventArgs)
+        {
+            if (FoodDetailUserControl_Select != null)
+            {
+                this.FoodDetailUserControl_Select(this, eventArgs);
+            }
         }
     }
 }

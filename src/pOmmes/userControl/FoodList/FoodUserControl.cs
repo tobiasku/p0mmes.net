@@ -7,18 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Parse;
 using System.Collections.ObjectModel;
-using pOmmes_Common;
+using pOmmes.Common;
 using MetroFramework.Controls;
+using pOmmes.Data;
+using pOmmes.Common.Dic;
+using System.Threading;
 
 namespace pOmmes
 {
     public partial class FoodUserControl : MetroUserControl
     {
-        ParseRestaurant restaurant;
+        Restaurant restaurant;
+        private Collection<OrderPosition> orderPositions = new Collection<OrderPosition>();
 
-        public FoodUserControl(ParseRestaurant restaurant)
+        public FoodUserControl(Restaurant restaurant)
         {
             this.restaurant = restaurant;
             InitializeComponent();
@@ -30,34 +33,60 @@ namespace pOmmes
             FillFoodList();
         }
 
-        private async void FillFoodList()
+        private void FillFoodList()
         {
-            ParseQuery<ParseArticle> articleQuery = new ParseQuery<ParseArticle>().WhereEqualTo("restaurantId", restaurant);
-            Collection<ParseArticle> articleCollection = new Collection<ParseArticle>((await articleQuery.FindAsync()).ToList<ParseArticle>());
+            mlbl_Restaurant.Text = restaurant.Name;
 
-            Dictionary<string, int> locationDic = new Dictionary<string, int>();
-
-            foreach (ParseArticle article in articleCollection)
+            ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
             {
-                if (!mtc_FoodList.TabPages.ContainsKey(article.Category.ObjectId))
+                Dictionary<string, object> filter = new Dictionary<string, object>();
+                filter.Add("Restaurant", restaurant._id);
+                Collection<Article> articleCollection = Dic.Get<IpOmmesDataBL>().Get<Article>(filter);
+
+                Dictionary<string, int> locationDic = new Dictionary<string, int>();
+
+                foreach (Article article in articleCollection)
                 {
-                    await article.Category.FetchIfNeededAsync();
+                    this.mtc_FoodList.Invoke(new Action(delegate ()
+                    {
+                        if (!mtc_FoodList.TabPages.ContainsKey(article.Category._id))
+                        {
+                            locationDic.Add(article.Category._id, 0);
+                            mtc_FoodList.TabPages.Add(article.Category._id, article.Category.Name);
+                        }
 
-                    locationDic.Add(article.Category.ObjectId, 0);
-                    mtc_FoodList.TabPages.Add(article.Category.ObjectId, article.Category.Name);
+                        FoodListUserControl contr = new FoodListUserControl(article);
+                        contr.FoodDetailUserControl_Select += Contr_FoodDetailUserControl_Select;
+                        contr.Location = new Point(0, locationDic[article.Category._id]);
+                        this.mtc_FoodList.TabPages[article.Category._id].Controls.Add(contr);
+
+                        locationDic[article.Category._id] += contr.Size.Height;
+                    }));
                 }
+            }));
+        }
 
-                FoodListUserControl contr = new FoodListUserControl(article);
-                contr.Location = new Point(0, locationDic[article.Category.ObjectId]);
-                this.mtc_FoodList.TabPages[article.Category.ObjectId].Controls.Add(contr);
+        private void Contr_FoodDetailUserControl_Select(object sender, FoodDetailUserControlEventArgs e)
+        {
+            if (orderPositions != null)
+            {
+                orderPositions.Add(e.OrderPosition);
+            }
 
-                locationDic[article.Category.ObjectId] += contr.Size.Height;
+            if (orderPositions.Count > 0)
+            {
+                mbtn_order.Visible = true;
+                mbtn_order.Text = orderPositions.Count.ToString();
+            }
+            else
+            {
+                mbtn_order.Visible = false;
+                mbtn_order.Text = "";
             }
         }
 
-
         FoodDetailUserControl actualFoodDetailUserControl;
-        string actualFoodObjectId;
+        string actualFoodObject;
 
         public void OnEvent(FoodDetailChangeEvent e)
         {
@@ -82,9 +111,9 @@ namespace pOmmes
             if (control != null)
             {
                 control.Location = new Point((this.Size.Width / 2 - control.Size.Width / 2), (this.Size.Height / 2 - control.Size.Height / 2));
-                this.mtc_FoodList.TabPages[control.article.Category.ObjectId].Controls.Add(control);
+                this.mtc_FoodList.TabPages[control.article.Category._id].Controls.Add(control);
                 control.BringToFront();
-                this.actualFoodObjectId = control.article.Category.ObjectId;
+                this.actualFoodObject = control.article.Category._id;
                 this.actualFoodDetailUserControl = control;
             }
         }
@@ -93,11 +122,16 @@ namespace pOmmes
         {
             if (actualFoodDetailUserControl != null)
             {
-                this.mtc_FoodList.TabPages[actualFoodObjectId].Controls.Remove(actualFoodDetailUserControl);
+                this.mtc_FoodList.TabPages[actualFoodObject].Controls.Remove(actualFoodDetailUserControl);
             }
             actualFoodDetailUserControl.Dispose();
             actualFoodDetailUserControl = null;
-            actualFoodObjectId = null;
+            actualFoodObject = null;
+        }
+
+        private void mbtn_order_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MetroFramework.Forms;
-using Parse;
-using pOmmes_Common;
+using pOmmes.Common;
+using pOmmes.Common.Dic;
+using pOmmes.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,7 +29,7 @@ namespace pOmmes
 
         public void OnEvent(UserControlChangeEvent e)
         {
-            switch(e.State)
+            switch (e.State)
             {
                 case UserControlChangeState.Pop:
                     PopUserControl();
@@ -69,40 +70,46 @@ namespace pOmmes
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            if (ParseUser.CurrentUser == null)
-            {
-                this.Hide();
+            //if (User.CurrentUser == null)
+            //{
+            //    this.Hide();
 
-                LoginForm loginForm = new LoginForm();
-                DialogResult result = loginForm.ShowDialog();
-                switch (result)
-                {
-                    case DialogResult.OK:
-                        this.Show();
-                        break;
-                    case DialogResult.Cancel:
-                    default:
-                        this.Close();
-                        return;
-                }
-            }
-            if (ParseUser.CurrentUser != null)
-            {
-                mlink_CurrentUser.Text = "Logged in as " + ParseUser.CurrentUser.Username;
-                
-                
-                EventBus.Instance.PostEvent(new UserControlChangeEvent(new RestaurantUserControl(),UserControlChangeState.Push));
+            //    LoginForm loginForm = new LoginForm();
+            //    DialogResult result = loginForm.ShowDialog();
+            //    switch (result)
+            //    {
+            //        case DialogResult.OK:
+            //            this.Show();
+            //            break;
+            //        case DialogResult.Cancel:
+            //        default:
+            //            this.Close();
+            //            return;
+            //    }
+            //}
+            //if (User.CurrentUser != null)
+            //{
+            //    mlink_CurrentUser.Text = "Logged in as " + User.CurrentUser.UserName;
+            EventBus.Instance.PostEvent(new UserControlChangeEvent(new EventUserControl(), UserControlChangeState.Push));
 
-            }
+            RestaurantUserControl restaurantControl = new RestaurantUserControl(new Event());
+            restaurantControl.RestaurantUserControl_Select += RestaurantControl_RestaurantUserControl_Select; ;
+            EventBus.Instance.PostEvent(new UserControlChangeEvent(restaurantControl, UserControlChangeState.Push));
+            //}
+        }
+
+        private void RestaurantControl_RestaurantUserControl_Select(object sender, RestaurantUserControlEventArgs e)
+        {
+            EventBus.Instance.PostEvent(new UserControlChangeEvent(new FoodUserControl(e.Restaurant), UserControlChangeState.Push));
         }
 
         private void mlink_CurrentUser_Click(object sender, EventArgs e)
         {
-            if (ParseUser.CurrentUser != null)
+            if (User.CurrentUser != null)
             {
-                ParseUser.LogOut();
+                User.Logout(User.CurrentUser);
             }
-            if (ParseUser.CurrentUser == null)
+            if (User.CurrentUser == null)
             {
                 this.Hide();
 
@@ -119,25 +126,25 @@ namespace pOmmes
                         return;
                 }
             }
-            if (ParseUser.CurrentUser != null)
+            if (User.CurrentUser != null)
             {
-                mlink_CurrentUser.Text = "Logged in as " + ParseUser.CurrentUser.Username;
+                mlink_CurrentUser.Text = "Logged in as " + User.CurrentUser.UserName;
             }
         }
 
         private void mlink_CurrentUser_MouseEnter(object sender, EventArgs e)
         {
-            if (ParseUser.CurrentUser != null)
+            if (User.CurrentUser != null)
             {
-                mlink_CurrentUser.Text = "Logout " + ParseUser.CurrentUser.Username;
+                mlink_CurrentUser.Text = "Logout " + User.CurrentUser.UserName;
             }
         }
 
         private void mlink_CurrentUser_MouseLeave(object sender, EventArgs e)
         {
-            if (ParseUser.CurrentUser != null)
+            if (User.CurrentUser != null)
             {
-                mlink_CurrentUser.Text = "Logged in as " + ParseUser.CurrentUser.Username;
+                mlink_CurrentUser.Text = "Logged in as " + User.CurrentUser.UserName;
             }
         }
     }

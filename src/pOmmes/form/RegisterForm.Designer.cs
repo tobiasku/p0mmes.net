@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.metroStyleManager = new MetroFramework.Components.MetroStyleManager(this.components);
             this.mbtn_Register = new MetroFramework.Controls.MetroButton();
             this.mlbl_desc_Password = new MetroFramework.Controls.MetroLabel();
             this.mtxt_Password = new MetroFramework.Controls.MetroTextBox();
@@ -46,13 +45,7 @@
             this.mbtn_Cancel = new MetroFramework.Controls.MetroButton();
             this.mlbl_desc_RetypePassword = new MetroFramework.Controls.MetroLabel();
             this.mtxt_RetypePassword = new MetroFramework.Controls.MetroTextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).BeginInit();
             this.SuspendLayout();
-            // 
-            // metroStyleManager
-            // 
-            this.metroStyleManager.Owner = this;
-            this.metroStyleManager.Style = MetroFramework.MetroColorStyle.Silver;
             // 
             // mbtn_Register
             // 
@@ -92,7 +85,6 @@
             this.mlbl_desc_UserName.Location = new System.Drawing.Point(23, 60);
             this.mlbl_desc_UserName.Name = "mlbl_desc_UserName";
             this.mlbl_desc_UserName.Size = new System.Drawing.Size(71, 19);
-            this.mlbl_desc_UserName.Style = MetroFramework.MetroColorStyle.Lime;
             this.mlbl_desc_UserName.TabIndex = 6;
             this.mlbl_desc_UserName.Text = "Username:";
             // 
@@ -115,7 +107,6 @@
             this.mlbl_desc_ForeName.Location = new System.Drawing.Point(23, 108);
             this.mlbl_desc_ForeName.Name = "mlbl_desc_ForeName";
             this.mlbl_desc_ForeName.Size = new System.Drawing.Size(72, 19);
-            this.mlbl_desc_ForeName.Style = MetroFramework.MetroColorStyle.Lime;
             this.mlbl_desc_ForeName.TabIndex = 11;
             this.mlbl_desc_ForeName.Text = "Forename:";
             // 
@@ -138,7 +129,6 @@
             this.mlbl_desc_SurName.Location = new System.Drawing.Point(23, 156);
             this.mlbl_desc_SurName.Name = "mlbl_desc_SurName";
             this.mlbl_desc_SurName.Size = new System.Drawing.Size(64, 19);
-            this.mlbl_desc_SurName.Style = MetroFramework.MetroColorStyle.Lime;
             this.mlbl_desc_SurName.TabIndex = 13;
             this.mlbl_desc_SurName.Text = "Surname:";
             // 
@@ -161,7 +151,6 @@
             this.mlbl_desc_Email.Location = new System.Drawing.Point(23, 204);
             this.mlbl_desc_Email.Name = "mlbl_desc_Email";
             this.mlbl_desc_Email.Size = new System.Drawing.Size(44, 19);
-            this.mlbl_desc_Email.Style = MetroFramework.MetroColorStyle.Lime;
             this.mlbl_desc_Email.TabIndex = 15;
             this.mlbl_desc_Email.Text = "Email:";
             // 
@@ -265,18 +254,14 @@
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.StyleManager = this.metroStyleManager;
             this.Text = "Register";
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private MetroFramework.Components.MetroStyleManager metroStyleManager;
+        
         private MetroFramework.Controls.MetroButton mbtn_Register;
         private MetroFramework.Controls.MetroLabel mlbl_desc_Password;
         private MetroFramework.Controls.MetroTextBox mtxt_Password;

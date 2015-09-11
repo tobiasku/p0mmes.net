@@ -1,6 +1,10 @@
-﻿using Parse;
+﻿using pOmmes.Common;
+using pOmmes.Common.Dic;
+using pOmmes.Data;
+using pOmmes.Data.Mongo;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,23 +21,11 @@ namespace pOmmes
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            
+            Dic.Put<IpOmmesDataDL, pOmmesDataDL>();
+            Dic.Put<IpOmmesDataBL, pOmmesDataBL>();
 
             MainForm frm = new MainForm();
-
-            ParseObject.RegisterSubclass<ParseArticle>();
-            ParseObject.RegisterSubclass<ParseFoodToOption>();
-            ParseObject.RegisterSubclass<ParseFoodToSize>();
-            ParseObject.RegisterSubclass<ParseCategory>();
-            ParseObject.RegisterSubclass<ParseCompany>();
-            ParseObject.RegisterSubclass<ParseEvent>();
-            ParseObject.RegisterSubclass<ParseOption>();
-            ParseObject.RegisterSubclass<ParseOrder>();
-            ParseObject.RegisterSubclass<ParseOrderPosition>();
-            ParseObject.RegisterSubclass<ParseRestaurant>();
-            ParseObject.RegisterSubclass<ParseSize>();
-            ParseObject.RegisterSubclass<ParseVote>();
-            ParseClient.Initialize("gcB3bvLRmFS2uRur2UZKrAvvycyFA59lyrQ7VqZW", "5dXJZXLGYMWs9lv1ZkkdEQZhm8lI42Bt9IjgUyO7");
-
             Application.Run(frm);
         }
     }

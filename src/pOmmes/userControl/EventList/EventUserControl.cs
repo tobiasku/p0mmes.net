@@ -71,7 +71,7 @@ namespace pOmmes
                     if (e.Event != null)
                     {
                         RestaurantUserControl restaurantUserControl = new RestaurantUserControl(e.Event);
-                        restaurantUserControl.RestaurantUserControl_Select += RestaurantUserControl_RestaurantUserControl_Select1;
+                        restaurantUserControl.RestaurantUserControl_Select += RestaurantUserControl_RestaurantUserControl_Select;
                         EventBus.Instance.PostEvent(new UserControlChangeEvent(restaurantUserControl, UserControlChangeState.Push));
                     }
                     break;
@@ -93,7 +93,7 @@ namespace pOmmes
             ThrowEventUserControl_Select(e);
         }
 
-        private void RestaurantUserControl_RestaurantUserControl_Select1(object sender, RestaurantUserControlEventArgs e)
+        private void RestaurantUserControl_RestaurantUserControl_Select(object sender, RestaurantUserControlEventArgs e)
         {
             if (e.Event != null)
             {

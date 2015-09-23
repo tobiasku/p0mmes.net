@@ -23,6 +23,10 @@ namespace pOmmes
             InitializeComponent();
 
             EventBus.Instance.Register(this);
+
+            User user = new User();
+
+            user.Password = "abcde";
         }
 
         Stack<UserControl> userControlBackStack = new Stack<UserControl>();

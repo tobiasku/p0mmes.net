@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace pOmmes.Common
@@ -35,10 +36,21 @@ namespace pOmmes.Common
             set;
         }
 
+        private string password;
         public string Password
         {
-            set;
-            get;
+            set
+            {
+                using (SHA512 shaM = new SHA512Managed())
+                {
+                    var bytes = shaM.ComputeHash(Encoding.UTF8.GetBytes(value)).ToString();
+                    foreach (byte x in bytes)
+                    {
+                        password += String.Format("{0:x2}", x);
+                    }
+                }
+            }
+            get { return password; }
         }
 
         public Company Company

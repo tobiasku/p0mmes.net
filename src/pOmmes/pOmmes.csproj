@@ -104,12 +104,6 @@
       <DependentUpon>EventUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="userControl\EventList\EventUserControlEventArgs.cs" />
-    <Compile Include="userControl\FoodList\FoodBasketUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="userControl\FoodList\FoodBasketUserControl.Designer.cs">
-      <DependentUpon>FoodBasketUserControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="userControl\FoodList\FoodDetailUserControlEventArgs.cs" />
     <Compile Include="userControl\FoodList\FoodDetailUserControl.cs">
       <SubType>UserControl</SubType>
@@ -167,9 +161,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="userControl\EventList\EventUserControl.resx">
       <DependentUpon>EventUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="userControl\FoodList\FoodBasketUserControl.resx">
-      <DependentUpon>FoodBasketUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="userControl\FoodList\FoodDetailUserControl.resx">
       <DependentUpon>FoodDetailUserControl.cs</DependentUpon>

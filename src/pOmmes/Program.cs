@@ -1,7 +1,6 @@
-﻿using pOmmes.Common;
-using pOmmes.Common.Dic;
+﻿using Parse;
+using pOmmes.Common;
 using pOmmes.Data;
-using pOmmes.Data.Mongo;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,12 +18,26 @@ namespace pOmmes
         [STAThread]
         static void Main()
         {
+            ParseObject.RegisterSubclass<Vote>();
+            ParseObject.RegisterSubclass<Size>();
+            ParseObject.RegisterSubclass<Restaurant>();
+            ParseObject.RegisterSubclass<OrderPosition>();
+            ParseObject.RegisterSubclass<OrderPositionToSize>();
+            ParseObject.RegisterSubclass<OrderPositionToOption>();
+            ParseObject.RegisterSubclass<Order>();
+            ParseObject.RegisterSubclass<Option>();
+            ParseObject.RegisterSubclass<Event>();
+            ParseObject.RegisterSubclass<Company>();
+            ParseObject.RegisterSubclass<Category>();
+            ParseObject.RegisterSubclass<ArticleToSize>();
+            ParseObject.RegisterSubclass<ArticleToOption>();
+            ParseObject.RegisterSubclass<Article>();
+
+            ParseClient.Initialize("gcB3bvLRmFS2uRur2UZKrAvvycyFA59lyrQ7VqZW", "5dXJZXLGYMWs9lv1ZkkdEQZhm8lI42Bt9IjgUyO7");
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             
-            Dic.Put<IpOmmesDataDL, pOmmesDataDL>();
-            Dic.Put<IpOmmesDataBL, pOmmesDataBL>();
-
             MainForm frm = new MainForm();
             Application.Run(frm);
         }

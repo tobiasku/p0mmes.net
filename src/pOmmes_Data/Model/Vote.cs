@@ -1,32 +1,27 @@
-﻿using System;
+﻿using Parse;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace pOmmes.Common
+namespace pOmmes.Data
 {
-    public class Order : Base
+    public class Vote : Base
     {
         //--------------------------------------------------------------------------
         //-- Fields
         //--------------------------------------------------------------------------
-        public User User
+        public ParseUser User
         {
-            get;
             set;
+            get;
         }
 
-        public double Price
+        public Restaurant Restaurant
         {
-            get;
             set;
-        }
-
-        public Collection<OrderPosition> OrderPositions
-        {
             get;
-            set;
         }
     }
 }

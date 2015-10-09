@@ -11,23 +11,20 @@ using System.Collections.ObjectModel;
 using MetroFramework.Controls;
 using pOmmes.Common;
 using pOmmes.Data;
-using pOmmes.Common.Dic;
 using System.Threading;
 using MetroFramework;
+using Parse;
 
 namespace pOmmes
 {
     public partial class RestaurantUserControl : MetroUserControl
     {
-        private IpOmmesDataBL pOmmesData = null;
-
         private Event pEvent;
 
         public RestaurantUserControl(Event pEvent)
         {
             InitializeComponent();
-
-            this.pOmmesData = Dic.Get<IpOmmesDataBL>();
+            
             this.pEvent = pEvent;
         }
 
@@ -36,26 +33,24 @@ namespace pOmmes
             FillRestaurantList();
         }
 
-        private void FillRestaurantList()
+        private async void FillRestaurantList()
         {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
+            var query = new ParseQuery<Restaurant>();
+            IEnumerable<Restaurant> restaurantCollection = await query.FindAsync();
+
+            int location = 0;
+            foreach (Restaurant poRestaurant in restaurantCollection)
             {
-                Collection<Restaurant> restaurantCollection = pOmmesData.Get<Restaurant>();
-
-                int location = 0;
-                foreach (Restaurant poRestaurant in restaurantCollection)
+                this.mtp_RestaurantList.Invoke(new Action(delegate ()
                 {
-                    this.mtp_RestaurantList.Invoke(new Action(delegate ()
-                    {
-                        RestaurantListUserControl contr = new RestaurantListUserControl(poRestaurant, pEvent);
-                        contr.Location = new Point(0, location);
-                        contr.RestaurantListUserControl_Clicked += RestaurantListUserControl_Clicked;
-                        this.mtp_RestaurantList.Controls.Add(contr);
+                    RestaurantListUserControl contr = new RestaurantListUserControl(poRestaurant, pEvent);
+                    contr.Location = new Point(0, location);
+                    contr.RestaurantListUserControl_Clicked += RestaurantListUserControl_Clicked;
+                    this.mtp_RestaurantList.Controls.Add(contr);
 
-                        location += contr.Size.Height;
-                    }));
-                }
-            }));
+                    location += contr.Size.Height;
+                }));
+            }
         }
 
         private void RestaurantListUserControl_Clicked(object sender, RestaurantUserControlEventArgs e)
@@ -63,7 +58,7 @@ namespace pOmmes
             DialogResult result = MetroMessageBox.Show(this.Parent.Parent, "Möchten sie für " + e.Restaurant.Name + " stimmen?", "Abstimmung", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             switch (result)
             {
-                case DialogResult.OK:              
+                case DialogResult.OK:
                     ThrowRestaurantUserControl_Select(e);
                     break;
                 case DialogResult.Cancel:

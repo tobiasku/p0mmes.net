@@ -4,35 +4,35 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace pOmmes.Common
+namespace pOmmes.Data
 {
-    public class ArticleToSize : Base
+    public class OrderPosition : Base
     {
         //--------------------------------------------------------------------------
         //-- Fields
         //--------------------------------------------------------------------------
-        public double Price
+        public Article Article
         {
             get;
             set;
         }
 
-        public Size Size
+        public ArticleToSize Size
         {
             get;
             set;
         }
 
-        public override string ToString()
+        public Collection<ArticleToOption> Options
         {
-            if (Size != null)
-            {
-                return Size.Name + " (+ " + Price.ToString("0.00") + " €)";
-            }
-            else
-            {
-                return base.ToString();
-            }
+            get;
+            set;
+        }
+
+        public string ExtraInformation
+        {
+            get;
+            set;
         }
     }
 }

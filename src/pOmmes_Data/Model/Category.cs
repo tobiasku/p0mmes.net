@@ -4,9 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace pOmmes.Common
+namespace pOmmes.Data
 {
-    public class Size : Base
+    public class Category : Base
     {
         //--------------------------------------------------------------------------
         //-- Fields

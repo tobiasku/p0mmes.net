@@ -4,23 +4,29 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace pOmmes.Common
+namespace pOmmes.Data
 {
-    public class Vote : Base
+    public class Restaurant : Base
     {
         //--------------------------------------------------------------------------
         //-- Fields
         //--------------------------------------------------------------------------
-        public User User
+        public string Name
         {
-            set;
             get;
+            set;
         }
 
-        public Restaurant Restaurant
+        public string PhoneNumber
         {
-            set;
             get;
+            set;
+        }
+
+        public string LogoURL
+        {
+            get;
+            set;
         }
     }
 }

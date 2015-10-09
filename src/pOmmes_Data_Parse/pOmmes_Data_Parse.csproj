@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7F0253E5-2E85-4FFD-BB4D-75A09F959C78}</ProjectGuid>
+    <ProjectGuid>{60E9E3CC-3E81-4AB8-8ABC-32CEE630B735}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>pOmmes.Data</RootNamespace>
-    <AssemblyName>pOmmes_Data</AssemblyName>
+    <RootNamespace>pOmmes.Data.Parse</RootNamespace>
+    <AssemblyName>pOmmes_Data_Parse</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Parse, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Parse.1.6.0\lib\net45\Parse.dll</HintPath>
       <Private>True</Private>
@@ -47,24 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DL\IpOmmes_Data_DL.cs" />
-    <Compile Include="BL\IpOmmes_Data_BL.cs" />
-    <Compile Include="BL\pOmmes_Data_BL.cs" />
-    <Compile Include="Model\Article.cs" />
-    <Compile Include="Model\ArticleToOption.cs" />
-    <Compile Include="Model\ArticleToSize.cs" />
-    <Compile Include="Model\Base.cs" />
-    <Compile Include="Model\Category.cs" />
-    <Compile Include="Model\Company.cs" />
-    <Compile Include="Model\Event.cs" />
-    <Compile Include="Model\Option.cs" />
-    <Compile Include="Model\Order.cs" />
-    <Compile Include="Model\OrderPosition.cs" />
-    <Compile Include="Model\Restaurant.cs" />
-    <Compile Include="Model\Role.cs" />
-    <Compile Include="Model\Size.cs" />
-    <Compile Include="Model\Vote.cs" />
+    <Compile Include="ParseConverter.cs" />
+    <Compile Include="pOmmes_Data_DL_Parse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\pOmmes_Common\pOmmes_Common.csproj">
@@ -75,9 +67,10 @@
       <Project>{72cb499b-f345-4ba1-9453-39000055d4fe}</Project>
       <Name>pOmmes_Common_Dic</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\pOmmes_Data\pOmmes_Data.csproj">
+      <Project>{7f0253e5-2e85-4ffd-bb4d-75a09f959c78}</Project>
+      <Name>pOmmes_Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

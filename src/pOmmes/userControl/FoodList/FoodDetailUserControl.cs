@@ -10,14 +10,15 @@ using System.Windows.Forms;
 using pOmmes.Common;
 using MetroFramework.Controls;
 using System.Collections.ObjectModel;
-using pOmmes.Common.Dic;
 using pOmmes.Data;
+using Parse;
 
 namespace pOmmes
 {
     public partial class FoodDetailUserControl : MetroUserControl
     {
         public Article article;
+        public Order order;
 
         public int quantity = 1;
         public ArticleToSize size;
@@ -26,7 +27,7 @@ namespace pOmmes
 
         public Collection<ArticleToOption> selectedOptions = new Collection<ArticleToOption>();
 
-        public FoodDetailUserControl(Article article)
+        public FoodDetailUserControl(Article article, Order order)
         {
             InitializeComponent();
             this.article = article;
@@ -45,18 +46,28 @@ namespace pOmmes
             mlbl_description.Text = article.Description;
         }
 
-        private void SetFoodDetailSizes()
+        private async void SetFoodDetailSizes()
         {
-            mcmb_sizes.DataSource = article.Sizes;
+            var query = new ParseQuery<ArticleToSize>().WhereEqualTo("article", article);
+            IEnumerable<ArticleToSize> sizesCollection = await query.FindAsync();
+
+            mcmb_sizes.DataSource = sizesCollection;
         }
 
-        private void SetFoodDetailOptions()
+        private async void SetFoodDetailOptions()
         {
             shownOptions.Clear();
 
-            foreach (ArticleToOption option in article.Options)
+            Common.Size articleSize = await size.Size.Query.FirstAsync();
+
+            var query = new ParseQuery<ArticleToOption>().WhereEqualTo("article", article);
+            IEnumerable<ArticleToOption> optionCollection = await query.FindAsync();
+
+            foreach (ArticleToOption option in optionCollection)
             {
-                if (option.Size != null && option.Size._id == size.Size._id)
+                Common.Size optionSize = await option.Size.Query.FirstAsync();
+
+                if (optionSize.ObjectId == articleSize.ObjectId)
                 {
                     if (!shownOptions.Contains(option))
                     {
@@ -128,16 +139,32 @@ namespace pOmmes
             EventBus.Instance.PostEvent(new FoodDetailChangeEvent(this, UserControlChangeState.Pop));
         }
 
-        private void mbtn_order_Click(object sender, EventArgs e)
+        private async void mbtn_order_Click(object sender, EventArgs e)
         {
             OrderPosition orderPosition = new OrderPosition();
-
-            orderPosition.Article = article;
-            orderPosition.Options = selectedOptions;
-            orderPosition.Size = size;
+            orderPosition.Article.Add(article);
             orderPosition.ExtraInformation = mtxt_ExtraWishes.Text;
+            orderPosition.Order.Add(order);
+            orderPosition.Quantity = quantity;
+            await order.SaveAsync();
 
-            ThrowFoodDetailUserControl_Select(new FoodDetailUserControlEventArgs(orderPosition));
+            OrderPositionToSize orderSize = new OrderPositionToSize();
+            orderSize.Size = size.Size;
+            orderSize.Price = size.Price;
+            orderSize.OrderPosition.Add(orderPosition);
+            await orderSize.SaveAsync();
+
+            foreach (ArticleToOption selectedOption in selectedOptions)
+            {
+                OrderPositionToOption orderOption = new OrderPositionToOption();
+                orderOption.Size = selectedOption.Size;
+                orderOption.Option = selectedOption.Option;
+                orderOption.Price = selectedOption.Price;
+                orderOption.OrderPosition.Add(orderPosition);
+                await orderOption.SaveAsync();
+            }
+
+            ThrowFoodDetailUserControl_Select(new FoodDetailUserControlEventArgs());
             EventBus.Instance.PostEvent(new FoodDetailChangeEvent(this, UserControlChangeState.Pop));
         }
 

@@ -53,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomJsonSerializer.cs" />
-    <Compile Include="pOmmes_Data_DL.cs" />
+    <Compile Include="pOmmes_Data_DL_Mongo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,18 +1,19 @@
-﻿using pOmmes.Common;
+﻿using Parse;
+using pOmmes.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace pOmmes.Common
+namespace pOmmes.Data
 {
     public class Event : Base
     {
         //--------------------------------------------------------------------------
         //-- Fields
         //--------------------------------------------------------------------------
-        public User UserCreated
+        public ParseUser UserCreated
         {
             get;
             set;

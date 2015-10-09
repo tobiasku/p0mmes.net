@@ -85,7 +85,7 @@
             this.AcceptButton = this.mbtn_ResetPassword;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackImage = global::pOmmes.Properties.Resources.ic_launcher;
+            this.BackImage = Resources.pOmmes_Resources.ic_launcher;
             this.BackImagePadding = new System.Windows.Forms.Padding(190, 12, 0, 0);
             this.BackMaxSize = 50;
             this.CancelButton = this.mbtn_Cancel;

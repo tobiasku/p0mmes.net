@@ -11,8 +11,8 @@ using System.Collections.ObjectModel;
 using pOmmes.Common;
 using MetroFramework.Controls;
 using pOmmes.Data;
-using pOmmes.Common.Dic;
 using System.Threading;
+using Parse;
 
 namespace pOmmes
 {
@@ -28,42 +28,42 @@ namespace pOmmes
             FillEventList();
         }
 
-        private void FillEventList()
+        private async void FillEventList()
         {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
+            var query = new ParseQuery<Event>();
+            IEnumerable<Event> eventCollection = await query.FindAsync();
+
+            int location = 0;
+            foreach (Event poEvent in eventCollection)
             {
-                Collection<Event> eventCollection = Dic.Get<IpOmmesDataBL>().Get<Event>();
+                ParseUser user = await poEvent.User.Query.FirstAsync();
 
-                int location = 0;
-                foreach (Event poEvent in eventCollection)
+                switch ((EventState)poEvent.EventState)
                 {
-                    switch (poEvent.EventState)
-                    {
-                        case EventState.Closed:
-                            if (poEvent.UserCreated._id == User.CurrentUser._id)
-                            {
-                                goto default;
-                            }
-                            break;
-                        default:
-                            this.mtp_EventList.Invoke(new Action(delegate ()
-                            {
-                                EventListUserControl contr = new EventListUserControl(poEvent);
-                                contr.Location = new Point(0, location);
-                                contr.EventListUserControl_Clicked += Contr_EventListUserControl_Clicked;
-                                this.mtp_EventList.Controls.Add(contr);
+                    case EventState.Closed:
+                        if (user == ParseUser.CurrentUser)
+                        {
+                            goto default;
+                        }
+                        break;
+                    default:
+                        this.mtp_EventList.Invoke(new Action(delegate ()
+                        {
+                            EventListUserControl contr = new EventListUserControl(poEvent);
+                            contr.Location = new Point(0, location);
+                            contr.EventListUserControl_Clicked += Contr_EventListUserControl_Clicked;
+                            this.mtp_EventList.Controls.Add(contr);
 
-                                location += contr.Size.Height;
-                            }));
-                            break;
-                    }
+                            location += contr.Size.Height;
+                        }));
+                        break;
                 }
-            }));
+            }
         }
 
         private void Contr_EventListUserControl_Clicked(object sender, EventUserControlEventArgs e)
         {
-            switch (e.Event.EventState)
+            switch ((EventState)e.Event.EventState)
             {
                 case EventState.Edit:
                     break;
@@ -78,7 +78,7 @@ namespace pOmmes
                 case EventState.Order:
                     if (e.Event.Restaurant != null)
                     {
-                        FoodUserControl foodUserControl = new FoodUserControl(e.Event.Restaurant);
+                        FoodUserControl foodUserControl = new FoodUserControl(e.Event);
                         EventBus.Instance.PostEvent(new UserControlChangeEvent(foodUserControl, UserControlChangeState.Push));
                     }
                     break;
@@ -93,24 +93,16 @@ namespace pOmmes
             ThrowEventUserControl_Select(e);
         }
 
-        private void RestaurantUserControl_RestaurantUserControl_Select(object sender, RestaurantUserControlEventArgs e)
+        private async void RestaurantUserControl_RestaurantUserControl_Select(object sender, RestaurantUserControlEventArgs e)
         {
-            if (e.Event != null)
+            if (e.Event != null && e.Restaurant != null)
             {
-                if (e.Event.Votes == null)
-                {
-                    e.Event.Votes = new Collection<Vote>();
-                }
                 Vote vote = new Vote();
-                vote.Restaurant = e.Restaurant;
-                //TODO: User
-                vote.User = null;
+                vote.Restaurant.Add(e.Restaurant);
+                vote.User.Add(ParseUser.CurrentUser);
+                vote.Event.Add(e.Event);
 
-                Dic.Get<IpOmmesDataBL>().Post<Vote>(new Collection<Vote>() { vote });
-
-                e.Event.Votes.Add(vote);
-
-                Dic.Get<IpOmmesDataBL>().Put<Event>(new Collection<Event>() { e.Event });
+                await vote.SaveAsync();
             }
         }
 

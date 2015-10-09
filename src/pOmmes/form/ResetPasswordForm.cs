@@ -1,6 +1,8 @@
 ﻿using MetroFramework;
 using MetroFramework.Forms;
+using Parse;
 using pOmmes.Common;
+using pOmmes.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +29,7 @@ namespace pOmmes
             {
                 if (!string.IsNullOrEmpty(mtxt_Email.Text))
                 {
-                    User.RequestPasswordReset(mtxt_Email.Text);
+                    ParseUser.RequestPasswordResetAsync(mtxt_Email.Text);
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }

@@ -3,21 +3,28 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Parse;
 
-namespace pOmmes.Common
+namespace pOmmes.Data
 {
-    public class Company : Base
+    public class Order : Base
     {
         //--------------------------------------------------------------------------
         //-- Fields
         //--------------------------------------------------------------------------
-        public string Name
+        public ParseUser User
         {
             get;
             set;
         }
 
-        public string PhoneNumber
+        public double Price
+        {
+            get;
+            set;
+        }
+
+        public Collection<OrderPosition> OrderPositions
         {
             get;
             set;

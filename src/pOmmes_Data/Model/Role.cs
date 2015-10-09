@@ -4,32 +4,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace pOmmes.Common
+namespace pOmmes.Data
 {
-    public class OrderPosition : Base
+    public class Role : Base
     {
         //--------------------------------------------------------------------------
         //-- Fields
         //--------------------------------------------------------------------------
-        public Article Article
-        {
-            get;
-            set;
-        }
-
-        public ArticleToSize Size
-        {
-            get;
-            set;
-        }
-
-        public Collection<ArticleToOption> Options
-        {
-            get;
-            set;
-        }
-
-        public string ExtraInformation
+        public string Name
         {
             get;
             set;

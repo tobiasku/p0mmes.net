@@ -4,41 +4,53 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace pOmmes.Common
+namespace pOmmes.Data
 {
-    public class ArticleToOption : Base
+    public class Article : Base
     {
         //--------------------------------------------------------------------------
         //-- Fields
         //--------------------------------------------------------------------------
-        public double Price
+        public string Name
         {
             get;
             set;
         }
 
-        public Size Size
+        public int Number
         {
             get;
             set;
         }
 
-        public Option Option
+        public Restaurant Restaurant
         {
             get;
             set;
         }
 
-        public override string ToString()
+        public string Description
         {
-            if (Option != null)
-            {
-                return Option.Name + " (+ " + Price.ToString("0.00") + " €)";
-            }
-            else
-            {
-                return base.ToString();
-            }
+            get;
+            set;
+        }
+
+        public Category Category
+        {
+            get;
+            set;
+        }
+
+        public Collection<ArticleToSize> Sizes
+        {
+            get;
+            set;
+        }
+
+        public Collection<ArticleToOption> Options
+        {
+            get;
+            set;
         }
     }
 }

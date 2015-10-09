@@ -4,10 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace pOmmes.Common
+namespace pOmmes.Data
 {
-    public class Option : Base
-    {        //--------------------------------------------------------------------------
+    public class Size : Base
+    {
+        //--------------------------------------------------------------------------
         //-- Fields
         //--------------------------------------------------------------------------
         public string Name

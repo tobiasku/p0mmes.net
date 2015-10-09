@@ -6,68 +6,61 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using MongoDB.Bson.Serialization;
 using Newtonsoft.Json;
 using System.Reflection;
+using Parse;
 
-namespace pOmmes.Data.Mongo
+namespace pOmmes.Data
 {
-    public class pOmmesDataDL : IpOmmesDataDL, IDisposable
+    public class pOmmesDataDLParse : IpOmmesDataDL, IDisposable
     {
         //--------------------------------------------------------------------------
         //-- Fields
         //--------------------------------------------------------------------------
-        protected static IMongoClient _client;
-        protected static IMongoDatabase _database;
-        
+
+
         //--------------------------------------------------------------------------
         //-- Methods
         //--------------------------------------------------------------------------
-        public pOmmesDataDL()
+        public pOmmesDataDLParse()
         {
-            _client = new MongoClient("mongodb://localhost:27017");
-            _database = _client.GetDatabase("pOmmes");
+            ParseClient.Initialize("gcB3bvLRmFS2uRur2UZKrAvvycyFA59lyrQ7VqZW", "5dXJZXLGYMWs9lv1ZkkdEQZhm8lI42Bt9IjgUyO7");
         }
 
         #region Get
         public Collection<T> Get<T>() where T : Base
         {
-            return GetObjects<T>(new BsonDocument()).Result;
+            return GetObjects<T>(null).Result;
         }
 
         public Collection<T> Get<T>(Dictionary<string, object> filter) where T : Base
         {
-            var builder = Builders<BsonDocument>.Filter;
-            FilterDefinition<BsonDocument> filterDefinition = null;
+            return GetObjects<T>(filter).Result;
+        }
 
-            foreach (KeyValuePair<string, object> value in filter)
+        private async Task<Collection<T>> GetObjects<T>(Dictionary<string, object> filters) where T : Base
+        {
+            Type t = typeof(T);
+
+            var query = ParseObject.GetQuery(t.Name);
+
+            if (filters != null)
             {
-                if (filterDefinition != null)
+                foreach (KeyValuePair<String, object> filter in filters)
                 {
-                    filterDefinition = filterDefinition & builder.Eq(value.Key, value.Value);
-                }
-                else
-                {
-                    filterDefinition = builder.Eq(value.Key, value.Value);
+
+                    query = query.WhereEqualTo(filter.Key, filter.Value);
                 }
             }
 
-            return GetObjects<T>(filterDefinition).Result;
-        }
+            IEnumerable<ParseObject> results = await query.FindAsync();
 
-        private async Task<Collection<T>> GetObjects<T>(FilterDefinition<BsonDocument> filter) where T : Base
-        {
-            var collection = GetCollection(typeof(T));
-
-            var docs = await collection.Find(filter).ToListAsync();
 
             Collection<T> resultCollection = new Collection<T>();
-            foreach (var doc in docs)
+
+            foreach (ParseObject parseObject in results)
             {
-                string json = doc.ToJson();
-                var result = (T)JsonConvert.DeserializeObject(json, typeof(T), new JsonConverter[] { new CustomJsonSerializer() });
+                var result = (T)ParseConverter.ConvertParseToObject(parseObject, t);
                 resultCollection.Add(result);
             }
 
@@ -90,33 +83,27 @@ namespace pOmmes.Data.Mongo
 
         private async Task<T> FindObject<T>(string objectId) where T : Base
         {
-            var collection = GetCollection(typeof(T));
+            Type t = typeof(T);
 
-            var builder = Builders<BsonDocument>.Filter;
-            FilterDefinition<BsonDocument> filterDefinition = builder.Eq("_id", objectId);
+            var query = ParseObject.GetQuery(t.Name);
 
-            var document = await collection.Find(filterDefinition).FirstAsync();
+            ParseObject result = await query.GetAsync(objectId);
 
-            string json = document.ToJson();
-            var result = (T)JsonConvert.DeserializeObject(json, typeof(T), new JsonConverter[] { new CustomJsonSerializer() });
-            return result;
+
+            Collection<T> resultCollection = new Collection<T>();
+
+            var resultObject = (T)ParseConverter.ConvertParseToObject(result, t);
+            return resultObject;
         }
         #endregion
 
         #region Put
         public async void Put<T>(Collection<T> collectionToPut) where T : Base
         {
-            var collection = GetCollection(collectionToPut.First().GetType());
-
-            foreach (T value in collectionToPut)
+            foreach (T objectToPut in collectionToPut)
             {
-                var builder = Builders<BsonDocument>.Filter;
-                FilterDefinition<BsonDocument> filterDefinition = builder.Eq("_id", value._id);
-
-                string jsonString = JsonConvert.SerializeObject(value, new JsonConverter[] { new CustomJsonSerializer() });
-                BsonDocument bsonDoc = BsonDocument.Parse(jsonString);
-
-                await collection.ReplaceOneAsync(filterDefinition, bsonDoc);
+                ParseObject parseObject = ParseConverter.ConvertObjectToParse(objectToPut);
+                await parseObject.SaveAsync();
             }
         }
         #endregion
@@ -124,10 +111,7 @@ namespace pOmmes.Data.Mongo
         #region Post
         public async void Post<T>(Collection<T> collectionToPost) where T : Base
         {
-            var collection = GetCollection(collectionToPost.First().GetType());
-            Collection<BsonDocument> documents = new Collection<BsonDocument>();
-
-            foreach (T value in collectionToPost)
+            foreach (T objectToPost in collectionToPost)
             {
                 //List<PropertyInfo> props = GetPropertyInfoByType(typeof(T)).Where(x => x.PropertyType.BaseType == typeof(Base)).ToList<PropertyInfo>();
                 //foreach (PropertyInfo prop in props)
@@ -168,45 +152,20 @@ namespace pOmmes.Data.Mongo
                 //    Post<Vote>(votes);
                 //}
 
-                value.CreatedAt = DateTime.Now;
-
-                if (value._id == null)
-                {
-                    value._id = ObjectId.GenerateNewId(DateTime.Now).ToString();
-                }
-
-                string jsonString = JsonConvert.SerializeObject(value, new JsonConverter[] { new CustomJsonSerializer() });
-
-                BsonDocument bsonDoc = BsonDocument.Parse(jsonString);
-
-                documents.Add(bsonDoc);
+                ParseObject parseObject = ParseConverter.ConvertObjectToParse(objectToPost);
+                await parseObject.SaveAsync();
             }
-
-            await collection.InsertManyAsync(documents);
         }
         #endregion
 
         #region Delete
         public async void Delete<T>(Collection<T> collectionToDelete) where T : Base
         {
-            var collection = GetCollection(typeof(T));
-
-            var builder = Builders<BsonDocument>.Filter;
-            FilterDefinition<BsonDocument> filterDefinition = null;
-
             foreach (T objectToDelete in collectionToDelete)
             {
-                if (filterDefinition != null)
-                {
-                    filterDefinition = filterDefinition & builder.Eq("_id", objectToDelete._id);
-                }
-                else
-                {
-                    filterDefinition = builder.Eq("_id", objectToDelete._id);
-                }
+                ParseObject parseObject = ParseConverter.ConvertObjectToParse(objectToDelete);
+                await parseObject.DeleteAsync();
             }
-
-            var result = await collection.DeleteManyAsync(filterDefinition);
         }
 
         //public async void DeleteAll<T>() where T : Base
@@ -216,11 +175,6 @@ namespace pOmmes.Data.Mongo
         #endregion
 
         #region Helper
-        private IMongoCollection<BsonDocument> GetCollection(Type type)
-        {
-            return _database.GetCollection<BsonDocument>(type.Name);
-        }
-
         private static List<PropertyInfo> GetPropertyInfoByType(Type type)
         {
             List<PropertyInfo> props = new List<PropertyInfo>();

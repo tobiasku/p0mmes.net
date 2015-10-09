@@ -1,7 +1,7 @@
 ﻿using MetroFramework;
 using MetroFramework.Forms;
+using Parse;
 using pOmmes.Common;
-using pOmmes.Common.Dic;
 using pOmmes.Data;
 using System;
 using System.Collections.Generic;
@@ -26,18 +26,17 @@ namespace pOmmes
             LoadCompanyComboBox();
         }
 
-        private void LoadCompanyComboBox()
+        private async void LoadCompanyComboBox()
         {
-            IpOmmesDataBL pOmmesDataBL = Dic.Get<IpOmmesDataBL>();
-            Collection<Company> companyCollection = pOmmesDataBL.Get<Company>();
+            var query = new ParseQuery<Company>();
+            IEnumerable<Company> companyCollection = await query.FindAsync();
 
             if (companyCollection != null)
             {
-                this.BeginInvoke(new Action(delegate()
+                this.BeginInvoke(new Action(delegate ()
                 {
                     mcmb_Company.DataSource = companyCollection;
                     mcmb_Company.DisplayMember = "Name";
-                    //mcmb_Company.ValueMember = "ObjectId";
                 }));
 
             }
@@ -55,17 +54,17 @@ namespace pOmmes
                     !string.IsNullOrEmpty(mtxt_Password.Text) &&
                     !string.IsNullOrEmpty(mtxt_RetypePassword.Text))
                 {
-                    User user = new User();
+                    ParseUser user = new ParseUser();
 
-                    user.UserName = mtxt_UserName.Text;
-                    user.Password = mtxt_Password.Text;
-                    user.Email = mtxt_Email.Text;
-                    user.ForeName = mtxt_ForeName.Text;
-                    user.SurName = mtxt_SurName.Text;
-                    user.Company = (Company)mcmb_Company.SelectedValue;
+                    user["UserName"] = mtxt_UserName.Text;
+                    user["Password"] = mtxt_Password.Text;
+                    user["Email"] = mtxt_Email.Text;
+                    user["ForeName"] = mtxt_ForeName.Text;
+                    user["SurName"] = mtxt_SurName.Text;
+                    user["Company"] = (Company)mcmb_Company.SelectedValue;
 
-                    User.Register(user);
-                    if (User.CurrentUser != null)
+                    user.SignUpAsync();
+                    if (ParseUser.CurrentUser != null)
                     {
                         this.DialogResult = DialogResult.OK;
                         this.Close();

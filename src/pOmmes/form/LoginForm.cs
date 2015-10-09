@@ -1,6 +1,6 @@
 ﻿using MetroFramework;
 using MetroFramework.Forms;
-using pOmmes.Common;
+using pOmmes.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Parse;
 
 namespace pOmmes
 {
@@ -26,8 +27,8 @@ namespace pOmmes
             {
                 if (!string.IsNullOrEmpty(mtxt_Password.Text) && !string.IsNullOrEmpty(mtxt_UserName.Text))
                 {
-                    User.Login(mtxt_UserName.Text, mtxt_Password.Text);
-                    if (User.CurrentUser != null)
+                    ParseUser.LogInAsync(mtxt_UserName.Text, mtxt_Password.Text).Wait();
+                    if (ParseUser.CurrentUser != null)
                     {
                         this.DialogResult = DialogResult.OK;
                         this.Close();
@@ -58,7 +59,7 @@ namespace pOmmes
             switch (result)
             {
                 case DialogResult.OK:
-                    if (User.CurrentUser != null)
+                    if (ParseUser.CurrentUser != null)
                     {
                         this.DialogResult = DialogResult.OK;
                         this.Close();

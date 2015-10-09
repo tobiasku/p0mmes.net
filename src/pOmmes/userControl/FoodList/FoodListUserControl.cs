@@ -10,16 +10,20 @@ using System.Windows.Forms;
 using pOmmes.Common;
 using MetroFramework.Controls;
 using System.Collections.ObjectModel;
+using pOmmes.Data;
+using Parse;
 
 namespace pOmmes
 {
     public partial class FoodListUserControl : MetroUserControl
     {
         Article article;
+        Order order;
 
-        public FoodListUserControl(Article article)
+        public FoodListUserControl(Article article,Order order)
         {
             this.article = article;
+            this.order = order;
 
             InitializeComponent();
         }
@@ -29,16 +33,19 @@ namespace pOmmes
             SetFoodListItem();
         }
 
-        private void SetFoodListItem()
+        private async void SetFoodListItem()
         {
+            var query = new ParseQuery<ArticleToSize>().WhereEqualTo("article", article);
+            IEnumerable<ArticleToSize> sizeCollection = await query.FindAsync();
+
             mlbl_name.Text = article.Name;
             mlbl_description.Text = article.Description;
-            mlbl_price.Text = "ab " + article.Sizes.Min(x => x.Price).ToString("0.00") + " €";
+            mlbl_price.Text = "ab " + sizeCollection.Min(x => x.Price).ToString("0.00") + " €";
         }
 
         private void FoodListUserControl_Click(object sender, EventArgs e)
         {
-            FoodDetailUserControl foodDetailUserControl = new FoodDetailUserControl(article);
+            FoodDetailUserControl foodDetailUserControl = new FoodDetailUserControl(article, order);
             foodDetailUserControl.FoodDetailUserControl_Select += FoodDetailUserControl_FoodDetailUserControl_Select;
             EventBus.Instance.PostEvent(new FoodDetailChangeEvent(foodDetailUserControl, UserControlChangeState.Push));
         }

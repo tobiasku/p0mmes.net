@@ -1,4 +1,5 @@
 ﻿using pOmmes.Common;
+using pOmmes.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,8 @@ namespace pOmmes
 {
     public class FoodDetailUserControlEventArgs
     {
-        private OrderPosition orderPosition = null;
-        public OrderPosition OrderPosition { get { return orderPosition; } private set { this.orderPosition = value; } }
-
-        public FoodDetailUserControlEventArgs(OrderPosition orderPosition)
+        public FoodDetailUserControlEventArgs()
         {
-            this.orderPosition = orderPosition;
         }
     }
 }

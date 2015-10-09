@@ -1,11 +1,12 @@
-﻿using System;
+﻿using pOmmes.Common.Dic;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace pOmmes.Common
+namespace pOmmes.Data
 {
     public class User : Base
     {
@@ -41,14 +42,15 @@ namespace pOmmes.Common
         {
             set
             {
-                using (SHA512 shaM = new SHA512Managed())
-                {
-                    var bytes = shaM.ComputeHash(Encoding.UTF8.GetBytes(value)).ToString();
-                    foreach (byte x in bytes)
-                    {
-                        password += String.Format("{0:x2}", x);
-                    }
-                }
+                password = value;
+                //using (SHA512 shaM = new SHA512Managed())
+                //{
+                //    var bytes = shaM.ComputeHash(Encoding.UTF8.GetBytes(value)).ToString();
+                //    foreach (byte x in bytes)
+                //    {
+                //        password += String.Format("{0:x2}", x);
+                //    }
+                //}
             }
             get { return password; }
         }
@@ -63,35 +65,6 @@ namespace pOmmes.Common
         {
             get;
             set;
-        }
-
-        //--------------------------------------------------------------------------
-        //-- Methods static
-        //--------------------------------------------------------------------------
-        public static User CurrentUser
-        {
-            get;
-            private set;
-        }
-
-        public static void Login(string userName, string password)
-        {
-
-        }
-
-        public static void Logout(User user)
-        {
-
-        }
-
-        public static void Register(User user)
-        {
-
-        }
-
-        public static void RequestPasswordReset(string email)
-        {
-
         }
     }
 }

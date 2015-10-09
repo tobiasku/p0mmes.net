@@ -23,6 +23,10 @@ namespace pOmmes
             InitializeComponent();
 
             EventBus.Instance.Register(this);
+
+            User user = new User();
+
+            user.Password = "abcde";
         }
 
         Stack<UserControl> userControlBackStack = new Stack<UserControl>();
@@ -90,11 +94,13 @@ namespace pOmmes
             //if (User.CurrentUser != null)
             //{
             //    mlink_CurrentUser.Text = "Logged in as " + User.CurrentUser.UserName;
-            EventBus.Instance.PostEvent(new UserControlChangeEvent(new EventUserControl(), UserControlChangeState.Push));
+
+            //EventBus.Instance.PostEvent(new UserControlChangeEvent(new EventUserControl(), UserControlChangeState.Push));
 
             RestaurantUserControl restaurantControl = new RestaurantUserControl(new Event());
             restaurantControl.RestaurantUserControl_Select += RestaurantControl_RestaurantUserControl_Select; ;
             EventBus.Instance.PostEvent(new UserControlChangeEvent(restaurantControl, UserControlChangeState.Push));
+
             //}
         }
 

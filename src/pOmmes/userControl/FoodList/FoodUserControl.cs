@@ -131,7 +131,8 @@ namespace pOmmes
 
         private void mbtn_order_Click(object sender, EventArgs e)
         {
-
+            Order order = new Order();
+            order.OrderPositions = orderPositions;
         }
     }
 }

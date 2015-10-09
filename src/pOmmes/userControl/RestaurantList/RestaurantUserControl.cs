@@ -63,10 +63,8 @@ namespace pOmmes
             DialogResult result = MetroMessageBox.Show(this.Parent.Parent, "Möchten sie für " + e.Restaurant.Name + " stimmen?", "Abstimmung", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             switch (result)
             {
-                case DialogResult.OK:
-                    //TODO:REMOVE                   
+                case DialogResult.OK:              
                     ThrowRestaurantUserControl_Select(e);
-                    //EventBus.Instance.PostEvent(new UserControlChangeEvent(null, UserControlChangeState.Pop));
                     break;
                 case DialogResult.Cancel:
                     break;

@@ -36,12 +36,20 @@ namespace pOmmes
             int location = 0;
             foreach (Event poEvent in eventCollection)
             {
-                ParseUser user = await poEvent.User.Query.FirstAsync();
+                ParseUser user = null;
+                try
+                {
+                    user = await poEvent.User.Query.FirstAsync();
+                }
+                catch (ParseException)
+                {
+                }
+
 
                 switch ((EventState)poEvent.EventState)
                 {
                     case EventState.Closed:
-                        if (user == ParseUser.CurrentUser)
+                        if (user != null && user == ParseUser.CurrentUser)
                         {
                             goto default;
                         }
@@ -51,7 +59,7 @@ namespace pOmmes
                         {
                             EventListUserControl contr = new EventListUserControl(poEvent);
                             contr.Location = new Point(0, location);
-                            contr.EventListUserControl_Clicked += Contr_EventListUserControl_Clicked;
+                            contr.EventListUserControl_Clicked += EventListUserControl_Clicked;
                             this.mtp_EventList.Controls.Add(contr);
 
                             location += contr.Size.Height;
@@ -61,7 +69,7 @@ namespace pOmmes
             }
         }
 
-        private void Contr_EventListUserControl_Clicked(object sender, EventUserControlEventArgs e)
+        private void EventListUserControl_Clicked(object sender, EventUserControlEventArgs e)
         {
             switch ((EventState)e.Event.EventState)
             {

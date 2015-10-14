@@ -66,7 +66,7 @@ namespace pOmmes
                 this.mpnl_Main.Controls.Add(userControlBackStack.Peek());
             }
         }
-
+        
 
         private async void MainForm_Load(object sender, EventArgs e)
         {
@@ -96,11 +96,6 @@ namespace pOmmes
                 mlink_CurrentUser.Text = "Logged in as " + ParseUser.CurrentUser["username"];
 
                 EventBus.Instance.PostEvent(new UserControlChangeEvent(new EventUserControl(), UserControlChangeState.Push));
-
-                //RestaurantUserControl restaurantControl = new RestaurantUserControl();
-                //restaurantControl.RestaurantUserControl_Select += RestaurantControl_RestaurantUserControl_Select; ;
-                //EventBus.Instance.PostEvent(new UserControlChangeEvent(restaurantControl, UserControlChangeState.Push));
-
             }
         }
 
@@ -113,7 +108,7 @@ namespace pOmmes
         {
             if (ParseUser.CurrentUser != null)
             {
-                ParseUser.LogOutAsync();
+                ParseUser.LogOut();
             }
             if (ParseUser.CurrentUser == null)
             {

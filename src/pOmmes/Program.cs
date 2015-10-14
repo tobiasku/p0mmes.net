@@ -18,6 +18,7 @@ namespace pOmmes
         [STAThread]
         static void Main()
         {
+            #region PARSE
             ParseObject.RegisterSubclass<Vote>();
             ParseObject.RegisterSubclass<Size>();
             ParseObject.RegisterSubclass<Restaurant>();
@@ -34,12 +35,15 @@ namespace pOmmes
             ParseObject.RegisterSubclass<Article>();
 
             ParseClient.Initialize("gcB3bvLRmFS2uRur2UZKrAvvycyFA59lyrQ7VqZW", "5dXJZXLGYMWs9lv1ZkkdEQZhm8lI42Bt9IjgUyO7");
-            
+            #endregion
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
+
+            Application.Run();
+
             MainForm frm = new MainForm();
-            Application.Run(frm);
+            frm.Show();
         }
     }
 }

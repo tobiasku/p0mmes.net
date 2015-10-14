@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.mtxt_UserName = new MetroFramework.Controls.MetroTextBox();
             this.mlbl_desc_UserName = new MetroFramework.Controls.MetroLabel();
             this.mlbl_desc_Password = new MetroFramework.Controls.MetroLabel();
@@ -133,7 +132,7 @@
             this.AcceptButton = this.mbtn_Login;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackImage = Resources.pOmmes_Resources.ic_launcher;
+            this.BackImage = global::pOmmes.Resources.pOmmes_Resources.ic_launcher;
             this.BackImagePadding = new System.Windows.Forms.Padding(90, 12, 0, 0);
             this.BackMaxSize = 50;
             this.CancelButton = this.mbtn_Cancel;
@@ -152,7 +151,6 @@
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.Text = "Login";
             this.ResumeLayout(false);
             this.PerformLayout();

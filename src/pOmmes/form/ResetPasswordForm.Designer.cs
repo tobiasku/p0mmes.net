@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.mlbl_desc_Email = new MetroFramework.Controls.MetroLabel();
             this.mtxt_Email = new MetroFramework.Controls.MetroTextBox();
             this.mbtn_Cancel = new MetroFramework.Controls.MetroButton();
@@ -85,7 +84,7 @@
             this.AcceptButton = this.mbtn_ResetPassword;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackImage = Resources.pOmmes_Resources.ic_launcher;
+            this.BackImage = global::pOmmes.Resources.pOmmes_Resources.ic_launcher;
             this.BackImagePadding = new System.Windows.Forms.Padding(190, 12, 0, 0);
             this.BackMaxSize = 50;
             this.CancelButton = this.mbtn_Cancel;
@@ -100,7 +99,6 @@
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.Text = "Reset Password";
             this.ResumeLayout(false);
             this.PerformLayout();

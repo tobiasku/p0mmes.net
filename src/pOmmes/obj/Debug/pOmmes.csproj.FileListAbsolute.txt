@@ -58,3 +58,6 @@ C:\Entwicklung\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.FoodUserControl.resources
 C:\Entwicklung\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.RestaurantListUserControl.resources
 C:\Entwicklung\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.RestaurantUserControl.resources
 C:\Entwicklung\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.csproj.GenerateResource.Cache
+C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.LoginForm.resources
+C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.RegisterForm.resources
+C:\Entwicklung\Products\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.ResetPasswordForm.resources

@@ -40,10 +40,8 @@ namespace pOmmes
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run();
-
             MainForm frm = new MainForm();
-            frm.Show();
+            frm.ShowDialog();
         }
     }
 }

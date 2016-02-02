@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace pOmmes.Common
+namespace pOmmes.Data
 {
     [ParseClassName("Size")]
     public class Size : ParseObject

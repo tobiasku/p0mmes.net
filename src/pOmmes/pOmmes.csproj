@@ -70,6 +70,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Callback.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="EventBus.cs" />
     <Compile Include="EventBusEvent\FoodDetailChangeEvent.cs" />
     <Compile Include="form\LoginForm.cs">
       <SubType>Form</SubType>
@@ -98,6 +101,7 @@
       <DependentUpon>ResetPasswordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="EventBusEvent\UserControlChangeEvent.cs" />
+    <Compile Include="State.cs" />
     <Compile Include="userControl\EventList\EventUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -250,9 +254,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\pOmmes_Common\pOmmes_Common.csproj">
+    <ProjectReference Include="..\pOmmes_Common\pOmmes_Data.csproj">
       <Project>{55682c30-67b5-4f08-9391-c9aac70ccb34}</Project>
-      <Name>pOmmes_Common</Name>
+      <Name>pOmmes_Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace pOmmes.Data
+namespace pOmmes.Common
 {
     public class FoodDetailChangeEvent
     {

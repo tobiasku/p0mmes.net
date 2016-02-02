@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pOmmes", "pOmmes\pOmmes.csproj", "{DF90BC98-D922-4BBF-A355-B0ADA2D66655}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pOmmes_Common", "pOmmes_Common\pOmmes_Common.csproj", "{55682C30-67B5-4F08-9391-C9AAC70CCB34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pOmmes_Data", "pOmmes_Common\pOmmes_Data.csproj", "{55682C30-67B5-4F08-9391-C9AAC70CCB34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

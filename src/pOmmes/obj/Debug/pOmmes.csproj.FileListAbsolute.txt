@@ -83,3 +83,17 @@ C:\Users\Tobias\Desktop\pOmmes.net-master\src\pOmmes\obj\Debug\pOmmes.pdb
 C:\dev\dotnet\pOmmes.net\bin\pOmmes.exe.config
 C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.exe
 C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.pdb
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.csprojResolveAssemblyReference.cache
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.LoginForm.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.MainForm.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.RegisterForm.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.ResetPasswordForm.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.Resources.pOmmes_Resources.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.EventListUserControl.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.EventUserControl.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.FoodDetailUserControl.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.FoodListUserControl.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.FoodUserControl.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.RestaurantListUserControl.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.RestaurantUserControl.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.csproj.GenerateResource.Cache

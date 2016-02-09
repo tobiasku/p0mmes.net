@@ -72,6 +72,13 @@ namespace pOmmes.Data
             get;
             set;
         }
+
+        public Event()
+        {
+            Orders = new Collection<Order>();
+            Votes = new Collection<Vote>();
+        }
+
         public static Collection<Event> Get()
         {
             return Dic.Get<IpOmmesDataBL>().Get<Event>();

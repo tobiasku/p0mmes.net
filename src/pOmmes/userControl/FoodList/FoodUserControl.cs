@@ -12,6 +12,7 @@ using pOmmes.Common;
 using MetroFramework.Controls;
 using System.Threading;
 using pOmmes.Data;
+using pOmmes.Common.Dic;
 
 namespace pOmmes
 {

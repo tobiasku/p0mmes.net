@@ -10,9 +10,8 @@ using System.Windows.Forms;
 using System.Collections.ObjectModel;
 using pOmmes.Common;
 using MetroFramework.Controls;
-using pOmmes.Data;
-using pOmmes.Common.Dic;
 using System.Threading;
+using pOmmes.Data;
 
 namespace pOmmes
 {
@@ -87,7 +86,7 @@ namespace pOmmes
 
         FoodDetailUserControl actualFoodDetailUserControl;
         string actualFoodObject;
-
+        
         public void OnEvent(FoodDetailChangeEvent e)
         {
             switch (e.State)

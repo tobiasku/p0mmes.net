@@ -103,8 +103,7 @@ namespace pOmmes
                 }
                 Vote vote = new Vote();
                 vote.Restaurant = e.Restaurant;
-                //TODO: User
-                vote.User = null;
+                vote.User = User.CurrentUser;
 
                 Dic.Get<IpOmmesDataBL>().Post<Vote>(new Collection<Vote>() { vote });
 

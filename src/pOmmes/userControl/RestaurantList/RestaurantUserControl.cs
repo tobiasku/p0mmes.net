@@ -41,8 +41,7 @@ namespace pOmmes
             ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
             {
                 //Restaurant.Post(new Collection<Restaurant>() { new Restaurant() { Name = "Pizzeria Florentina", PhoneNumber = "02862 8685", LogoURL = "https://drive.google.com/file/d/0B09e2Bsi3mxVZExSUDBfTVNwcGc/view?usp=sharing" } });
-
-
+                
                 int location = 0;
                 foreach (Restaurant poRestaurant in Restaurant.Get())
                 {

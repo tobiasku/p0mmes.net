@@ -34,14 +34,21 @@ namespace pOmmes
 
         private void SetRestaurantListItem()
         {
-                        mlbl_name.Text = restaurant.Name;
+            mlbl_name.Text = restaurant.Name;
             mlbl_phone.Text = restaurant.PhoneNumber;
 
             try
             {
                 if (!string.IsNullOrEmpty(restaurant.LogoURL))
                 {
-                    pic_state.Load(restaurant.LogoURL);
+                    try
+                    {
+                        pic_state.Load(restaurant.LogoURL);
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
                 }
             }
             catch (DirectoryNotFoundException e)

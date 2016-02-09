@@ -103,7 +103,7 @@
             this.pic_state.Location = new System.Drawing.Point(3, 3);
             this.pic_state.Name = "pic_state";
             this.pic_state.Size = new System.Drawing.Size(80, 80);
-            this.pic_state.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pic_state.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pic_state.TabIndex = 2;
             this.pic_state.TabStop = false;
             this.pic_state.Click += new System.EventHandler(this.RestaurantListUserControl_Click);

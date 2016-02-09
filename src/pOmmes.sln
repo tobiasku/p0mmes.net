@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pOmmes", "pOmmes\pOmmes.csproj", "{DF90BC98-D922-4BBF-A355-B0ADA2D66655}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F5F4F08F-E0E4-4FDE-AC53-6DB78A97C43B} = {F5F4F08F-E0E4-4FDE-AC53-6DB78A97C43B}
+		{72CB499B-F345-4BA1-9453-39000055D4FE} = {72CB499B-F345-4BA1-9453-39000055D4FE}
+		{7F0253E5-2E85-4FFD-BB4D-75A09F959C78} = {7F0253E5-2E85-4FFD-BB4D-75A09F959C78}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pOmmes_Common", "pOmmes_Common\pOmmes_Common.csproj", "{55682C30-67B5-4F08-9391-C9AAC70CCB34}"
 EndProject

@@ -24,7 +24,9 @@ namespace pOmmes
             Dic.Put<IpOmmesDataDL, pOmmesDataDL>();
             Dic.Put<IpOmmesDataBL, pOmmesDataBL>();
 
-            MainForm frm = new MainForm();
+            //MainForm frm = new MainForm();
+            ArticleForm frm = new ArticleForm(null);
+
             Application.Run(frm);
         }
     }

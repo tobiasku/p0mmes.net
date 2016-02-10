@@ -41,7 +41,7 @@ namespace pOmmes
         {
             FoodDetailUserControl foodDetailUserControl = new FoodDetailUserControl(article);
             foodDetailUserControl.FoodDetailUserControl_Select += FoodDetailUserControl_FoodDetailUserControl_Select;
-            EventBus.Instance.PostEvent(new FoodDetailChangeEvent(foodDetailUserControl, UserControlChangeState.Push));
+            EventBus.Instance.PostEvent(new FoodControlChangeEvent(foodDetailUserControl, UserControlChangeState.Push));
         }
 
         private void FoodDetailUserControl_FoodDetailUserControl_Select(object sender, FoodDetailUserControlEventArgs e)

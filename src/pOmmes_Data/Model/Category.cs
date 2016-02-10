@@ -18,44 +18,44 @@ namespace pOmmes.Data
             set;
         }
 
-        public static Collection<ArticleToSize> Get()
+        public static Collection<Category> Get()
         {
-            return Dic.Get<IpOmmesDataBL>().Get<ArticleToSize>();
+            return Dic.Get<IpOmmesDataBL>().Get<Category>();
         }
 
-        public static Collection<ArticleToSize> Get(Dictionary<string, object> filter)
+        public static Collection<Category> Get(Dictionary<string, object> filter)
         {
-            return Dic.Get<IpOmmesDataBL>().Get<ArticleToSize>(filter);
+            return Dic.Get<IpOmmesDataBL>().Get<Category>(filter);
         }
 
-        public static ArticleToSize Find(string objectId)
+        public static Category Find(string objectId)
         {
-            return Dic.Get<IpOmmesDataBL>().Find<ArticleToSize>(objectId);
+            return Dic.Get<IpOmmesDataBL>().Find<Category>(objectId);
         }
 
-        public static void Put(Collection<ArticleToSize> collectionToPut)
+        public static void Put(Collection<Category> collectionToPut)
         {
             foreach (var toPut in collectionToPut)
             {
                 toPut.UpdatedAt = DateTime.Now;
             }
 
-            Dic.Get<IpOmmesDataBL>().Put<ArticleToSize>(collectionToPut);
+            Dic.Get<IpOmmesDataBL>().Put<Category>(collectionToPut);
         }
 
-        public static void Post(Collection<ArticleToSize> collectionToPost)
+        public static void Post(Collection<Category> collectionToPost)
         {
             foreach (var toPost in collectionToPost)
             {
                 toPost.CreatedAt = DateTime.Now;
             }
 
-            Dic.Get<IpOmmesDataBL>().Post<ArticleToSize>(collectionToPost);
+            Dic.Get<IpOmmesDataBL>().Post<Category>(collectionToPost);
         }
 
-        public static void Delete(Collection<ArticleToSize> collectionToDelete)
+        public static void Delete(Collection<Category> collectionToDelete)
         {
-            Dic.Get<IpOmmesDataBL>().Delete<ArticleToSize>(collectionToDelete);
+            Dic.Get<IpOmmesDataBL>().Delete<Category>(collectionToDelete);
         }
     }
 }

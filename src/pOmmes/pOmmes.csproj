@@ -72,7 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventBusEvent\FoodDetailChangeEvent.cs" />
+    <Compile Include="EventBusEvent\FoodControlChangeEvent.cs" />
     <Compile Include="form\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +84,12 @@
     </Compile>
     <Compile Include="form\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="form\ArticleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="form\ArticleForm.Designer.cs">
+      <DependentUpon>ArticleForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -107,6 +113,13 @@
       <DependentUpon>EventUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="userControl\EventList\EventUserControlEventArgs.cs" />
+    <Compile Include="userControl\FoodList\FoodBasketUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="userControl\FoodList\FoodBasketUserControl.Designer.cs">
+      <DependentUpon>FoodBasketUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="userControl\FoodList\FoodBasketUserControlEventArgs.cs" />
     <Compile Include="userControl\FoodList\FoodDetailUserControlEventArgs.cs" />
     <Compile Include="userControl\FoodList\FoodDetailUserControl.cs">
       <SubType>UserControl</SubType>
@@ -145,6 +158,9 @@
       <DependentUpon>RestaurantUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="userControl\RestaurantList\RestaurantUserControlEventArgs.cs" />
+    <EmbeddedResource Include="form\ArticleForm.resx">
+      <DependentUpon>ArticleForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="form\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -164,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="userControl\EventList\EventUserControl.resx">
       <DependentUpon>EventUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="userControl\FoodList\FoodBasketUserControl.resx">
+      <DependentUpon>FoodBasketUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="userControl\FoodList\FoodDetailUserControl.resx">
       <DependentUpon>FoodDetailUserControl.cs</DependentUpon>
@@ -222,6 +241,7 @@
     <None Include="Resources\ic_block_black_48dp.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\ic_settings_black_48dp.png" />
     <Content Include="Resources\ic_shopping_cart_white_48dp.png" />
   </ItemGroup>
   <ItemGroup>

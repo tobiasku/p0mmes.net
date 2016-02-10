@@ -54,6 +54,12 @@ namespace pOmmes.Data
             set;
         }
 
+        public Article()
+        {
+            Sizes = new Collection<ArticleToSize>();
+            Options = new Collection<ArticleToOption>();
+        }
+
         public static Collection<Article> Get()
         {
             return Dic.Get<IpOmmesDataBL>().Get<Article>();

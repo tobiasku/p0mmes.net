@@ -24,5 +24,11 @@ namespace pOmmes.Data
         void Post<T>(Collection<T> collectionToPost) where T : Base;
 
         void Delete<T>(Collection<T> collectionToDelete) where T : Base;
+
+        void Put<T>(T toPut) where T : Base;
+
+        void Post<T>(T toPost) where T : Base;
+
+        void Delete<T>(T toDelete) where T : Base;
     }
 }

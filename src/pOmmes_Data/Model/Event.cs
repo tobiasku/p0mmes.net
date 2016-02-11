@@ -94,6 +94,25 @@ namespace pOmmes.Data
             return Dic.Get<IpOmmesDataBL>().Find<Event>(objectId);
         }
 
+        public void Put()
+        {
+            this.UpdatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Put<Event>(this);
+        }
+
+        public void Post()
+        {
+            this.CreatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Post<Event>(this);
+        }
+
+        public void Delete()
+        {
+            Dic.Get<IpOmmesDataBL>().Delete<Event>(this);
+        }
+
         public static void Put(Collection<Event> collectionToPut)
         {
             foreach (var toPut in collectionToPut)

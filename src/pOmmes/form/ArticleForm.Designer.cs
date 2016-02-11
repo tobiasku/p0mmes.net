@@ -80,6 +80,9 @@
             // 
             // mtxt_Name
             // 
+            // 
+            // 
+            // 
             this.mtxt_Name.CustomButton.Image = null;
             this.mtxt_Name.CustomButton.Location = new System.Drawing.Point(260, 1);
             this.mtxt_Name.CustomButton.Name = "";
@@ -114,6 +117,9 @@
             this.mlbl_desc_Description.Text = "Description:";
             // 
             // mtxt_Description
+            // 
+            // 
+            // 
             // 
             this.mtxt_Description.CustomButton.Image = null;
             this.mtxt_Description.CustomButton.Location = new System.Drawing.Point(204, 2);
@@ -177,11 +183,14 @@
             this.mlbl_desc_Number.AutoSize = true;
             this.mlbl_desc_Number.Location = new System.Drawing.Point(23, 108);
             this.mlbl_desc_Number.Name = "mlbl_desc_Number";
-            this.mlbl_desc_Number.Size = new System.Drawing.Size(61, 19);
+            this.mlbl_desc_Number.Size = new System.Drawing.Size(62, 19);
             this.mlbl_desc_Number.TabIndex = 19;
             this.mlbl_desc_Number.Text = "Number:";
             // 
             // mtxt_Number
+            // 
+            // 
+            // 
             // 
             this.mtxt_Number.CustomButton.Image = null;
             this.mtxt_Number.CustomButton.Location = new System.Drawing.Point(260, 1);
@@ -212,7 +221,7 @@
             this.mlbl_desc_Category.AutoSize = true;
             this.mlbl_desc_Category.Location = new System.Drawing.Point(23, 535);
             this.mlbl_desc_Category.Name = "mlbl_desc_Category";
-            this.mlbl_desc_Category.Size = new System.Drawing.Size(66, 19);
+            this.mlbl_desc_Category.Size = new System.Drawing.Size(67, 19);
             this.mlbl_desc_Category.TabIndex = 21;
             this.mlbl_desc_Category.Text = "Category:";
             // 
@@ -230,7 +239,6 @@
             // 
             this.mg_Sizes.AllowUserToResizeRows = false;
             this.mg_Sizes.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.mg_Sizes.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.mg_Sizes.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.mg_Sizes.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -257,6 +265,7 @@
             this.mg_Sizes.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.mg_Sizes.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.mg_Sizes.Location = new System.Drawing.Point(23, 283);
+            this.mg_Sizes.MultiSelect = false;
             this.mg_Sizes.Name = "mg_Sizes";
             this.mg_Sizes.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -308,8 +317,6 @@
             // 
             this.mg_Options.AllowUserToResizeRows = false;
             this.mg_Options.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.mg_Options.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.mg_Options.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.mg_Options.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));

@@ -33,6 +33,25 @@ namespace pOmmes.Data
             return Dic.Get<IpOmmesDataBL>().Find<Role>(objectId);
         }
 
+        public void Put()
+        {
+            this.UpdatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Put<Role>(this);
+        }
+
+        public void Post()
+        {
+            this.CreatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Post<Role>(this);
+        }
+
+        public void Delete()
+        {
+            Dic.Get<IpOmmesDataBL>().Delete<Role>(this);
+        } 
+
         public static void Put(Collection<Role> collectionToPut)
         {
             foreach (var toPut in collectionToPut)

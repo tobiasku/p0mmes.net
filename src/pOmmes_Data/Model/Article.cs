@@ -18,7 +18,7 @@ namespace pOmmes.Data
             set;
         }
 
-        public int Number
+        public string Number
         {
             get;
             set;
@@ -73,6 +73,25 @@ namespace pOmmes.Data
         public static Article Find(string objectId)
         {
             return Dic.Get<IpOmmesDataBL>().Find<Article>(objectId);
+        }
+
+        public void Put()
+        {
+            this.UpdatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Put<Article>(this);
+        }
+
+        public void Post()
+        {
+            this.CreatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Post<Article>(this);
+        }
+
+        public void Delete()
+        {
+            Dic.Get<IpOmmesDataBL>().Delete<Article>(this);
         }
 
         public static void Put(Collection<Article> collectionToPut)

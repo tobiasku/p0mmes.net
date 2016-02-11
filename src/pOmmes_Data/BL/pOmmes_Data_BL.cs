@@ -61,5 +61,24 @@ namespace pOmmes.Data
         {
             pOmmesDataDL.Delete<T>(collectionToDelete);
         }
+
+        public void Put<T>(T toPut) where T : Base
+        {
+            toPut.UpdatedAt = DateTime.Now;
+
+            pOmmesDataDL.Put<T>(toPut);
+        }
+
+        public void Post<T>(T toPost) where T : Base
+        {
+            toPost.CreatedAt = DateTime.Now;
+
+            pOmmesDataDL.Post<T>(toPost);
+        }
+
+        public void Delete<T>(T toDelete) where T : Base
+        {
+            pOmmesDataDL.Delete<T>(toDelete);
+        }
     }
 }

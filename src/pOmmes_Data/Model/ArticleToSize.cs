@@ -51,6 +51,25 @@ namespace pOmmes.Data
             return Dic.Get<IpOmmesDataBL>().Find<ArticleToSize>(objectId);
         }
 
+        public void Put()
+        {
+            this.UpdatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Put<ArticleToSize>(this);
+        }
+
+        public void Post()
+        {
+            this.CreatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Post<ArticleToSize>(this);
+        }
+
+        public void Delete()
+        {
+            Dic.Get<IpOmmesDataBL>().Delete<ArticleToSize>(this);
+        }
+
         public static void Put(Collection<ArticleToSize> collectionToPut)
         {
             foreach (var toPut in collectionToPut)

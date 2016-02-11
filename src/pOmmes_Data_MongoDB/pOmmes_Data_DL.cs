@@ -21,7 +21,7 @@ namespace pOmmes.Data.Mongo
         //--------------------------------------------------------------------------
         protected static IMongoClient _client;
         protected static IMongoDatabase _database;
-        
+
         //--------------------------------------------------------------------------
         //-- Methods
         //--------------------------------------------------------------------------
@@ -107,7 +107,7 @@ namespace pOmmes.Data.Mongo
         #region Put
         public async void Put<T>(Collection<T> collectionToPut) where T : Base
         {
-            var collection = GetCollection(collectionToPut.First().GetType());
+            var collection = GetCollection(typeof(T));
 
             foreach (T value in collectionToPut)
             {
@@ -120,12 +120,26 @@ namespace pOmmes.Data.Mongo
                 await collection.ReplaceOneAsync(filterDefinition, bsonDoc);
             }
         }
+
+        public async void Put<T>(T toPut) where T : Base
+        {
+            var collection = GetCollection(toPut.GetType());
+
+            var builder = Builders<BsonDocument>.Filter;
+            FilterDefinition<BsonDocument> filterDefinition = builder.Eq("_id", toPut._id);
+
+            string jsonString = JsonConvert.SerializeObject(toPut, new JsonConverter[] { new CustomJsonSerializer() });
+            BsonDocument bsonDoc = BsonDocument.Parse(jsonString);
+
+            await collection.ReplaceOneAsync(filterDefinition, bsonDoc);
+        }
         #endregion
 
         #region Post
         public async void Post<T>(Collection<T> collectionToPost) where T : Base
         {
-            var collection = GetCollection(collectionToPost.First().GetType());
+            var collection = GetCollection(typeof(T));
+
             Collection<BsonDocument> documents = new Collection<BsonDocument>();
 
             foreach (T value in collectionToPost)
@@ -185,6 +199,25 @@ namespace pOmmes.Data.Mongo
 
             await collection.InsertManyAsync(documents);
         }
+
+        public async void Post<T>(T toPost) where T : Base
+        {
+            var collection = GetCollection(toPost.GetType());
+            Collection<BsonDocument> documents = new Collection<BsonDocument>();
+
+            toPost.CreatedAt = DateTime.Now;
+
+            if (toPost._id == null)
+            {
+                toPost._id = ObjectId.GenerateNewId(DateTime.Now).ToString();
+            }
+
+            string jsonString = JsonConvert.SerializeObject(toPost, new JsonConverter[] { new CustomJsonSerializer() });
+
+            BsonDocument bsonDoc = BsonDocument.Parse(jsonString);
+
+            await collection.InsertOneAsync(bsonDoc);
+        }
         #endregion
 
         #region Delete
@@ -208,6 +241,25 @@ namespace pOmmes.Data.Mongo
             }
 
             var result = await collection.DeleteManyAsync(filterDefinition);
+        }
+
+        public async void Delete<T>(T toDelete) where T : Base
+        {
+            var collection = GetCollection(typeof(T));
+
+            var builder = Builders<BsonDocument>.Filter;
+            FilterDefinition<BsonDocument> filterDefinition = null;
+
+            if (filterDefinition != null)
+            {
+                filterDefinition = filterDefinition & builder.Eq("_id", toDelete._id);
+            }
+            else
+            {
+                filterDefinition = builder.Eq("_id", toDelete._id);
+            }
+
+            var result = await collection.DeleteOneAsync(filterDefinition);
         }
 
         //public async void DeleteAll<T>() where T : Base

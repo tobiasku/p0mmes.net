@@ -57,6 +57,25 @@ namespace pOmmes.Data
             return Dic.Get<IpOmmesDataBL>().Find<ArticleToOption>(objectId);
         }
 
+        public void Put()
+        {
+            this.UpdatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Put<ArticleToOption>(this);
+        }
+
+        public void Post()
+        {
+            this.CreatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Post<ArticleToOption>(this);
+        }
+
+        public void Delete()
+        {
+            Dic.Get<IpOmmesDataBL>().Delete<ArticleToOption>(this);
+        }
+
         public static void Put(Collection<ArticleToOption> collectionToPut)
         {
             foreach (var toPut in collectionToPut)

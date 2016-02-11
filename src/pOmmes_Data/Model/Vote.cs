@@ -39,6 +39,25 @@ namespace pOmmes.Data
             return Dic.Get<IpOmmesDataBL>().Find<Vote>(objectId);
         }
 
+        public void Put()
+        {
+            this.UpdatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Put<Vote>(this);
+        }
+
+        public void Post()
+        {
+            this.CreatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Post<Vote>(this);
+        }
+
+        public void Delete()
+        {
+            Dic.Get<IpOmmesDataBL>().Delete<Vote>(this);
+        }
+
         public static void Put(Collection<Vote> collectionToPut)
         {
             foreach (var toPut in collectionToPut)

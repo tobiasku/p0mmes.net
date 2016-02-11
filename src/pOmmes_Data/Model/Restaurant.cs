@@ -45,6 +45,25 @@ namespace pOmmes.Data
             return Dic.Get<IpOmmesDataBL>().Find<Restaurant>(objectId);
         }
 
+        public void Put()
+        {
+            this.UpdatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Put<Restaurant>(this);
+        }
+
+        public void Post()
+        {
+            this.CreatedAt = DateTime.Now;
+
+            Dic.Get<IpOmmesDataBL>().Post<Restaurant>(this);
+        }
+
+        public void Delete()
+        {
+            Dic.Get<IpOmmesDataBL>().Delete<Restaurant>(this);
+        }
+
         public static void Put(Collection<Restaurant> collectionToPut)
         {
             foreach (var toPut in collectionToPut)

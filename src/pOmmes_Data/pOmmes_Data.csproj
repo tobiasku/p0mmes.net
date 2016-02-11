@@ -42,6 +42,21 @@
     <Compile Include="DL\IpOmmes_Data_DL.cs" />
     <Compile Include="BL\IpOmmes_Data_BL.cs" />
     <Compile Include="BL\pOmmes_Data_BL.cs" />
+    <Compile Include="Model\Article.cs" />
+    <Compile Include="Model\ArticleToOption.cs" />
+    <Compile Include="Model\ArticleToSize.cs" />
+    <Compile Include="Model\Base.cs" />
+    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\Company.cs" />
+    <Compile Include="Model\Event.cs" />
+    <Compile Include="Model\Option.cs" />
+    <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\OrderPosition.cs" />
+    <Compile Include="Model\Restaurant.cs" />
+    <Compile Include="Model\Role.cs" />
+    <Compile Include="Model\Size.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\Vote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

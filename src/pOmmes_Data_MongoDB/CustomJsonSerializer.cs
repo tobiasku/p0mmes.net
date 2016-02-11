@@ -70,6 +70,18 @@ namespace pOmmes.Data
 
                         jObject[prop.Name] = JToken.FromObject(result);
                     }
+                    else if (prop.PropertyType == typeof(Collection<Order>))
+                    {
+                        Collection<Order> orders = prop.GetValue(value) as Collection<Order>;
+
+                        Collection<string> result = new Collection<string>();
+                        foreach (Order order in orders)
+                        {
+                            result.Add(order._id);
+                        }
+
+                        jObject[prop.Name] = JToken.FromObject(result);
+                    }
                 }
             }
 
@@ -195,6 +207,22 @@ namespace pOmmes.Data
                                     }
 
                                     prop.SetValue(result, votes);
+                                }
+                                else if (reader.Path == "Orders")
+                                {
+                                    Collection<Order> orders = new Collection<Order>();
+                                    reader.Read();
+
+                                    while (reader.TokenType != JsonToken.EndArray)
+                                    {
+                                        Order order = Activator.CreateInstance(typeof(Order)) as Order;
+                                        order = Dic.Get<IpOmmesDataBL>().Find<Order>(reader.Value.ToString());
+                                        orders.Add(order);
+
+                                        reader.Read();
+                                    }
+
+                                    prop.SetValue(result, orders);
                                 }
                             }
                             else if (prop.PropertyType == typeof(Int32))

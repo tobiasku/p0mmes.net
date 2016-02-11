@@ -27,6 +27,7 @@ namespace pOmmes.Data.Mongo
         //--------------------------------------------------------------------------
         public pOmmesDataDL()
         {
+            //_client = new MongoClient("mongodb://root:Abl745er@ds055895.mongolab.com:55895");
             _client = new MongoClient("mongodb://localhost:27017");
             _database = _client.GetDatabase("pOmmes");
         }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using pOmmes.Common;
 using MetroFramework.Controls;
 using System.Collections.ObjectModel;
+using pOmmes.Data;
 
 namespace pOmmes
 {
@@ -40,7 +41,7 @@ namespace pOmmes
         {
             FoodDetailUserControl foodDetailUserControl = new FoodDetailUserControl(article);
             foodDetailUserControl.FoodDetailUserControl_Select += FoodDetailUserControl_FoodDetailUserControl_Select;
-            EventBus.Instance.PostEvent(new FoodDetailChangeEvent(foodDetailUserControl, UserControlChangeState.Push));
+            EventBus.Instance.PostEvent(new FoodControlChangeEvent(foodDetailUserControl, UserControlChangeState.Push));
         }
 
         private void FoodDetailUserControl_FoodDetailUserControl_Select(object sender, FoodDetailUserControlEventArgs e)

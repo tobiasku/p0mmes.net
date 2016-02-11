@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using pOmmes.Common;
 using MetroFramework.Controls;
+using pOmmes.Data;
 
 namespace pOmmes
 {

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using pOmmes.Common;
 using MetroFramework.Controls;
 using pOmmes.Data;
+using System.IO;
 
 namespace pOmmes
 {
@@ -35,9 +36,24 @@ namespace pOmmes
         {
             mlbl_name.Text = restaurant.Name;
             mlbl_phone.Text = restaurant.PhoneNumber;
-            if (!string.IsNullOrEmpty(restaurant.LogoURL))
+
+            try
             {
-                pic_state.Load(restaurant.LogoURL);
+                if (!string.IsNullOrEmpty(restaurant.LogoURL))
+                {
+                    try
+                    {
+                        pic_state.Load(restaurant.LogoURL);
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
+            }
+            catch (DirectoryNotFoundException e)
+            {
+
             }
         }
 

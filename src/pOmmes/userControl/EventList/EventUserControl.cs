@@ -32,10 +32,10 @@ namespace pOmmes
         {
             ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
             {
-                Collection<Event> eventCollection = Dic.Get<IpOmmesDataBL>().Get<Event>();
+                //Event.Post(new Collection<Event>() { new Event() { Name = "Fritten-Freitag", EventType = EventType.VoteEvent, EventState = EventState.Vote, DateToVote = DateTime.Now.AddDays(7), DateToOrder = DateTime.Now.AddDays(14) } });
 
                 int location = 0;
-                foreach (Event poEvent in eventCollection)
+                foreach (Event poEvent in Event.Get())
                 {
                     switch (poEvent.EventState)
                     {
@@ -70,16 +70,24 @@ namespace pOmmes
                 case EventState.Vote:
                     if (e.Event != null)
                     {
-                        RestaurantUserControl restaurantUserControl = new RestaurantUserControl(e.Event);
-                        restaurantUserControl.RestaurantUserControl_Select += RestaurantUserControl_RestaurantUserControl_Select;
-                        EventBus.Instance.PostEvent(new UserControlChangeEvent(restaurantUserControl, UserControlChangeState.Push));
+                        if (e.Event.Votes.FirstOrDefault(x => x.User == User.CurrentUser) != null)
+                        {
+                            RestaurantUserControl restaurantUserControl = new RestaurantUserControl(e.Event);
+                            restaurantUserControl.RestaurantUserControl_Select += RestaurantUserControl_RestaurantUserControl_Select;
+                            EventBus.Instance.PostEvent(new UserControlChangeEvent(restaurantUserControl, UserControlChangeState.Push));
+                        }
                     }
                     break;
                 case EventState.Order:
-                    if (e.Event.Restaurant != null)
+                    if (e.Event != null)
                     {
-                        FoodUserControl foodUserControl = new FoodUserControl(e.Event.Restaurant);
-                        EventBus.Instance.PostEvent(new UserControlChangeEvent(foodUserControl, UserControlChangeState.Push));
+                        if (e.Event.Restaurant != null)
+                        {
+                            Order order = e.Event.Orders.FirstOrDefault(x => x.User == User.CurrentUser);
+
+                            FoodUserControl foodUserControl = new FoodUserControl(e.Event.Restaurant,order);
+                            EventBus.Instance.PostEvent(new UserControlChangeEvent(foodUserControl, UserControlChangeState.Push));
+                        }
                     }
                     break;
                 case EventState.ReadyToSent:
@@ -103,14 +111,15 @@ namespace pOmmes
                 }
                 Vote vote = new Vote();
                 vote.Restaurant = e.Restaurant;
-                //TODO: User
-                vote.User = null;
+                vote.User = User.CurrentUser;
 
-                Dic.Get<IpOmmesDataBL>().Post<Vote>(new Collection<Vote>() { vote });
+                Vote.Post(new Collection<Vote>() { vote });
 
                 e.Event.Votes.Add(vote);
 
-                Dic.Get<IpOmmesDataBL>().Put<Event>(new Collection<Event>() { e.Event });
+                Event.Put(new Collection<Event>() { e.Event });
+
+                EventBus.Instance.PostEvent(new UserControlChangeEvent(null, UserControlChangeState.Pop));
             }
         }
 

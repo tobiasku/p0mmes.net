@@ -94,19 +94,8 @@ namespace pOmmes
             //if (User.CurrentUser != null)
             //{
             //    mlink_CurrentUser.Text = "Logged in as " + User.CurrentUser.UserName;
-
-            //EventBus.Instance.PostEvent(new UserControlChangeEvent(new EventUserControl(), UserControlChangeState.Push));
-
-            RestaurantUserControl restaurantControl = new RestaurantUserControl(new Event());
-            restaurantControl.RestaurantUserControl_Select += RestaurantControl_RestaurantUserControl_Select; ;
-            EventBus.Instance.PostEvent(new UserControlChangeEvent(restaurantControl, UserControlChangeState.Push));
-
+            EventBus.Instance.PostEvent(new UserControlChangeEvent(new EventUserControl(), UserControlChangeState.Push));
             //}
-        }
-
-        private void RestaurantControl_RestaurantUserControl_Select(object sender, RestaurantUserControlEventArgs e)
-        {
-            EventBus.Instance.PostEvent(new UserControlChangeEvent(new FoodUserControl(e.Restaurant), UserControlChangeState.Push));
         }
 
         private void mlink_CurrentUser_Click(object sender, EventArgs e)

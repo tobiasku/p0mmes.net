@@ -125,7 +125,7 @@ namespace pOmmes
 
         private void mlink_Close_Click(object sender, EventArgs e)
         {
-            EventBus.Instance.PostEvent(new FoodDetailChangeEvent(this, UserControlChangeState.Pop));
+            EventBus.Instance.PostEvent(new FoodControlChangeEvent(this, UserControlChangeState.Pop));
         }
 
         private void mbtn_order_Click(object sender, EventArgs e)
@@ -138,7 +138,7 @@ namespace pOmmes
             orderPosition.ExtraInformation = mtxt_ExtraWishes.Text;
 
             ThrowFoodDetailUserControl_Select(new FoodDetailUserControlEventArgs(orderPosition));
-            EventBus.Instance.PostEvent(new FoodDetailChangeEvent(this, UserControlChangeState.Pop));
+            EventBus.Instance.PostEvent(new FoodControlChangeEvent(this, UserControlChangeState.Pop));
         }
 
         public event EventHandler<FoodDetailUserControlEventArgs> FoodDetailUserControl_Select;

@@ -10,19 +10,21 @@ using System.Windows.Forms;
 using System.Collections.ObjectModel;
 using pOmmes.Common;
 using MetroFramework.Controls;
+using System.Threading;
 using pOmmes.Data;
 using pOmmes.Common.Dic;
-using System.Threading;
 
 namespace pOmmes
 {
     public partial class FoodUserControl : MetroUserControl
     {
         Restaurant restaurant;
+        Order order;
         private Collection<OrderPosition> orderPositions = new Collection<OrderPosition>();
 
-        public FoodUserControl(Restaurant restaurant)
+        public FoodUserControl(Restaurant restaurant, Order order)
         {
+            this.order = order;
             this.restaurant = restaurant;
             InitializeComponent();
             EventBus.Instance.Register(this);
@@ -39,13 +41,19 @@ namespace pOmmes
 
             ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
             {
+                //Dictionary<string, object> filterDic = new Dictionary<string, object>();
+                //filterDic.Add("Name", "Döner");
+                //Article döner = Article.Get(filterDic).First();
+                
+                //ArticleToOption.Post(new Collection<ArticleToOption>() { new ArticleToSize() { } })
+
+
                 Dictionary<string, object> filter = new Dictionary<string, object>();
                 filter.Add("Restaurant", restaurant._id);
-                Collection<Article> articleCollection = Dic.Get<IpOmmesDataBL>().Get<Article>(filter);
 
                 Dictionary<string, int> locationDic = new Dictionary<string, int>();
 
-                foreach (Article article in articleCollection)
+                foreach (Article article in Article.Get(filter))
                 {
                     this.mtc_FoodList.Invoke(new Action(delegate ()
                     {
@@ -85,10 +93,17 @@ namespace pOmmes
             }
         }
 
+
+        private void mbtn_order_Click(object sender, EventArgs e)
+        {
+            EventBus.Instance.PostEvent(new FoodControlChangeEvent(new FoodBasketUserControl(orderPositions, null), UserControlChangeState.Push));
+        }
+
         FoodDetailUserControl actualFoodDetailUserControl;
+        FoodBasketUserControl actualFoodBasketUserControl;
         string actualFoodObject;
 
-        public void OnEvent(FoodDetailChangeEvent e)
+        public void OnEvent(FoodControlChangeEvent e)
         {
             switch (e.State)
             {
@@ -96,8 +111,31 @@ namespace pOmmes
                     PopUserControl();
                     break;
                 case UserControlChangeState.Push:
-                    PushUserControl(e.Control);
+                    if (e.FoodBasketControl != null)
+                    {
+                        PushUserControl(e.FoodBasketControl);
+                    }
+                    else if (e.FoodDetailControl != null)
+                    {
+                        PushUserControl(e.FoodDetailControl);
+                    }
                     break;
+            }
+        }
+
+        private void PushUserControl(FoodBasketUserControl control)
+        {
+            if (actualFoodBasketUserControl != null)
+            {
+                PopUserControl();
+            }
+
+            if (control != null)
+            {
+                control.Location = new Point((this.Size.Width / 2 - control.Size.Width / 2), (this.Size.Height / 2 - control.Size.Height / 2));
+                this.Controls.Add(control);
+                control.BringToFront();
+                this.actualFoodBasketUserControl = control;
             }
         }
 
@@ -124,15 +162,16 @@ namespace pOmmes
             {
                 this.mtc_FoodList.TabPages[actualFoodObject].Controls.Remove(actualFoodDetailUserControl);
             }
+            if (actualFoodBasketUserControl != null)
+            {
+                this.Controls.Remove(actualFoodBasketUserControl);
+            }
             actualFoodDetailUserControl.Dispose();
+            actualFoodBasketUserControl.Dispose();
             actualFoodDetailUserControl = null;
-            actualFoodObject = null;
-        }
+            actualFoodBasketUserControl = null;
 
-        private void mbtn_order_Click(object sender, EventArgs e)
-        {
-            Order order = new Order();
-            order.OrderPositions = orderPositions;
+            actualFoodObject = null;
         }
     }
 }

@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             this.mpnl_Main = new MetroFramework.Controls.MetroPanel();
-            this.mlbl_desc_UserName = new MetroFramework.Controls.MetroLabel();
+            this.mlbl_description = new MetroFramework.Controls.MetroLabel();
+            this.mlbl_desc_ExtraInformation = new MetroFramework.Controls.MetroLabel();
             this.mtxt_ExtraWishes = new MetroFramework.Controls.MetroTextBox();
             this.clb_Options = new System.Windows.Forms.CheckedListBox();
             this.mlink_Close = new MetroFramework.Controls.MetroLink();
@@ -38,7 +39,6 @@
             this.mbtn_order = new MetroFramework.Controls.MetroButton();
             this.mlbl_name = new MetroFramework.Controls.MetroLabel();
             this.mtxt_Count = new MetroFramework.Controls.MetroTextBox();
-            this.mlbl_description = new MetroFramework.Controls.MetroLabel();
             this.mpnl_Main.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,7 +47,7 @@
             this.mpnl_Main.BackColor = System.Drawing.Color.Black;
             this.mpnl_Main.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.mpnl_Main.Controls.Add(this.mlbl_description);
-            this.mpnl_Main.Controls.Add(this.mlbl_desc_UserName);
+            this.mpnl_Main.Controls.Add(this.mlbl_desc_ExtraInformation);
             this.mpnl_Main.Controls.Add(this.mtxt_ExtraWishes);
             this.mpnl_Main.Controls.Add(this.clb_Options);
             this.mpnl_Main.Controls.Add(this.mlink_Close);
@@ -68,17 +68,37 @@
             this.mpnl_Main.VerticalScrollbarHighlightOnWheel = false;
             this.mpnl_Main.VerticalScrollbarSize = 10;
             // 
-            // mlbl_desc_UserName
+            // mlbl_description
             // 
-            this.mlbl_desc_UserName.AutoSize = true;
-            this.mlbl_desc_UserName.Location = new System.Drawing.Point(22, 244);
-            this.mlbl_desc_UserName.Name = "mlbl_desc_UserName";
-            this.mlbl_desc_UserName.Size = new System.Drawing.Size(113, 19);
-            this.mlbl_desc_UserName.TabIndex = 12;
-            this.mlbl_desc_UserName.Text = "Extra Information:";
+            this.mlbl_description.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.mlbl_description.Location = new System.Drawing.Point(66, 38);
+            this.mlbl_description.Name = "mlbl_description";
+            this.mlbl_description.Size = new System.Drawing.Size(209, 46);
+            this.mlbl_description.TabIndex = 14;
+            // 
+            // mlbl_desc_ExtraInformation
+            // 
+            this.mlbl_desc_ExtraInformation.AutoSize = true;
+            this.mlbl_desc_ExtraInformation.Location = new System.Drawing.Point(22, 244);
+            this.mlbl_desc_ExtraInformation.Name = "mlbl_desc_ExtraInformation";
+            this.mlbl_desc_ExtraInformation.Size = new System.Drawing.Size(113, 19);
+            this.mlbl_desc_ExtraInformation.TabIndex = 12;
+            this.mlbl_desc_ExtraInformation.Text = "Extra Information:";
             // 
             // mtxt_ExtraWishes
             // 
+            // 
+            // 
+            // 
+            this.mtxt_ExtraWishes.CustomButton.Image = null;
+            this.mtxt_ExtraWishes.CustomButton.Location = new System.Drawing.Point(193, 2);
+            this.mtxt_ExtraWishes.CustomButton.Name = "";
+            this.mtxt_ExtraWishes.CustomButton.Size = new System.Drawing.Size(57, 57);
+            this.mtxt_ExtraWishes.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.mtxt_ExtraWishes.CustomButton.TabIndex = 1;
+            this.mtxt_ExtraWishes.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.mtxt_ExtraWishes.CustomButton.UseSelectable = true;
+            this.mtxt_ExtraWishes.CustomButton.Visible = false;
             this.mtxt_ExtraWishes.Lines = new string[0];
             this.mtxt_ExtraWishes.Location = new System.Drawing.Point(22, 266);
             this.mtxt_ExtraWishes.MaxLength = 32767;
@@ -87,9 +107,13 @@
             this.mtxt_ExtraWishes.PasswordChar = '\0';
             this.mtxt_ExtraWishes.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.mtxt_ExtraWishes.SelectedText = "";
+            this.mtxt_ExtraWishes.SelectionLength = 0;
+            this.mtxt_ExtraWishes.SelectionStart = 0;
             this.mtxt_ExtraWishes.Size = new System.Drawing.Size(253, 62);
             this.mtxt_ExtraWishes.TabIndex = 11;
             this.mtxt_ExtraWishes.UseSelectable = true;
+            this.mtxt_ExtraWishes.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.mtxt_ExtraWishes.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // clb_Options
             // 
@@ -157,6 +181,18 @@
             // 
             // mtxt_Count
             // 
+            // 
+            // 
+            // 
+            this.mtxt_Count.CustomButton.Image = null;
+            this.mtxt_Count.CustomButton.Location = new System.Drawing.Point(14, 1);
+            this.mtxt_Count.CustomButton.Name = "";
+            this.mtxt_Count.CustomButton.Size = new System.Drawing.Size(23, 23);
+            this.mtxt_Count.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.mtxt_Count.CustomButton.TabIndex = 1;
+            this.mtxt_Count.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.mtxt_Count.CustomButton.UseSelectable = true;
+            this.mtxt_Count.CustomButton.Visible = false;
             this.mtxt_Count.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.mtxt_Count.Lines = new string[] {
         "1"};
@@ -166,21 +202,17 @@
             this.mtxt_Count.PasswordChar = '\0';
             this.mtxt_Count.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.mtxt_Count.SelectedText = "";
+            this.mtxt_Count.SelectionLength = 0;
+            this.mtxt_Count.SelectionStart = 0;
             this.mtxt_Count.Size = new System.Drawing.Size(38, 25);
             this.mtxt_Count.TabIndex = 2;
             this.mtxt_Count.Text = "1";
             this.mtxt_Count.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.mtxt_Count.UseSelectable = true;
+            this.mtxt_Count.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.mtxt_Count.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             this.mtxt_Count.TextChanged += new System.EventHandler(this.mtxt_Count_TextChanged);
             this.mtxt_Count.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.mtxt_Count_KeyPress);
-            // 
-            // mlbl_description
-            // 
-            this.mlbl_description.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.mlbl_description.Location = new System.Drawing.Point(66, 38);
-            this.mlbl_description.Name = "mlbl_description";
-            this.mlbl_description.Size = new System.Drawing.Size(209, 46);
-            this.mlbl_description.TabIndex = 14;
             // 
             // FoodDetailUserControl
             // 
@@ -207,7 +239,7 @@
         private MetroFramework.Controls.MetroLink mlink_Close;
         private System.Windows.Forms.CheckedListBox clb_Options;
         private MetroFramework.Controls.MetroTextBox mtxt_ExtraWishes;
-        private MetroFramework.Controls.MetroLabel mlbl_desc_UserName;
+        private MetroFramework.Controls.MetroLabel mlbl_desc_ExtraInformation;
         private MetroFramework.Controls.MetroLabel mlbl_description;
     }
 }

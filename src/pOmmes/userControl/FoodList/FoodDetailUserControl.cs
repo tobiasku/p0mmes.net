@@ -58,14 +58,14 @@ namespace pOmmes
         {
             shownOptions.Clear();
 
-            Common.Size articleSize = await size.Size.Query.FirstAsync();
+            Data.Size articleSize = await size.Size.Query.FirstAsync();
 
             var query = new ParseQuery<ArticleToOption>().WhereEqualTo("article", article);
             IEnumerable<ArticleToOption> optionCollection = await query.FindAsync();
 
             foreach (ArticleToOption option in optionCollection)
             {
-                Common.Size optionSize = await option.Size.Query.FirstAsync();
+                Data.Size optionSize = await option.Size.Query.FirstAsync();
 
                 if (optionSize.ObjectId == articleSize.ObjectId)
                 {

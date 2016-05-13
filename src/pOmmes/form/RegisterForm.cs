@@ -35,14 +35,14 @@ namespace pOmmes
             {
                 this.BeginInvoke(new Action(delegate ()
                 {
-                    mcmb_Company.DataSource = companyCollection;
+                    mcmb_Company.DataSource = companyCollection.ToList<Company>();
                     mcmb_Company.DisplayMember = "Name";
                 }));
 
             }
         }
 
-        private void mbtn_Register_Click(object sender, EventArgs e)
+        private async void mbtn_Register_Click(object sender, EventArgs e)
         {
             try
             {
@@ -54,16 +54,18 @@ namespace pOmmes
                     !string.IsNullOrEmpty(mtxt_Password.Text) &&
                     !string.IsNullOrEmpty(mtxt_RetypePassword.Text))
                 {
-                    ParseUser user = new ParseUser();
+                    ParseUser user = new ParseUser()
+                    {
+                        Username= mtxt_UserName.Text,
+                        Password= mtxt_Password.Text,
+                        Email = mtxt_Email.Text,
+                    };
 
-                    user["UserName"] = mtxt_UserName.Text;
-                    user["Password"] = mtxt_Password.Text;
-                    user["Email"] = mtxt_Email.Text;
                     user["ForeName"] = mtxt_ForeName.Text;
                     user["SurName"] = mtxt_SurName.Text;
-                    user["Company"] = (Company)mcmb_Company.SelectedValue;
+                    //user["Company"] = mcmb_Company.SelectedValue;
 
-                    user.SignUpAsync();
+                    await user.SignUpAsync();
                     if (ParseUser.CurrentUser != null)
                     {
                         this.DialogResult = DialogResult.OK;

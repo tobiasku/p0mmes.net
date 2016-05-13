@@ -34,7 +34,11 @@ namespace pOmmes
             ParseObject.RegisterSubclass<ArticleToOption>();
             ParseObject.RegisterSubclass<Article>();
 
-            ParseClient.Initialize("gcB3bvLRmFS2uRur2UZKrAvvycyFA59lyrQ7VqZW", "5dXJZXLGYMWs9lv1ZkkdEQZhm8lI42Bt9IjgUyO7");
+            ParseClient.Initialize(new ParseClient.Configuration
+            {
+                ApplicationId = "gcB3bvLRmFS2uRur2UZKrAvvycyFA59lyrQ7VqZW",
+                Server = "http://p0mmes.herokuapp.com/api/",
+            });
             #endregion
 
             Application.EnableVisualStyles();

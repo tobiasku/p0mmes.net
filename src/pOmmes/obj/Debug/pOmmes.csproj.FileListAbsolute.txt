@@ -97,3 +97,7 @@ C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.FoodUserControl.resources
 C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.RestaurantListUserControl.resources
 C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.RestaurantUserControl.resources
 C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.csproj.GenerateResource.Cache
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.exe
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.pdb
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.FoodBasketUserControl.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.ArticleForm.resources

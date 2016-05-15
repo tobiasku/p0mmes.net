@@ -108,10 +108,17 @@ namespace pOmmes
             }
         }
 
+
+        private void mbtn_order_Click(object sender, EventArgs e)
+        {
+            EventBus.Instance.PostEvent(new FoodControlChangeEvent(new FoodBasketUserControl(orderPositions, null), UserControlChangeState.Push));
+        }
+
         FoodDetailUserControl actualFoodDetailUserControl;
+        FoodBasketUserControl actualFoodBasketUserControl;
         string actualFoodObject;
 
-        public void OnEvent(FoodDetailChangeEvent e)
+        public void OnEvent(FoodControlChangeEvent e)
         {
             switch (e.State)
             {
@@ -119,8 +126,31 @@ namespace pOmmes
                     PopUserControl();
                     break;
                 case UserControlChangeState.Push:
-                    PushUserControl(e.Control);
+                    if (e.FoodBasketControl != null)
+                    {
+                        PushUserControl(e.FoodBasketControl);
+                    }
+                    else if (e.FoodDetailControl != null)
+                    {
+                        PushUserControl(e.FoodDetailControl);
+                    }
                     break;
+            }
+        }
+
+        private void PushUserControl(FoodBasketUserControl control)
+        {
+            if (actualFoodBasketUserControl != null)
+            {
+                PopUserControl();
+            }
+
+            if (control != null)
+            {
+                control.Location = new Point((this.Size.Width / 2 - control.Size.Width / 2), (this.Size.Height / 2 - control.Size.Height / 2));
+                this.Controls.Add(control);
+                control.BringToFront();
+                this.actualFoodBasketUserControl = control;
             }
         }
 
@@ -149,8 +179,15 @@ namespace pOmmes
             {
                 this.mtc_FoodList.TabPages[actualFoodObject].Controls.Remove(actualFoodDetailUserControl);
             }
+            if (actualFoodBasketUserControl != null)
+            {
+                this.Controls.Remove(actualFoodBasketUserControl);
+            }
             actualFoodDetailUserControl.Dispose();
+            actualFoodBasketUserControl.Dispose();
             actualFoodDetailUserControl = null;
+            actualFoodBasketUserControl = null;
+
             actualFoodObject = null;
         }
 

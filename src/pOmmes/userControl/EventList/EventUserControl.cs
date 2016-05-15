@@ -89,10 +89,6 @@ namespace pOmmes
                 case EventState.Order:
                     if (e.Event != null)
                     {
-<<<<<<< HEAD
-                        FoodUserControl foodUserControl = new FoodUserControl(e.Event);
-                        EventBus.Instance.PostEvent(new UserControlChangeEvent(foodUserControl, UserControlChangeState.Push));
-=======
                         if (e.Event.Restaurant != null)
                         {
                             Order order = e.Event.Orders.FirstOrDefault(x => x.User == User.CurrentUser);
@@ -100,7 +96,6 @@ namespace pOmmes
                             FoodUserControl foodUserControl = new FoodUserControl(e.Event.Restaurant,order);
                             EventBus.Instance.PostEvent(new UserControlChangeEvent(foodUserControl, UserControlChangeState.Push));
                         }
->>>>>>> 195bd55... commit
                     }
                     break;
                 case EventState.ReadyToSent:

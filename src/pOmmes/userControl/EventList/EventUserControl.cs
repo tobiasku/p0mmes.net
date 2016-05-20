@@ -78,16 +78,24 @@ namespace pOmmes
                 case EventState.Vote:
                     if (e.Event != null)
                     {
-                        RestaurantUserControl restaurantUserControl = new RestaurantUserControl(e.Event);
-                        restaurantUserControl.RestaurantUserControl_Select += RestaurantUserControl_RestaurantUserControl_Select;
-                        EventBus.Instance.PostEvent(new UserControlChangeEvent(restaurantUserControl, UserControlChangeState.Push));
+                        if (e.Event.Votes.FirstOrDefault(x => x.User == User.CurrentUser) != null)
+                        {
+                            RestaurantUserControl restaurantUserControl = new RestaurantUserControl(e.Event);
+                            restaurantUserControl.RestaurantUserControl_Select += RestaurantUserControl_RestaurantUserControl_Select;
+                            EventBus.Instance.PostEvent(new UserControlChangeEvent(restaurantUserControl, UserControlChangeState.Push));
+                        }
                     }
                     break;
                 case EventState.Order:
-                    if (e.Event.Restaurant != null)
+                    if (e.Event != null)
                     {
-                        FoodUserControl foodUserControl = new FoodUserControl(e.Event);
-                        EventBus.Instance.PostEvent(new UserControlChangeEvent(foodUserControl, UserControlChangeState.Push));
+                        if (e.Event.Restaurant != null)
+                        {
+                            Order order = e.Event.Orders.FirstOrDefault(x => x.User == User.CurrentUser);
+
+                            FoodUserControl foodUserControl = new FoodUserControl(e.Event.Restaurant,order);
+                            EventBus.Instance.PostEvent(new UserControlChangeEvent(foodUserControl, UserControlChangeState.Push));
+                        }
                     }
                     break;
                 case EventState.ReadyToSent:

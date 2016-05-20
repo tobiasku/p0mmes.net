@@ -93,7 +93,7 @@ namespace pOmmes
                         {
                             Order order = e.Event.Orders.FirstOrDefault(x => x.User == User.CurrentUser);
 
-                            FoodUserControl foodUserControl = new FoodUserControl(e.Event.Restaurant,order);
+                            FoodUserControl foodUserControl = new FoodUserControl(e.Event.Restaurant);
                             EventBus.Instance.PostEvent(new UserControlChangeEvent(foodUserControl, UserControlChangeState.Push));
                         }
                     }

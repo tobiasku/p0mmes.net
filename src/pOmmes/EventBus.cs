@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pOmmes.Common
+namespace pOmmes
 {
     public class EventBus
     {

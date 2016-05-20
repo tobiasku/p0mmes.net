@@ -164,13 +164,8 @@ namespace pOmmes
                 await orderOption.SaveAsync();
             }
 
-<<<<<<< HEAD
             ThrowFoodDetailUserControl_Select(new FoodDetailUserControlEventArgs());
-            EventBus.Instance.PostEvent(new FoodDetailChangeEvent(this, UserControlChangeState.Pop));
-=======
-            ThrowFoodDetailUserControl_Select(new FoodDetailUserControlEventArgs(orderPosition));
             EventBus.Instance.PostEvent(new FoodControlChangeEvent(this, UserControlChangeState.Pop));
->>>>>>> 195bd55... commit
         }
 
         public event EventHandler<FoodDetailUserControlEventArgs> FoodDetailUserControl_Select;

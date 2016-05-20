@@ -282,7 +282,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\pOmmes_Common\pOmmes_Data.csproj">
+    <ProjectReference Include="..\pOmmes_Data\pOmmes_Data.csproj">
       <Project>{55682c30-67b5-4f08-9391-c9aac70ccb34}</Project>
       <Name>pOmmes_Data</Name>
     </ProjectReference>

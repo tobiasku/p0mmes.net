@@ -13,6 +13,7 @@ using MetroFramework.Controls;
 using pOmmes.Data;
 using System.Threading;
 using Parse;
+using MetroFramework;
 
 namespace pOmmes
 {
@@ -69,7 +70,7 @@ namespace pOmmes
             }
         }
 
-        private void EventListUserControl_Clicked(object sender, EventUserControlEventArgs e)
+        private async void EventListUserControl_Clicked(object sender, EventUserControlEventArgs e)
         {
             switch ((EventState)e.Event.EventState)
             {
@@ -78,7 +79,27 @@ namespace pOmmes
                 case EventState.Vote:
                     if (e.Event != null)
                     {
-                        if (e.Event.Votes.FirstOrDefault(x => x.User == User.CurrentUser) != null)
+                        var query = from voteQuery in new ParseQuery<Vote>()
+                                    where voteQuery["Event"] == e.Event && voteQuery["User"] == ParseUser.CurrentUser
+                                    select voteQuery;
+                        IEnumerable<Vote> votes = await query.FindAsync();
+
+                        Console.WriteLine(votes.Count());
+
+                        if (votes != null && votes.Count() > 0)
+                        {
+                            DialogResult result = MetroMessageBox.Show(this.Parent.Parent, "Sie haben bereits einmal abgestimmt!", "Abstimmung", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            switch (result)
+                            {
+                                case DialogResult.OK:
+                                    break;
+                                case DialogResult.Cancel:
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        else
                         {
                             RestaurantUserControl restaurantUserControl = new RestaurantUserControl(e.Event);
                             restaurantUserControl.RestaurantUserControl_Select += RestaurantUserControl_RestaurantUserControl_Select;
@@ -91,9 +112,16 @@ namespace pOmmes
                     {
                         if (e.Event.Restaurant != null)
                         {
-                            Order order = e.Event.Orders.FirstOrDefault(x => x.User == User.CurrentUser);
+                            Restaurant restaurant = await e.Event.Restaurant.Query.FirstAsync();
 
-                            FoodUserControl foodUserControl = new FoodUserControl(e.Event.Restaurant);
+                            var query = from orderQuery in new ParseQuery<Order>()
+                                        where orderQuery["Event"] == e.Event
+                                        && orderQuery["User"] == ParseUser.CurrentUser
+                                        && orderQuery["Restaurant"] == restaurant
+                                        select orderQuery;
+                            Order order = await query.FirstAsync();
+
+                            FoodUserControl foodUserControl = new FoodUserControl(e.Event);
                             EventBus.Instance.PostEvent(new UserControlChangeEvent(foodUserControl, UserControlChangeState.Push));
                         }
                     }

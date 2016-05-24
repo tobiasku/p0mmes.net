@@ -30,6 +30,7 @@ namespace pOmmes
             this.eventObject = eventObject;
             MakeOrder(eventObject);
         }
+
         private async void MakeOrder(Event eventObject)
         {
             Restaurant restaurant = await eventObject.Restaurant.Query.FirstAsync();

@@ -63,7 +63,7 @@ namespace pOmmes
 
                     user["ForeName"] = mtxt_ForeName.Text;
                     user["SurName"] = mtxt_SurName.Text;
-                    //user["Company"] = mcmb_Company.SelectedValue;
+                    user["Company"] = mcmb_Company.SelectedValue;
 
                     await user.SignUpAsync();
                     if (ParseUser.CurrentUser != null)

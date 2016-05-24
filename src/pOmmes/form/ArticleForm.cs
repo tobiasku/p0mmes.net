@@ -1,7 +1,8 @@
 ﻿using MetroFramework;
 using MetroFramework.Forms;
+using Parse;
 using pOmmes.Common;
-using pOmmes.Common.Dic;
+using pOmmes.Common;
 using pOmmes.Data;
 using System;
 using System.Collections.Generic;
@@ -37,64 +38,52 @@ namespace pOmmes
             LoadCategoryComboBox();
         }
 
-        private void LoadOptionsGrid()
+        private async void LoadOptionsGrid()
         {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
-            {
-                Collection<pOmmes.Data.Size> sizeCollection = pOmmes.Data.Size.Get();
-                Collection<Option> optionCollection = pOmmes.Data.Option.Get();
+            IEnumerable<Data.Size> sizeCollection = await new ParseQuery<Data.Size>().FindAsync();
+            IEnumerable<Data.Option> optionCollection = await new ParseQuery<Data.Option>().FindAsync();
 
-                this.mg_Options_clm_Option.DataSource = optionCollection;
-                this.mg_Options_clm_Option.DisplayMember = "Name";
+            this.mg_Options_clm_Option.DataSource = optionCollection;
+            this.mg_Options_clm_Option.DisplayMember = "Name";
 
-                this.mg_Options_clm_Size.DataSource = sizeCollection;
-                this.mg_Options_clm_Size.DisplayMember = "Name";
-            }));
+            this.mg_Options_clm_Size.DataSource = sizeCollection;
+            this.mg_Options_clm_Size.DisplayMember = "Name";
         }
 
-        private void LoadSizesGrid()
+        private async void LoadSizesGrid()
         {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
-            {
-                Collection<pOmmes.Data.Size> sizeCollection = pOmmes.Data.Size.Get();
+            IEnumerable<Data.Size> sizeCollection = await new ParseQuery<Data.Size>().FindAsync();
 
-                this.mg_Sizes_clm_Size.DataSource = sizeCollection;
-                this.mg_Sizes_clm_Size.DisplayMember = "Name";
-            }));
+            this.mg_Sizes_clm_Size.DataSource = sizeCollection;
+            this.mg_Sizes_clm_Size.DisplayMember = "Name";
         }
 
-        private void LoadRestaurantComboBox()
+        private async void LoadRestaurantComboBox()
         {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
+            IEnumerable<Restaurant> restaurantCollection = await new ParseQuery<Restaurant>().FindAsync();
+            if (restaurantCollection != null)
             {
-                Collection<Restaurant> restaurantCollection = Restaurant.Get();
-                if (restaurantCollection != null)
+                this.BeginInvoke(new Action(delegate ()
                 {
-                    this.BeginInvoke(new Action(delegate ()
-                    {
-                        mcmb_Restaurant.DataSource = restaurantCollection;
-                        mcmb_Restaurant.DisplayMember = "Name";
-                    }));
+                    mcmb_Restaurant.DataSource = restaurantCollection;
+                    mcmb_Restaurant.DisplayMember = "Name";
+                }));
 
-                }
-            }));
+            }
         }
 
-        private void LoadCategoryComboBox()
+        private async void LoadCategoryComboBox()
         {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(x =>
+            IEnumerable<Category> categoryCollection = await new ParseQuery<Category>().FindAsync();
+            if (categoryCollection != null)
             {
-                Collection<Category> categoryCollection = Category.Get();
-                if (categoryCollection != null)
+                this.BeginInvoke(new Action(delegate ()
                 {
-                    this.BeginInvoke(new Action(delegate ()
-                    {
-                        mcmb_Category.DataSource = categoryCollection;
-                        mcmb_Category.DisplayMember = "Name";
-                    }));
+                    mcmb_Category.DataSource = categoryCollection;
+                    mcmb_Category.DisplayMember = "Name";
+                }));
 
-                }
-            }));
+            }
         }
 
 

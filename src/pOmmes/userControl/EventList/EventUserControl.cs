@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
-using pOmmes.Common;
 using MetroFramework.Controls;
 using pOmmes.Data;
 using System.Threading;
@@ -40,7 +39,7 @@ namespace pOmmes
                 ParseUser user = null;
                 try
                 {
-                    user = await poEvent.User.Query.FirstAsync();
+                    user = await poEvent.User.FetchAsync();
                 }
                 catch (ParseException)
                 {
@@ -79,16 +78,36 @@ namespace pOmmes
                 case EventState.Vote:
                     if (e.Event != null)
                     {
-                        var query = from voteQuery in new ParseQuery<Vote>()
-                                    where voteQuery["Event"] == e.Event && voteQuery["User"] == ParseUser.CurrentUser
-                                    select voteQuery;
-                        IEnumerable<Vote> votes = await query.FindAsync();
-
-                        Console.WriteLine(votes.Count());
-
-                        if (votes != null && votes.Count() > 0)
+                        if (e.Event.DateToVote <= DateTime.Now)
                         {
-                            DialogResult result = MetroMessageBox.Show(this.Parent.Parent, "Sie haben bereits einmal abgestimmt!", "Abstimmung", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            var votesQuery = from votes in new ParseQuery<Vote>()
+                                             where votes["Event"] == e.Event && votes["User"] == ParseUser.CurrentUser
+                                             select votes;
+                            IEnumerable<Vote> voteCollection = await votesQuery.FindAsync();
+
+                            if (voteCollection != null && voteCollection.Count() > 0)
+                            {
+                                DialogResult result = MetroMessageBox.Show(this.Parent.Parent, "Sie haben bereits einmal abgestimmt!", "Abstimmung", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                switch (result)
+                                {
+                                    case DialogResult.OK:
+                                        break;
+                                    case DialogResult.Cancel:
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                RestaurantUserControl restaurantUserControl = new RestaurantUserControl(e.Event);
+                                restaurantUserControl.RestaurantUserControl_Select += RestaurantUserControl_RestaurantUserControl_Select;
+                                EventBus.Instance.PostEvent(new UserControlChangeEvent(restaurantUserControl, UserControlChangeState.Push));
+                            }
+                        }
+                        else
+                        {
+                            DialogResult result = MetroMessageBox.Show(this.Parent.Parent, "Die Zeit um für das Restaurant abzustimmen ist bereits vorbei.", "Abstimmung", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             switch (result)
                             {
                                 case DialogResult.OK:
@@ -99,28 +118,90 @@ namespace pOmmes
                                     break;
                             }
                         }
-                        else
-                        {
-                            RestaurantUserControl restaurantUserControl = new RestaurantUserControl(e.Event);
-                            restaurantUserControl.RestaurantUserControl_Select += RestaurantUserControl_RestaurantUserControl_Select;
-                            EventBus.Instance.PostEvent(new UserControlChangeEvent(restaurantUserControl, UserControlChangeState.Push));
-                        }
                     }
                     break;
                 case EventState.Order:
                     if (e.Event != null)
                     {
+                        if (e.Event.Restaurant == null)
+                        {
+                            var votesQuery = from votes in new ParseQuery<Vote>()
+                                             where votes["Event"] == e.Event
+                                             select votes;
+                            IEnumerable<Vote> voteCollection = await votesQuery.FindAsync();
+
+                            Dictionary<Restaurant, int> restaurantDic = new Dictionary<Restaurant, int>();
+
+                            if (voteCollection != null && voteCollection.Count() > 0)
+                            {
+                                foreach (Vote vote in voteCollection)
+                                {
+                                    if (restaurantDic.ContainsKey(vote.Restaurant))
+                                    {
+                                        restaurantDic[vote.Restaurant] += 1;
+                                    }
+                                    else
+                                    {
+                                        restaurantDic.Add(vote.Restaurant, 1);
+                                    }
+                                }
+                            }
+
+                            if (restaurantDic != null && restaurantDic.Count > 0)
+                            {
+                                Collection<KeyValuePair<Restaurant, int>> highestCollection = new Collection<KeyValuePair<Restaurant, int>>();
+                                foreach (KeyValuePair<Restaurant, int> restaurant in restaurantDic)
+                                {
+                                    if (highestCollection.Count > 0)
+                                    {
+                                        foreach (KeyValuePair<Restaurant, int> restaurantTemp in highestCollection)
+                                        {
+                                            if (restaurantTemp.Value > restaurant.Value)
+                                            {
+                                                highestCollection.Clear();
+                                                highestCollection.Add(restaurant);
+                                            }
+                                            else if (restaurantTemp.Value == restaurant.Value)
+                                            {
+                                                highestCollection.Add(restaurant);
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        highestCollection.Add(restaurant);
+                                    }
+                                }
+
+                                if (highestCollection.Count > 0)
+                                {
+                                    if (highestCollection.Count == 1)
+                                    {
+                                        e.Event.Restaurant = highestCollection.First().Key;
+                                        await e.Event.SaveAsync();
+                                    }
+                                    else
+                                    {
+                                        //TODO: Random
+                                    }
+                                }
+                                else
+                                {
+                                    //TODO: Error
+                                }
+                            }
+                            else
+                            {
+                                //TODO: Error
+                            }
+                        }
+
                         if (e.Event.Restaurant != null)
                         {
-                            Restaurant restaurant = await e.Event.Restaurant.Query.FirstAsync();
-
-                            var query = from orderQuery in new ParseQuery<Order>()
-                                        where orderQuery["Event"] == e.Event
-                                        && orderQuery["User"] == ParseUser.CurrentUser
-                                        && orderQuery["Restaurant"] == restaurant
-                                        select orderQuery;
-                            Order order = await query.FirstAsync();
-
                             FoodUserControl foodUserControl = new FoodUserControl(e.Event);
                             EventBus.Instance.PostEvent(new UserControlChangeEvent(foodUserControl, UserControlChangeState.Push));
                         }
@@ -142,11 +223,13 @@ namespace pOmmes
             if (e.Event != null && e.Restaurant != null)
             {
                 Vote vote = new Vote();
-                vote.Restaurant.Add(e.Restaurant);
-                vote.User.Add(ParseUser.CurrentUser);
-                vote.Event.Add(e.Event);
+                vote.Restaurant = e.Restaurant;
+                vote.User = ParseUser.CurrentUser;
+                vote.Event = e.Event;
 
                 await vote.SaveAsync();
+
+                EventBus.Instance.PostEvent(new UserControlChangeEvent(null, UserControlChangeState.Pop));
             }
         }
 

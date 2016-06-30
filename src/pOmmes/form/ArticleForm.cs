@@ -1,8 +1,6 @@
 ﻿using MetroFramework;
 using MetroFramework.Forms;
 using Parse;
-using pOmmes.Common;
-using pOmmes.Common;
 using pOmmes.Data;
 using System;
 using System.Collections.Generic;
@@ -29,6 +27,8 @@ namespace pOmmes
                 article = new Article();
             }
 
+            this.article = article;
+
             InitializeComponent();
 
             LoadSizesGrid();
@@ -42,20 +42,33 @@ namespace pOmmes
         {
             IEnumerable<Data.Size> sizeCollection = await new ParseQuery<Data.Size>().FindAsync();
             IEnumerable<Data.Option> optionCollection = await new ParseQuery<Data.Option>().FindAsync();
+            if (sizeCollection != null && optionCollection != null)
+            {
+                this.BeginInvoke(new Action(delegate ()
+                {
+                    this.mg_Options_clm_Option.DisplayMember = "Name";
+                    this.mg_Options_clm_Option.ValueMember = "ObjectId";
+                    this.mg_Options_clm_Option.DataSource = optionCollection.ToList();
 
-            this.mg_Options_clm_Option.DataSource = optionCollection;
-            this.mg_Options_clm_Option.DisplayMember = "Name";
-
-            this.mg_Options_clm_Size.DataSource = sizeCollection;
-            this.mg_Options_clm_Size.DisplayMember = "Name";
+                    this.mg_Options_clm_Size.DisplayMember = "Name";
+                    this.mg_Options_clm_Size.ValueMember = "ObjectId";
+                    this.mg_Options_clm_Size.DataSource = sizeCollection.ToList();
+                }));
+            }
         }
 
         private async void LoadSizesGrid()
         {
             IEnumerable<Data.Size> sizeCollection = await new ParseQuery<Data.Size>().FindAsync();
-
-            this.mg_Sizes_clm_Size.DataSource = sizeCollection;
-            this.mg_Sizes_clm_Size.DisplayMember = "Name";
+            if (sizeCollection != null)
+            {
+                this.BeginInvoke(new Action(delegate ()
+                {
+                    this.mg_Sizes_clm_Size.DisplayMember = "Name";
+                    this.mg_Sizes_clm_Size.ValueMember = "ObjectId";
+                    this.mg_Sizes_clm_Size.DataSource = sizeCollection.ToList();
+                }));
+            }
         }
 
         private async void LoadRestaurantComboBox()
@@ -65,8 +78,9 @@ namespace pOmmes
             {
                 this.BeginInvoke(new Action(delegate ()
                 {
-                    mcmb_Restaurant.DataSource = restaurantCollection;
-                    mcmb_Restaurant.DisplayMember = "Name";
+                    this.mcmb_Restaurant.DisplayMember = "Name";
+                    this.mcmb_Restaurant.ValueMember = "ObjectId";
+                    this.mcmb_Restaurant.DataSource = restaurantCollection.ToList();
                 }));
 
             }
@@ -79,8 +93,9 @@ namespace pOmmes
             {
                 this.BeginInvoke(new Action(delegate ()
                 {
-                    mcmb_Category.DataSource = categoryCollection;
-                    mcmb_Category.DisplayMember = "Name";
+                    this.mcmb_Category.DisplayMember = "Name";
+                    this.mcmb_Category.ValueMember = "ObjectId";
+                    this.mcmb_Category.DataSource = categoryCollection.ToList();
                 }));
 
             }
@@ -92,21 +107,47 @@ namespace pOmmes
             try
             {
                 if (!string.IsNullOrEmpty(mtxt_Name.Text) &&
-                    !string.IsNullOrEmpty(mtxt_Name.Text) &&
+                    !string.IsNullOrEmpty(mtxt_Number.Text) &&
                     !string.IsNullOrEmpty(mtxt_Description.Text))
                 {
-                    //User user = new User();
+                    article.Name = mtxt_Name.Text;
+                    article.Number = mtxt_Number.Text;
+                    article.Description = mtxt_Description.Text;
 
-                    //user.UserName = mtxt_Name.Text;
-                    //user.Password = mtxt_Password.Text;
-                    //user.Email = mtxt_Email.Text;
-                    //user.ForeName = mtxt_Description.Text;
-                    //user.SurName = mtxt_SurName.Text;
-                    //user.Company = (Restaurant)mcmb_Restaurant.SelectedValue;
+                    Restaurant restaurant = ParseObject.CreateWithoutData<Restaurant>(mcmb_Restaurant.SelectedValue.ToString());
+                    if (restaurant != null)
+                    {
+                        article.Restaurant = restaurant;
+                    }
+
+                    Category category = ParseObject.CreateWithoutData<Category>(mcmb_Category.SelectedValue.ToString());
+                    if (category != null)
+                    {
+                        article.Category = category;
+                    }
+
+                    article.SaveAsync();
 
 
+                    foreach (DataGridViewRow row in mg_Sizes.Rows)
+                    {
+                        ArticleToSize size = new ArticleToSize();
+                        size.Article = article;
+                        size.Price = Convert.ToDouble(row.Cells["mg_Sizes_txt_Price"].Value);
+                        size.Size = ParseObject.CreateWithoutData<Data.Size>(row.Cells["mg_Sizes_clm_Size"].Value.ToString());
+                        size.SaveAsync();
+                    }
 
-
+                    foreach (DataGridViewRow row in mg_Options.Rows)
+                    {
+                        ArticleToOption option= new ArticleToOption();
+                        option.Article = article;
+                        option.Price = Convert.ToDouble(row.Cells["mg_Options_txt_Price"].Value);
+                        option.Size = ParseObject.CreateWithoutData<Data.Size>(row.Cells["mg_Options_clm_Size"].Value.ToString());
+                        option.Option = ParseObject.CreateWithoutData<Data.Option>(row.Cells["mg_Options_clm_Option"].Value.ToString());
+                        option.SaveAsync();
+                    }
+                    
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
@@ -127,31 +168,20 @@ namespace pOmmes
             this.Close();
         }
 
+        //private void mg_Sizes_UserAddedRow(object sender, DataGridViewRowEventArgs e)
+        //{
+        //    Console.WriteLine("UserAddedRow");
 
-        private void mg_Sizes_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            Console.WriteLine("CellValueChanged");
-        }
+        //    ArticleToSize articleSize = new ArticleToSize();
 
-        private void mg_Sizes_UserAddedRow(object sender, DataGridViewRowEventArgs e)
-        {
-            Console.WriteLine("UserAddedRow");
-
-            ArticleToSize articleSize = new ArticleToSize();
-
-            if (e.Row != null)
-            {
-                DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)e.Row.Cells["mg_Sizes_clm_Size"];
-                if (cell != null)
-                {
-                    Data.Size size = (Data.Size)cell.Value;
-                }
-            }
-        }
-
-        private void mg_Sizes_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
-        {
-            Console.WriteLine("UserDeletedRow");
-        }
+        //    if (e.Row != null)
+        //    {
+        //        DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)e.Row.Cells["mg_Sizes_clm_Size"];
+        //        if (cell != null)
+        //        {
+        //            Data.Size size = (Data.Size)cell.Value;
+        //        }
+        //    }
+        //}
     }
 }

@@ -14,25 +14,24 @@ namespace pOmmes.Data
         //-- Fields
         //--------------------------------------------------------------------------
         [ParseFieldName("User")]
-        public ParseRelation<ParseUser> User
+        public ParseUser User
         {
-            set { SetProperty<ParseRelation<ParseUser>>(value); }
-            get { return GetRelationProperty<ParseUser>(); }
+            set { SetProperty<ParseUser>(value); }
+            get { return GetProperty<ParseUser>(); }
         }
 
-
         [ParseFieldName("Company")]
-        public ParseRelation<Company> Company
+        public Company Company
         {
-            set { SetProperty<ParseRelation<Company>>(value); }
-            get { return GetRelationProperty<Company>(); }
+            set { SetProperty<Company>(value); }
+            get { return GetProperty<Company>(); }
         }
 
         [ParseFieldName("Restaurant")]
-        public ParseRelation<Restaurant> Restaurant
+        public Restaurant Restaurant
         {
-            set { SetProperty<ParseRelation<Restaurant>>(value); }
-            get { return GetRelationProperty<Restaurant>(); }
+            set { SetProperty<Restaurant>(value); }
+            get { return GetProperty<Restaurant>(); }
         }
 
         [ParseFieldName("DateToOrder")]

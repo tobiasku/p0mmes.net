@@ -14,10 +14,10 @@ namespace pOmmes.Data
         //-- Fields
         //--------------------------------------------------------------------------
         [ParseFieldName("User")]
-        public ParseRelation<ParseUser> User
+        public ParseUser User
         {
-            set { SetProperty<ParseRelation<ParseUser>>(value); }
-            get { return GetRelationProperty<ParseUser>(); }
+            set { SetProperty<ParseUser>(value); }
+            get { return GetProperty<ParseUser>(); }
         }
 
         [ParseFieldName("Price")]
@@ -28,17 +28,17 @@ namespace pOmmes.Data
         }
 
         [ParseFieldName("Event")]
-        public ParseRelation<Event> Event
+        public Event Event
         {
-            set { SetProperty<ParseRelation<Event>>(value); }
-            get { return GetRelationProperty<Event>(); }
+            set { SetProperty<Event>(value); }
+            get { return GetProperty<Event>(); }
         }
 
         [ParseFieldName("Restaurant")]
-        public ParseRelation<Restaurant> Restaurant
+        public Restaurant Restaurant
         {
-            set { SetProperty<ParseRelation<Restaurant>>(value); }
-            get { return GetRelationProperty<Restaurant>(); }
+            set { SetProperty<Restaurant>(value); }
+            get { return GetProperty<Restaurant>(); }
         }
     }
 }

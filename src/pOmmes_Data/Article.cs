@@ -16,36 +16,36 @@ namespace pOmmes.Data
         [ParseFieldName("Name")]
         public string Name
         {
-            get;
-            set;
+            get { return GetProperty<string>(); }
+            set { SetProperty<string>(value); }
         }
 
         [ParseFieldName("Number")]
-        public int Number
+        public string Number
         {
-            get;
-            set;
+            get { return GetProperty<string>(); }
+            set { SetProperty<string>(value); }
         }
 
         [ParseFieldName("Restaurant")]
-        public ParseRelation<Restaurant> Restaurant
+        public Restaurant Restaurant
         {
-            set { SetProperty<ParseRelation<Restaurant>>(value); }
-            get { return GetRelationProperty<Restaurant>(); }
+            set { SetProperty<Restaurant>(value); }
+            get { return GetProperty<Restaurant>(); }
         }
 
         [ParseFieldName("Description")]
         public string Description
         {
-            get;
-            set;
+            get { return GetProperty<string>(); }
+            set { SetProperty<string>(value); }
         }
 
         [ParseFieldName("Category")]
-        public ParseRelation<Category> Category
+        public Category Category
         {
-            set { SetProperty<ParseRelation<Category>>(value); }
-            get { return GetRelationProperty<Category>(); }
+            set { SetProperty<Category>(value); }
+            get { return GetProperty<Category>(); }
         }
     }
 }

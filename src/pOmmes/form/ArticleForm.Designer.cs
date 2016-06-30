@@ -272,9 +272,6 @@
             this.mg_Sizes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.mg_Sizes.Size = new System.Drawing.Size(333, 112);
             this.mg_Sizes.TabIndex = 22;
-            this.mg_Sizes.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.mg_Sizes_CellValueChanged);
-            this.mg_Sizes.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.mg_Sizes_UserAddedRow);
-            this.mg_Sizes.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.mg_Sizes_UserDeletedRow);
             // 
             // mg_Sizes_clm_Size
             // 

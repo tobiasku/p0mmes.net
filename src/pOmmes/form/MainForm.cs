@@ -1,5 +1,5 @@
 ﻿using MetroFramework.Forms;
-using pOmmes.Common;
+
 using pOmmes.Data;
 using System;
 using System.Collections.Generic;
@@ -68,7 +68,7 @@ namespace pOmmes
         }
         
 
-        private async void MainForm_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             if (ParseUser.CurrentUser == null)
             {
@@ -89,19 +89,10 @@ namespace pOmmes
             }
             if (ParseUser.CurrentUser != null)
             {
-                var query = new ParseQuery<Event>();
-                IEnumerable<Event> eventCollection = await query.FindAsync();
-
-
                 mlink_CurrentUser.Text = "Logged in as " + ParseUser.CurrentUser["username"];
 
                 EventBus.Instance.PostEvent(new UserControlChangeEvent(new EventUserControl(), UserControlChangeState.Push));
             }
-        }
-
-        private void RestaurantControl_RestaurantUserControl_Select(object sender, RestaurantUserControlEventArgs e)
-        {
-            EventBus.Instance.PostEvent(new UserControlChangeEvent(new FoodUserControl(e.Event), UserControlChangeState.Push));
         }
 
         private void mlink_CurrentUser_Click(object sender, EventArgs e)

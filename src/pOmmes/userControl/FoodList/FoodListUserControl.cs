@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using pOmmes.Common;
+
 using MetroFramework.Controls;
 using System.Collections.ObjectModel;
 using pOmmes.Data;
@@ -35,7 +35,7 @@ namespace pOmmes
 
         private async void SetFoodListItem()
         {
-            var query = new ParseQuery<ArticleToSize>().WhereEqualTo("article", article);
+            var query = new ParseQuery<ArticleToSize>().WhereEqualTo("Article", article);
             IEnumerable<ArticleToSize> sizeCollection = await query.FindAsync();
 
             mlbl_name.Text = article.Name;

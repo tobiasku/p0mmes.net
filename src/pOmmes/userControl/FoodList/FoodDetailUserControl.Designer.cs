@@ -126,7 +126,7 @@
             this.clb_Options.Size = new System.Drawing.Size(253, 119);
             this.clb_Options.TabIndex = 10;
             this.clb_Options.ThreeDCheckBoxes = true;
-            this.clb_Options.SelectedValueChanged += new System.EventHandler(this.clb_Options_SelectedValueChanged);
+            //this.clb_Options.SelectedValueChanged += new System.EventHandler(this.clb_Options_SelectedValueChanged);
             // 
             // mlink_Close
             // 

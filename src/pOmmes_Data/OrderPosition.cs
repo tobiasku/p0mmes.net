@@ -14,10 +14,10 @@ namespace pOmmes.Data
         //-- Fields
         //--------------------------------------------------------------------------
         [ParseFieldName("Article")]
-        public ParseRelation<Article> Article
+        public Article Article
         {
-            set { SetProperty<ParseRelation<Article>>(value); }
-            get { return GetRelationProperty<Article>(); }
+            set { SetProperty<Article>(value); }
+            get { return GetProperty<Article>(); }
         }
 
         [ParseFieldName("ExtraInformation")]
@@ -35,10 +35,10 @@ namespace pOmmes.Data
         }
 
         [ParseFieldName("Order")]
-        public ParseRelation<Order> Order
+        public Order Order
         {
-            set { SetProperty<ParseRelation<Order>>(value); }
-            get { return GetRelationProperty<Order>(); }
+            set { SetProperty<Order>(value); }
+            get { return GetProperty<Order>(); }
         }
     }
 }

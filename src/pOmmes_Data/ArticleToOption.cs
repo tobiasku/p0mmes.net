@@ -21,31 +21,31 @@ namespace pOmmes.Data
         }
 
         [ParseFieldName("Size")]
-        public ParseRelation<Size> Size
+        public Size Size
         {
-            set { SetProperty<ParseRelation<Size>>(value); }
-            get { return GetRelationProperty<Size>(); }
+            set { SetProperty<Size>(value); }
+            get { return GetProperty<Size>(); }
         }
 
         [ParseFieldName("Option")]
-        public ParseRelation<Option> Option
+        public Option Option
         {
-            set { SetProperty<ParseRelation<Option>>(value); }
-            get { return GetRelationProperty<Option>(); }
+            set { SetProperty<Option>(value); }
+            get { return GetProperty<Option>(); }
         }
 
         [ParseFieldName("Article")]
-        public ParseRelation<Article> Article
+        public Article Article
         {
-            set { SetProperty<ParseRelation<Article>>(value); }
-            get { return GetRelationProperty<Article>(); }
+            set { SetProperty<Article>(value); }
+            get { return GetProperty<Article>(); }
         }
 
         public override string ToString()
         {
             if (Option != null)
             {
-                return Option.ToString() + " (+ " + Price.ToString("0.00") + " €)";
+                return Option.Name.ToString() + " (+ " + Price.ToString("0.00") + " €)";
             }
             else
             {

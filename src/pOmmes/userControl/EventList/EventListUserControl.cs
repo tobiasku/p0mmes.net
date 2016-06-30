@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using pOmmes.Common;
+
 using MetroFramework.Controls;
 using pOmmes.Data;
 using Parse;
@@ -39,7 +39,7 @@ namespace pOmmes
                 {
                     try
                     {
-                        Restaurant restaurant = await pevent.Restaurant.Query.FirstAsync();
+                        Restaurant restaurant = await pevent.Restaurant.FetchAsync();
                         if (restaurant != null)
                         {
                             mlbl_restaurant.Text = restaurant.Name;
@@ -90,17 +90,34 @@ namespace pOmmes
 
         public event EventHandler<EventUserControlEventArgs> EventListUserControl_Clicked;
 
-        private void ThrowEventListUserControl_Clicked()
+        private void ThrowEventListUserControl_Clicked(MouseButton button)
         {
             if (EventListUserControl_Clicked != null)
             {
-                this.EventListUserControl_Clicked(this, new EventUserControlEventArgs(this.pevent));
+                this.EventListUserControl_Clicked(this, new EventUserControlEventArgs(this.pevent, button));
             }
         }
 
-        private void EventListUserControl_Click(object sender, EventArgs e)
+        private void EventListUserControl_MouseUp(object sender, MouseEventArgs e)
         {
-            ThrowEventListUserControl_Clicked();
+            if (e != null)
+            {
+                switch (e.Button)
+                {
+                    case MouseButtons.Left:
+                        ThrowEventListUserControl_Clicked(MouseButton.Left);
+                        break;
+                    case MouseButtons.Middle:
+                        ThrowEventListUserControl_Clicked(MouseButton.Middle);
+                        break;
+                    case MouseButtons.Right:
+                        ThrowEventListUserControl_Clicked(MouseButton.Right);
+                        break;
+                    case MouseButtons.None:
+                        ThrowEventListUserControl_Clicked(MouseButton.None);
+                        break;
+                }
+            }
         }
     }
 }

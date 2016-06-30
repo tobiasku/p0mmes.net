@@ -1,5 +1,5 @@
 ﻿using Parse;
-using pOmmes.Common;
+
 using pOmmes.Data;
 using System;
 using System.Collections.Generic;
@@ -36,8 +36,8 @@ namespace pOmmes
 
             ParseClient.Initialize(new ParseClient.Configuration
             {
-                ApplicationId = "",
-                Server = "",
+                ApplicationId = "gcB3bvLRmFS2uRur2UZKrAvvycyFA59lyrQ7VqZW",
+                Server = "http://p0mmes.herokuapp.com/api/",
             });
             #endregion
 
@@ -45,6 +45,7 @@ namespace pOmmes
             Application.SetCompatibleTextRenderingDefault(false);
 
             MainForm frm = new MainForm();
+//            ArticleForm frm = new ArticleForm(null);
             frm.ShowDialog();
         }
     }

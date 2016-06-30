@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
 using MetroFramework.Controls;
-using pOmmes.Common;
+
 using pOmmes.Data;
 using System.Threading;
 using MetroFramework;
@@ -55,7 +55,7 @@ namespace pOmmes
 
         private void RestaurantListUserControl_Clicked(object sender, RestaurantUserControlEventArgs e)
         {
-            DialogResult result = MetroMessageBox.Show(this.Parent.Parent, "Möchten sie für " + e.Restaurant.Name + " stimmen?", "Abstimmung", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            DialogResult result = MetroMessageBox.Show(this, "Möchten sie für " + e.Restaurant.Name + " stimmen?", "Abstimmung", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             switch (result)
             {
                 case DialogResult.OK:

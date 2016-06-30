@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using pOmmes.Common;
 using MetroFramework.Controls;
 using pOmmes.Data;
 using System.IO;

@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
-using pOmmes.Common;
 using MetroFramework.Controls;
 using pOmmes.Data;
 using System.Threading;
@@ -24,19 +23,31 @@ namespace pOmmes
 
         public FoodUserControl(Event eventObject)
         {
-            InitializeComponent();
-            EventBus.Instance.Register(this);
-
             this.eventObject = eventObject;
+
+            InitializeComponent();
+        }
+
+        private void FoodUserControl_Load(object sender, EventArgs e)
+        {
+            EventBus.Instance.Register(this);
             MakeOrder(eventObject);
+            FillFoodList();
         }
 
         private async void MakeOrder(Event eventObject)
         {
-            Restaurant restaurant = await eventObject.Restaurant.Query.FirstAsync();
+            Restaurant restaurant = await eventObject.Restaurant.FetchAsync();
 
-            var query = new ParseQuery<Order>().WhereEqualTo("user", ParseUser.CurrentUser).WhereEqualTo("event", eventObject).WhereEqualTo("restaurant", restaurant);
-            order = await query.FirstAsync();
+            try
+            {
+                var query = new ParseQuery<Order>().WhereEqualTo("User", ParseUser.CurrentUser).WhereEqualTo("Event", eventObject).WhereEqualTo("Restaurant", restaurant);
+                order = await query.FirstAsync();
+            }
+            catch (ParseException e)
+            {
+
+            }
 
             if (order != null)
             {
@@ -45,22 +56,16 @@ namespace pOmmes
             else
             {
                 order = new Order();
-                order.Event.Add(eventObject);
-                order.User.Add(ParseUser.CurrentUser);
-                order.Restaurant.Add(restaurant);
+                order.Event = eventObject;
+                order.User = ParseUser.CurrentUser;
+                order.Restaurant = restaurant;
                 await order.SaveAsync();
             }
         }
 
-        private void FoodUserControl_Load(object sender, EventArgs e)
-        {
-            FillFoodList();
-        }
-
         private async void FillFoodList()
         {
-            Restaurant restaurant = eventObject.Restaurant.Query.FirstAsync().Result;
-
+            Restaurant restaurant = await eventObject.Restaurant.FetchAsync();
             mlbl_Restaurant.Text = restaurant.Name;
 
             var query = new ParseQuery<Article>().WhereEqualTo("Restaurant", restaurant);
@@ -70,7 +75,7 @@ namespace pOmmes
 
             foreach (Article article in articleCollection)
             {
-                Category category = article.Category.Query.FirstAsync().Result;
+                Category category = await article.Category.FetchAsync();
 
                 this.mtc_FoodList.Invoke(new Action(delegate ()
                 {
@@ -113,6 +118,11 @@ namespace pOmmes
         private void mbtn_order_Click(object sender, EventArgs e)
         {
             EventBus.Instance.PostEvent(new FoodControlChangeEvent(new FoodBasketUserControl(orderPositions, null), UserControlChangeState.Push));
+            //    foreach (OrderPosition orderPosition in orderPositions)
+            //    {
+            //        orderPosition.Order.Add(order);
+            //        await orderPosition.SaveAsync();
+            //    }
         }
 
         FoodDetailUserControl actualFoodDetailUserControl;
@@ -155,7 +165,7 @@ namespace pOmmes
             }
         }
 
-        private void PushUserControl(FoodDetailUserControl control)
+        private async void PushUserControl(FoodDetailUserControl control)
         {
             if (actualFoodDetailUserControl != null)
             {
@@ -164,7 +174,7 @@ namespace pOmmes
 
             if (control != null)
             {
-                Category category = control.article.Category.Query.FirstAsync().Result;
+                Category category = await control.article.Category.FetchAsync();
 
                 control.Location = new Point((this.Size.Width / 2 - control.Size.Width / 2), (this.Size.Height / 2 - control.Size.Height / 2));
                 this.mtc_FoodList.TabPages[category.ObjectId].Controls.Add(control);
@@ -191,14 +201,5 @@ namespace pOmmes
 
             actualFoodObject = null;
         }
-
-        //private async void mbtn_order_Click(object sender, EventArgs e)
-        //{
-        //    foreach (OrderPosition orderPosition in orderPositions)
-        //    {
-        //        orderPosition.Order.Add(order);
-        //        await orderPosition.SaveAsync();
-        //    }
-        //}
     }
 }

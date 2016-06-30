@@ -21,24 +21,24 @@ namespace pOmmes.Data
         }
 
         [ParseFieldName("Size")]
-        public ParseRelation<Size> Size
+        public Size Size
         {
-            set { SetProperty<ParseRelation<Size>>(value); }
-            get { return GetRelationProperty<Size>(); }
+            set { SetProperty<Size>(value); }
+            get { return GetProperty<Size>(); }
         }
 
         [ParseFieldName("Article")]
-        public ParseRelation<Article> Article
+        public Article Article
         {
-            set { SetProperty<ParseRelation<Article>>(value); }
-            get { return GetRelationProperty<Article>(); }
+            set { SetProperty<Article>(value); }
+            get { return GetProperty<Article>(); }
         }
 
         [ParseFieldName("OrderPosition")]
-        public ParseRelation<OrderPosition> OrderPosition
+        public OrderPosition OrderPosition
         {
-            set { SetProperty<ParseRelation<OrderPosition>>(value); }
-            get { return GetRelationProperty<OrderPosition>(); }
+            set { SetProperty<OrderPosition>(value); }
+            get { return GetProperty<OrderPosition>(); }
         }
 
         public override string ToString()

@@ -47,7 +47,7 @@
             this.mlbl_name.Name = "mlbl_name";
             this.mlbl_name.Size = new System.Drawing.Size(0, 0);
             this.mlbl_name.TabIndex = 0;
-            this.mlbl_name.Click += new System.EventHandler(this.EventListUserControl_Click);
+            this.mlbl_name.MouseUp += new System.Windows.Forms.MouseEventHandler(this.EventListUserControl_MouseUp);
             // 
             // mpnl_main
             // 
@@ -68,7 +68,7 @@
             this.mpnl_main.VerticalScrollbarBarColor = false;
             this.mpnl_main.VerticalScrollbarHighlightOnWheel = false;
             this.mpnl_main.VerticalScrollbarSize = 10;
-            this.mpnl_main.Click += new System.EventHandler(this.EventListUserControl_Click);
+            this.mpnl_main.MouseUp += new System.Windows.Forms.MouseEventHandler(this.EventListUserControl_MouseUp);
             // 
             // mpnl_hairline
             // 
@@ -86,7 +86,7 @@
             this.mpnl_hairline.VerticalScrollbarBarColor = true;
             this.mpnl_hairline.VerticalScrollbarHighlightOnWheel = false;
             this.mpnl_hairline.VerticalScrollbarSize = 10;
-            this.mpnl_hairline.Click += new System.EventHandler(this.EventListUserControl_Click);
+            this.mpnl_hairline.MouseUp += new System.Windows.Forms.MouseEventHandler(this.EventListUserControl_MouseUp);
             // 
             // mlbl_restaurant
             // 
@@ -97,7 +97,7 @@
             this.mlbl_restaurant.Name = "mlbl_restaurant";
             this.mlbl_restaurant.Size = new System.Drawing.Size(0, 0);
             this.mlbl_restaurant.TabIndex = 5;
-            this.mlbl_restaurant.Click += new System.EventHandler(this.EventListUserControl_Click);
+            this.mlbl_restaurant.MouseUp += new System.Windows.Forms.MouseEventHandler(this.EventListUserControl_MouseUp);
             // 
             // mlbl_description
             // 
@@ -106,7 +106,7 @@
             this.mlbl_description.Name = "mlbl_description";
             this.mlbl_description.Size = new System.Drawing.Size(0, 0);
             this.mlbl_description.TabIndex = 3;
-            this.mlbl_description.Click += new System.EventHandler(this.EventListUserControl_Click);
+            this.mlbl_description.MouseUp += new System.Windows.Forms.MouseEventHandler(this.EventListUserControl_MouseUp);
             // 
             // pic_state
             // 
@@ -117,7 +117,7 @@
             this.pic_state.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pic_state.TabIndex = 2;
             this.pic_state.TabStop = false;
-            this.pic_state.Click += new System.EventHandler(this.EventListUserControl_Click);
+            this.pic_state.MouseUp += new System.Windows.Forms.MouseEventHandler(this.EventListUserControl_MouseUp);
             // 
             // EventListUserControl
             // 
@@ -128,14 +128,12 @@
             this.Name = "EventListUserControl";
             this.Size = new System.Drawing.Size(392, 90);
             this.Load += new System.EventHandler(this.EventListUserControl_Load);
-            this.Click += new System.EventHandler(this.EventListUserControl_Click);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.EventListUserControl_MouseUp);
             this.mpnl_main.ResumeLayout(false);
             this.mpnl_main.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_state)).EndInit();
             this.ResumeLayout(false);
-
         }
-
         #endregion
 
         private MetroFramework.Controls.MetroLabel mlbl_name;

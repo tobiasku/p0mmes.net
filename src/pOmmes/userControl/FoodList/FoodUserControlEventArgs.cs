@@ -10,8 +10,16 @@ namespace pOmmes
 {
     public class FoodUserControlEventArgs
     {
-        public FoodUserControlEventArgs()
+        public FoodUserControlEventArgs(Article article)
         {
+            this.article = article;
+        }
+
+        private Article article;
+        public Article Article
+        {
+            get { return article; }
+            set { article = value; }
         }
     }
 }

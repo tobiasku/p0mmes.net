@@ -37,7 +37,7 @@ namespace pOmmes
             ParseClient.Initialize(new ParseClient.Configuration
             {
                 ApplicationId = "gcB3bvLRmFS2uRur2UZKrAvvycyFA59lyrQ7VqZW",
-                Server = "http://p0mmes.herokuapp.com/api/",
+                Server = "https://p0mmes.herokuapp.com/api/",
             });
             #endregion
 

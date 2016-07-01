@@ -10,6 +10,11 @@ namespace pOmmes.Data
     [ParseClassName("OrderPosition")]
     public class OrderPosition : ParseObject
     {
+        public OrderPosition()
+        {
+            OrderOptions = new Collection<OrderPositionToOption>();
+        }
+
         //--------------------------------------------------------------------------
         //-- Fields
         //--------------------------------------------------------------------------
@@ -40,5 +45,9 @@ namespace pOmmes.Data
             set { SetProperty<Order>(value); }
             get { return GetProperty<Order>(); }
         }
+
+        public OrderPositionToSize OrderSize { get; set; }
+
+        public Collection<OrderPositionToOption> OrderOptions { get; set; }
     }
 }

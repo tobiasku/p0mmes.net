@@ -20,10 +20,9 @@ namespace pOmmes
         Article article;
         Order order;
 
-        public FoodListUserControl(Article article,Order order)
+        public FoodListUserControl(Article article)
         {
             this.article = article;
-            this.order = order;
 
             InitializeComponent();
         }
@@ -45,19 +44,11 @@ namespace pOmmes
 
         private void FoodListUserControl_Click(object sender, EventArgs e)
         {
-            FoodDetailUserControl foodDetailUserControl = new FoodDetailUserControl(article, order);
-            foodDetailUserControl.FoodDetailUserControl_Select += FoodDetailUserControl_FoodDetailUserControl_Select;
-            EventBus.Instance.PostEvent(new FoodControlChangeEvent(foodDetailUserControl, UserControlChangeState.Push));
-        }
+            ThrowFoodDetailUserControl_Select(new FoodUserControlEventArgs(article));
+        }        
 
-        private void FoodDetailUserControl_FoodDetailUserControl_Select(object sender, FoodDetailUserControlEventArgs e)
-        {
-            ThrowFoodDetailUserControl_Select(e);
-        }
-
-        public event EventHandler<FoodDetailUserControlEventArgs> FoodDetailUserControl_Select;
-
-        private void ThrowFoodDetailUserControl_Select(FoodDetailUserControlEventArgs eventArgs)
+        public event EventHandler<FoodUserControlEventArgs> FoodDetailUserControl_Select;
+        private void ThrowFoodDetailUserControl_Select(FoodUserControlEventArgs eventArgs)
         {
             if (FoodDetailUserControl_Select != null)
             {

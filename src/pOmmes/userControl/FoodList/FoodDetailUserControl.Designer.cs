@@ -75,6 +75,7 @@
             this.mlbl_description.Name = "mlbl_description";
             this.mlbl_description.Size = new System.Drawing.Size(209, 46);
             this.mlbl_description.TabIndex = 14;
+            this.mlbl_description.WrapToLine = true;
             // 
             // mlbl_desc_ExtraInformation
             // 
@@ -126,7 +127,7 @@
             this.clb_Options.Size = new System.Drawing.Size(253, 119);
             this.clb_Options.TabIndex = 10;
             this.clb_Options.ThreeDCheckBoxes = true;
-            //this.clb_Options.SelectedValueChanged += new System.EventHandler(this.clb_Options_SelectedValueChanged);
+            this.clb_Options.SelectedValueChanged += new System.EventHandler(this.clb_Options_SelectedValueChanged);
             // 
             // mlink_Close
             // 
@@ -160,7 +161,7 @@
             // mbtn_order
             // 
             this.mbtn_order.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(6)))), ((int)(((byte)(19)))));
-            this.mbtn_order.BackgroundImage = Resources.pOmmes_Resources.ic_shopping_cart_white_48dp;
+            this.mbtn_order.BackgroundImage = global::pOmmes.Resources.pOmmes_Resources.ic_shopping_cart_white_48dp;
             this.mbtn_order.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.mbtn_order.Location = new System.Drawing.Point(180, 334);
             this.mbtn_order.Name = "mbtn_order";

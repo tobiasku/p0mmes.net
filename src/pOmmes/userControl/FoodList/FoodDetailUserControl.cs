@@ -17,7 +17,6 @@ namespace pOmmes
     public partial class FoodDetailUserControl : MetroUserControl
     {
         public Article article;
-        public Order order;
 
         public int quantity = 1;
         public ArticleToSize size;
@@ -27,7 +26,7 @@ namespace pOmmes
         public Collection<ArticleToOption> selectedOptions = new Collection<ArticleToOption>();
 
 
-        public FoodDetailUserControl(Article article, Order order)
+        public FoodDetailUserControl(Article article)
         {
             this.article = article;
             InitializeComponent();
@@ -178,21 +177,22 @@ namespace pOmmes
             EventBus.Instance.PostEvent(new FoodControlChangeEvent(this, UserControlChangeState.Pop));
         }
 
-        private async void mbtn_order_Click(object sender, EventArgs e)
+        private void mbtn_order_Click(object sender, EventArgs e)
         {
             OrderPosition orderPosition = new OrderPosition();
+
             orderPosition.Article = article;
             orderPosition.ExtraInformation = mtxt_ExtraWishes.Text;
-            orderPosition.Order = order;
             orderPosition.Quantity = quantity;
-            await order.SaveAsync();
 
             OrderPositionToSize orderSize = new OrderPositionToSize();
             orderSize.Size = size.Size;
             orderSize.Price = size.Price;
             orderSize.OrderPosition = orderPosition;
-            await orderSize.SaveAsync();
 
+            orderPosition.OrderSize = orderSize;
+
+            orderPosition.OrderOptions.Clear();
             foreach (ArticleToOption selectedOption in selectedOptions)
             {
                 OrderPositionToOption orderOption = new OrderPositionToOption();
@@ -200,11 +200,11 @@ namespace pOmmes
                 orderOption.Option = selectedOption.Option;
                 orderOption.Price = selectedOption.Price;
                 orderOption.OrderPosition = orderPosition;
-                await orderOption.SaveAsync();
+
+                orderPosition.OrderOptions.Add(orderOption);
             }
 
-            ThrowFoodDetailUserControl_Select(new FoodDetailUserControlEventArgs());
-            EventBus.Instance.PostEvent(new FoodControlChangeEvent(this, UserControlChangeState.Pop));
+            ThrowFoodDetailUserControl_Select(new FoodDetailUserControlEventArgs(article, orderPosition));
         }
 
 
@@ -217,5 +217,7 @@ namespace pOmmes
                 this.FoodDetailUserControl_Select(this, eventArgs);
             }
         }
+
+
     }
 }

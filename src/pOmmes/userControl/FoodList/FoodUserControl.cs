@@ -31,36 +31,8 @@ namespace pOmmes
         private void FoodUserControl_Load(object sender, EventArgs e)
         {
             EventBus.Instance.Register(this);
-            MakeOrder(eventObject);
+
             FillFoodList();
-        }
-
-        private async void MakeOrder(Event eventObject)
-        {
-            Restaurant restaurant = await eventObject.Restaurant.FetchAsync();
-
-            try
-            {
-                var query = new ParseQuery<Order>().WhereEqualTo("User", ParseUser.CurrentUser).WhereEqualTo("Event", eventObject).WhereEqualTo("Restaurant", restaurant);
-                order = await query.FirstAsync();
-            }
-            catch (ParseException e)
-            {
-
-            }
-
-            if (order != null)
-            {
-
-            }
-            else
-            {
-                order = new Order();
-                order.Event = eventObject;
-                order.User = ParseUser.CurrentUser;
-                order.Restaurant = restaurant;
-                await order.SaveAsync();
-            }
         }
 
         private async void FillFoodList()
@@ -85,7 +57,7 @@ namespace pOmmes
                         mtc_FoodList.TabPages.Add(category.ObjectId, category.Name);
                     }
 
-                    FoodListUserControl contr = new FoodListUserControl(article, order);
+                    FoodListUserControl contr = new FoodListUserControl(article);
                     contr.FoodDetailUserControl_Select += Contr_FoodDetailUserControl_Select;
                     contr.Location = new Point(0, locationDic[category.ObjectId]);
                     this.mtc_FoodList.TabPages[category.ObjectId].Controls.Add(contr);
@@ -95,25 +67,43 @@ namespace pOmmes
             }
         }
 
-        private async void Contr_FoodDetailUserControl_Select(object sender, FoodDetailUserControlEventArgs e)
+
+        private void Contr_FoodDetailUserControl_Select(object sender, FoodUserControlEventArgs e)
         {
-            await order.FetchAsync();
+            FoodDetailUserControl foodDetailUserControl = new FoodDetailUserControl(e.Article);
+            foodDetailUserControl.FoodDetailUserControl_Select += FoodDetailUserControl_FoodDetailUserControl_Select;
 
-            var query = new ParseQuery<OrderPosition>().WhereEqualTo("order", order);
-            IEnumerable<OrderPosition> orderPositions = await query.FindAsync();
+            EventBus.Instance.PostEvent(new FoodControlChangeEvent(foodDetailUserControl, UserControlChangeState.Push));
 
-            if (orderPositions.Count() > 0)
-            {
-                mbtn_order.Visible = true;
-                mbtn_order.Text = orderPositions.Count().ToString();
-            }
-            else
-            {
-                mbtn_order.Visible = false;
-                mbtn_order.Text = "";
-            }
+            //await order.FetchAsync();
+
+            //var query = new ParseQuery<OrderPosition>().WhereEqualTo("Order", order);
+            //IEnumerable<OrderPosition> orderPositions = await query.FindAsync();
+
+            //if (orderPositions.Count() > 0)
+            //{
+            //    mbtn_order.Visible = true;
+            //    mbtn_order.Text = orderPositions.Count().ToString();
+            //}
+            //else
+            //{
+            //    mbtn_order.Visible = false;
+            //    mbtn_order.Text = "";
+            //}
         }
 
+        private void FoodDetailUserControl_FoodDetailUserControl_Select(object sender, FoodDetailUserControlEventArgs e)
+        {
+            if (e != null)
+            {
+                if (e.OrderPosition != null)
+                {
+                    orderPositions.Add(e.OrderPosition);
+
+                    EventBus.Instance.PostEvent(new FoodControlChangeEvent((FoodDetailUserControl)null, UserControlChangeState.Pop));
+                }
+            }
+        }
 
         private void mbtn_order_Click(object sender, EventArgs e)
         {
@@ -125,10 +115,8 @@ namespace pOmmes
             //    }
         }
 
-        FoodDetailUserControl actualFoodDetailUserControl;
-        FoodBasketUserControl actualFoodBasketUserControl;
-        string actualFoodObject;
 
+        FoodDetailUserControl actualFoodDetailUserControl;
         public void OnEvent(FoodControlChangeEvent e)
         {
             switch (e.State)
@@ -137,11 +125,7 @@ namespace pOmmes
                     PopUserControl();
                     break;
                 case UserControlChangeState.Push:
-                    if (e.FoodBasketControl != null)
-                    {
-                        PushUserControl(e.FoodBasketControl);
-                    }
-                    else if (e.FoodDetailControl != null)
+                    if (e.FoodDetailControl != null)
                     {
                         PushUserControl(e.FoodDetailControl);
                     }
@@ -149,9 +133,9 @@ namespace pOmmes
             }
         }
 
-        private void PushUserControl(FoodBasketUserControl control)
+        private void PushUserControl(FoodDetailUserControl control)
         {
-            if (actualFoodBasketUserControl != null)
+            if (actualFoodDetailUserControl != null)
             {
                 PopUserControl();
             }
@@ -161,25 +145,6 @@ namespace pOmmes
                 control.Location = new Point((this.Size.Width / 2 - control.Size.Width / 2), (this.Size.Height / 2 - control.Size.Height / 2));
                 this.Controls.Add(control);
                 control.BringToFront();
-                this.actualFoodBasketUserControl = control;
-            }
-        }
-
-        private async void PushUserControl(FoodDetailUserControl control)
-        {
-            if (actualFoodDetailUserControl != null)
-            {
-                PopUserControl();
-            }
-
-            if (control != null)
-            {
-                Category category = await control.article.Category.FetchAsync();
-
-                control.Location = new Point((this.Size.Width / 2 - control.Size.Width / 2), (this.Size.Height / 2 - control.Size.Height / 2));
-                this.mtc_FoodList.TabPages[category.ObjectId].Controls.Add(control);
-                control.BringToFront();
-                this.actualFoodObject = category.ObjectId;
                 this.actualFoodDetailUserControl = control;
             }
         }
@@ -188,18 +153,10 @@ namespace pOmmes
         {
             if (actualFoodDetailUserControl != null)
             {
-                this.mtc_FoodList.TabPages[actualFoodObject].Controls.Remove(actualFoodDetailUserControl);
-            }
-            if (actualFoodBasketUserControl != null)
-            {
-                this.Controls.Remove(actualFoodBasketUserControl);
+                this.Controls.Remove(actualFoodDetailUserControl);
             }
             actualFoodDetailUserControl.Dispose();
-            actualFoodBasketUserControl.Dispose();
             actualFoodDetailUserControl = null;
-            actualFoodBasketUserControl = null;
-
-            actualFoodObject = null;
         }
     }
 }

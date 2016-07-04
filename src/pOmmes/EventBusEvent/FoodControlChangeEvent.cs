@@ -10,20 +10,13 @@ namespace pOmmes
 {
     public class FoodControlChangeEvent
     {
-        public FoodBasketUserControl FoodBasketControl { get; private set; }
-        public FoodDetailUserControl FoodDetailControl { get; private set; }
+        public UserControl UserControl { get; private set; }
         public UserControlChangeState State { get; private set; }
 
-        public FoodControlChangeEvent(FoodDetailUserControl control, UserControlChangeState state)
+        public FoodControlChangeEvent(UserControl control, UserControlChangeState state)
         {
             this.State = state;
-            this.FoodDetailControl = control;
-        }
-
-        public FoodControlChangeEvent(FoodBasketUserControl control, UserControlChangeState state)
-        {
-            this.State = state;
-            this.FoodBasketControl = control;
+            this.UserControl = control;
         }
     }
 }

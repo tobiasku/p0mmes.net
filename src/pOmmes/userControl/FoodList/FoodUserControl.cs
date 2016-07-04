@@ -19,7 +19,7 @@ namespace pOmmes
     {
         Event eventObject;
         Order order;
-        private Collection<OrderPosition> orderPositions = new Collection<OrderPosition>();
+        private List<OrderPosition> orderPositions = new List<OrderPosition>();
 
         public FoodUserControl(Event eventObject)
         {
@@ -32,7 +32,47 @@ namespace pOmmes
         {
             EventBus.Instance.Register(this);
 
+            FillOrderObject();
+
             FillFoodList();
+        }
+
+        public async void FillOrderObject()
+        {
+            try
+            {
+                var query = new ParseQuery<Order>().WhereEqualTo("User", ParseUser.CurrentUser).WhereEqualTo("Event", eventObject).WhereEqualTo("Restaurant", eventObject.Restaurant);
+                order = await query.FirstAsync();
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            try
+            {
+                var query = new ParseQuery<OrderPosition>().WhereEqualTo("Order", order);
+                IEnumerable<OrderPosition> orderPositions = await query.FindAsync();
+                if (orderPositions != null && orderPositions.Count() > 0)
+                {
+                    orderPositions = orderPositions.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            if (orderPositions.Count() > 0)
+            {
+                mbtn_order.Visible = true;
+                mbtn_order.Text = orderPositions.Count().ToString();
+            }
+            else
+            {
+                mbtn_order.Visible = false;
+                mbtn_order.Text = "";
+            }
         }
 
         private async void FillFoodList()
@@ -67,29 +107,12 @@ namespace pOmmes
             }
         }
 
-
         private void Contr_FoodDetailUserControl_Select(object sender, FoodUserControlEventArgs e)
         {
             FoodDetailUserControl foodDetailUserControl = new FoodDetailUserControl(e.Article);
             foodDetailUserControl.FoodDetailUserControl_Select += FoodDetailUserControl_FoodDetailUserControl_Select;
 
             EventBus.Instance.PostEvent(new FoodControlChangeEvent(foodDetailUserControl, UserControlChangeState.Push));
-
-            //await order.FetchAsync();
-
-            //var query = new ParseQuery<OrderPosition>().WhereEqualTo("Order", order);
-            //IEnumerable<OrderPosition> orderPositions = await query.FindAsync();
-
-            //if (orderPositions.Count() > 0)
-            //{
-            //    mbtn_order.Visible = true;
-            //    mbtn_order.Text = orderPositions.Count().ToString();
-            //}
-            //else
-            //{
-            //    mbtn_order.Visible = false;
-            //    mbtn_order.Text = "";
-            //}
         }
 
         private void FoodDetailUserControl_FoodDetailUserControl_Select(object sender, FoodDetailUserControlEventArgs e)
@@ -98,7 +121,31 @@ namespace pOmmes
             {
                 if (e.OrderPosition != null)
                 {
-                    orderPositions.Add(e.OrderPosition);
+                    if (order == null)
+                    {
+                        order = new Order();
+                        order.Event = eventObject;
+                        order.User = ParseUser.CurrentUser;
+                        order.Restaurant = eventObject.Restaurant;
+                        order.SaveAsync();
+                    }
+                    if (order != null)
+                    {
+                        e.OrderPosition.Order = order;
+
+                        orderPositions.Add(e.OrderPosition);
+                    }
+
+                    if (orderPositions.Count() > 0)
+                    {
+                        mbtn_order.Visible = true;
+                        mbtn_order.Text = orderPositions.Count().ToString();
+                    }
+                    else
+                    {
+                        mbtn_order.Visible = false;
+                        mbtn_order.Text = "";
+                    }
 
                     EventBus.Instance.PostEvent(new FoodControlChangeEvent((FoodDetailUserControl)null, UserControlChangeState.Pop));
                 }
@@ -107,16 +154,12 @@ namespace pOmmes
 
         private void mbtn_order_Click(object sender, EventArgs e)
         {
-            EventBus.Instance.PostEvent(new FoodControlChangeEvent(new FoodBasketUserControl(orderPositions, null), UserControlChangeState.Push));
-            //    foreach (OrderPosition orderPosition in orderPositions)
-            //    {
-            //        orderPosition.Order.Add(order);
-            //        await orderPosition.SaveAsync();
-            //    }
+            FoodBasketUserControl foodBasketUserControl = new FoodBasketUserControl(orderPositions, order);
+            EventBus.Instance.PostEvent(new FoodControlChangeEvent(foodBasketUserControl, UserControlChangeState.Push));
         }
 
 
-        FoodDetailUserControl actualFoodDetailUserControl;
+        UserControl actualUserControl;
         public void OnEvent(FoodControlChangeEvent e)
         {
             switch (e.State)
@@ -125,17 +168,17 @@ namespace pOmmes
                     PopUserControl();
                     break;
                 case UserControlChangeState.Push:
-                    if (e.FoodDetailControl != null)
+                    if (e.UserControl != null)
                     {
-                        PushUserControl(e.FoodDetailControl);
+                        PushUserControl(e.UserControl);
                     }
                     break;
             }
         }
 
-        private void PushUserControl(FoodDetailUserControl control)
+        private void PushUserControl(UserControl control)
         {
-            if (actualFoodDetailUserControl != null)
+            if (actualUserControl != null)
             {
                 PopUserControl();
             }
@@ -145,18 +188,18 @@ namespace pOmmes
                 control.Location = new Point((this.Size.Width / 2 - control.Size.Width / 2), (this.Size.Height / 2 - control.Size.Height / 2));
                 this.Controls.Add(control);
                 control.BringToFront();
-                this.actualFoodDetailUserControl = control;
+                this.actualUserControl = control;
             }
         }
 
         private void PopUserControl()
         {
-            if (actualFoodDetailUserControl != null)
+            if (actualUserControl != null)
             {
-                this.Controls.Remove(actualFoodDetailUserControl);
+                this.Controls.Remove(actualUserControl);
             }
-            actualFoodDetailUserControl.Dispose();
-            actualFoodDetailUserControl = null;
+            actualUserControl.Dispose();
+            actualUserControl = null;
         }
     }
 }

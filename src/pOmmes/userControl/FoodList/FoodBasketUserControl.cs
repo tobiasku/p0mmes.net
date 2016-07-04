@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -7,22 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MetroFramework.Controls;
-using System.Collections.ObjectModel;
 using pOmmes.Data;
 
 namespace pOmmes
 {
-    public partial class FoodBasketUserControl : MetroUserControl
+    public partial class FoodBasketUserControl : UserControl
     {
         private Order order;
-        private Collection<OrderPosition> orderPositions;
+        private List<OrderPosition> orderPositions;
 
-        public FoodBasketUserControl(Collection<OrderPosition> orderPositions, Order order)
+        public FoodBasketUserControl(IEnumerable<OrderPosition> orderPositions, Order order)
         {
-            InitializeComponent();
             this.order = order;
-            this.orderPositions = orderPositions;
+            this.orderPositions = orderPositions.ToList();
+            InitializeComponent();
         }
 
         private void FoodBasketUserControl_Load(object sender, EventArgs e)
@@ -32,7 +30,6 @@ namespace pOmmes
 
         private void SetFoodBasketUserControl()
         {
-            this.mg_orderdata.DataSource = orderPositions;
         }
 
         private void mlink_Close_Click(object sender, EventArgs e)
@@ -43,7 +40,6 @@ namespace pOmmes
         private void mbtn_order_Click(object sender, EventArgs e)
         {
             ThrowFoodBasketUserControl_Order(new FoodBasketUserControlEventArgs(order));
-            EventBus.Instance.PostEvent(new FoodControlChangeEvent(this, UserControlChangeState.Pop));
         }
 
         public event EventHandler<FoodBasketUserControlEventArgs> FoodBasketUserControl_Order;

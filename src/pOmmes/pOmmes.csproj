@@ -125,7 +125,9 @@
       <DependentUpon>EventUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="userControl\EventList\EventUserControlEventArgs.cs" />
-    <Compile Include="userControl\FoodList\FoodBasketUserControl.cs" />
+    <Compile Include="userControl\FoodList\FoodBasketUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="userControl\FoodList\FoodBasketUserControl.Designer.cs">
       <DependentUpon>FoodBasketUserControl.cs</DependentUpon>
     </Compile>

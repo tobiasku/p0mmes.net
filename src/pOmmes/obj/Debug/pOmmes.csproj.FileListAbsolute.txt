@@ -101,3 +101,4 @@ C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.ArticleForm.resources
 C:\dev\dotnet\pOmmes.net\bin\pOmmes.exe
 C:\dev\dotnet\pOmmes.net\bin\pOmmes.pdb
 C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.FoodBasketUserControl.resources
+C:\dev\dotnet\pOmmes.net\src\pOmmes\obj\Debug\pOmmes.Properties.Resources.resources

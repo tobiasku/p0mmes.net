@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.mlink_CurrentUser = new MetroFramework.Controls.MetroLink();
             this.mpnl_Main = new MetroFramework.Controls.MetroPanel();
             this.SuspendLayout();
@@ -65,8 +64,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackImage = Resources.pOmmes_Resources.ic_launcher;
-            this.BackImagePadding = new System.Windows.Forms.Padding(130, 12, 0, 0);
+            this.BackImage = global::pOmmes.Resources.pOmmes_Resources.ic_launcher;
+            this.BackImagePadding = new System.Windows.Forms.Padding(131, 11, 0, 0);
             this.BackMaxSize = 50;
             this.ClientSize = new System.Drawing.Size(440, 680);
             this.Controls.Add(this.mpnl_Main);

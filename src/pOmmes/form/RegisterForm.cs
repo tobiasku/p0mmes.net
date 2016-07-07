@@ -35,7 +35,7 @@ namespace pOmmes
             {
                 this.BeginInvoke(new Action(delegate ()
                 {
-                    mcmb_Company.DataSource = companyCollection.ToList<Company>();
+                    mcmb_Company.DataSource = companyCollection.ToList();
                     mcmb_Company.DisplayMember = "Name";
                 }));
 
@@ -56,14 +56,14 @@ namespace pOmmes
                 {
                     ParseUser user = new ParseUser()
                     {
-                        Username= mtxt_UserName.Text,
-                        Password= mtxt_Password.Text,
+                        Username = mtxt_UserName.Text,
+                        Password = mtxt_Password.Text,
                         Email = mtxt_Email.Text,
                     };
 
                     user["ForeName"] = mtxt_ForeName.Text;
                     user["SurName"] = mtxt_SurName.Text;
-                    user.GetRelation<Company>("Company").Add((Company)mcmb_Company.SelectedValue);
+                    user["Company"] = (Company)mcmb_Company.SelectedValue;
 
                     await user.SignUpAsync();
                     if (ParseUser.CurrentUser != null)

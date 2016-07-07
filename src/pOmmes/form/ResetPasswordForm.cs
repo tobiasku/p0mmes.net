@@ -23,13 +23,13 @@ namespace pOmmes
         }
 
 
-        private void mbtn_ResetPassword_Click(object sender, EventArgs e)
+        private async void mbtn_ResetPassword_Click(object sender, EventArgs e)
         {
             try
             {
                 if (!string.IsNullOrEmpty(mtxt_Email.Text))
                 {
-                    ParseUser.RequestPasswordResetAsync(mtxt_Email.Text);
+                    await ParseUser.RequestPasswordResetAsync(mtxt_Email.Text);
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }

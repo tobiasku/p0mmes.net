@@ -40,6 +40,18 @@
             // 
             // mtxt_UserName
             // 
+            // 
+            // 
+            // 
+            this.mtxt_UserName.CustomButton.Image = null;
+            this.mtxt_UserName.CustomButton.Location = new System.Drawing.Point(260, 1);
+            this.mtxt_UserName.CustomButton.Name = "";
+            this.mtxt_UserName.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.mtxt_UserName.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.mtxt_UserName.CustomButton.TabIndex = 1;
+            this.mtxt_UserName.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.mtxt_UserName.CustomButton.UseSelectable = true;
+            this.mtxt_UserName.CustomButton.Visible = false;
             this.mtxt_UserName.Lines = new string[0];
             this.mtxt_UserName.Location = new System.Drawing.Point(23, 82);
             this.mtxt_UserName.MaxLength = 32767;
@@ -47,9 +59,13 @@
             this.mtxt_UserName.PasswordChar = '\0';
             this.mtxt_UserName.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.mtxt_UserName.SelectedText = "";
+            this.mtxt_UserName.SelectionLength = 0;
+            this.mtxt_UserName.SelectionStart = 0;
             this.mtxt_UserName.Size = new System.Drawing.Size(282, 23);
             this.mtxt_UserName.TabIndex = 1;
             this.mtxt_UserName.UseSelectable = true;
+            this.mtxt_UserName.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.mtxt_UserName.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // mlbl_desc_UserName
             // 
@@ -65,22 +81,39 @@
             this.mlbl_desc_Password.AutoSize = true;
             this.mlbl_desc_Password.Location = new System.Drawing.Point(23, 108);
             this.mlbl_desc_Password.Name = "mlbl_desc_Password";
-            this.mlbl_desc_Password.Size = new System.Drawing.Size(67, 19);
+            this.mlbl_desc_Password.Size = new System.Drawing.Size(66, 19);
             this.mlbl_desc_Password.TabIndex = 3;
             this.mlbl_desc_Password.Text = "Password:";
             // 
             // mtxt_Password
             // 
+            // 
+            // 
+            // 
+            this.mtxt_Password.CustomButton.Image = null;
+            this.mtxt_Password.CustomButton.Location = new System.Drawing.Point(260, 1);
+            this.mtxt_Password.CustomButton.Name = "";
+            this.mtxt_Password.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.mtxt_Password.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.mtxt_Password.CustomButton.TabIndex = 1;
+            this.mtxt_Password.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.mtxt_Password.CustomButton.UseSelectable = true;
+            this.mtxt_Password.CustomButton.Visible = false;
             this.mtxt_Password.Lines = new string[0];
             this.mtxt_Password.Location = new System.Drawing.Point(23, 130);
             this.mtxt_Password.MaxLength = 32767;
             this.mtxt_Password.Name = "mtxt_Password";
-            this.mtxt_Password.PasswordChar = '\0';
+            this.mtxt_Password.PasswordChar = '●';
             this.mtxt_Password.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.mtxt_Password.SelectedText = "";
+            this.mtxt_Password.SelectionLength = 0;
+            this.mtxt_Password.SelectionStart = 0;
             this.mtxt_Password.Size = new System.Drawing.Size(282, 23);
             this.mtxt_Password.TabIndex = 2;
             this.mtxt_Password.UseSelectable = true;
+            this.mtxt_Password.UseSystemPasswordChar = true;
+            this.mtxt_Password.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.mtxt_Password.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // mbtn_Login
             // 

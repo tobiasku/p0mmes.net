@@ -47,6 +47,18 @@ namespace pOmmes
             // 
             // mtxt_Email
             // 
+            // 
+            // 
+            // 
+            this.mtxt_Email.CustomButton.Image = null;
+            this.mtxt_Email.CustomButton.Location = new System.Drawing.Point(260, 1);
+            this.mtxt_Email.CustomButton.Name = "";
+            this.mtxt_Email.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.mtxt_Email.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.mtxt_Email.CustomButton.TabIndex = 1;
+            this.mtxt_Email.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.mtxt_Email.CustomButton.UseSelectable = true;
+            this.mtxt_Email.CustomButton.Visible = false;
             this.mtxt_Email.Lines = new string[0];
             this.mtxt_Email.Location = new System.Drawing.Point(23, 82);
             this.mtxt_Email.MaxLength = 32767;
@@ -54,9 +66,13 @@ namespace pOmmes
             this.mtxt_Email.PasswordChar = '\0';
             this.mtxt_Email.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.mtxt_Email.SelectedText = "";
+            this.mtxt_Email.SelectionLength = 0;
+            this.mtxt_Email.SelectionStart = 0;
             this.mtxt_Email.Size = new System.Drawing.Size(282, 23);
             this.mtxt_Email.TabIndex = 1;
             this.mtxt_Email.UseSelectable = true;
+            this.mtxt_Email.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.mtxt_Email.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // mbtn_Cancel
             // 
@@ -77,7 +93,7 @@ namespace pOmmes
             this.mbtn_ResetPassword.Name = "mbtn_ResetPassword";
             this.mbtn_ResetPassword.Size = new System.Drawing.Size(90, 29);
             this.mbtn_ResetPassword.TabIndex = 2;
-            this.mbtn_ResetPassword.Text = "Login";
+            this.mbtn_ResetPassword.Text = "Reset";
             this.mbtn_ResetPassword.UseSelectable = true;
             this.mbtn_ResetPassword.Click += new System.EventHandler(this.mbtn_ResetPassword_Click);
             // 

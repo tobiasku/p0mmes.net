@@ -30,8 +30,20 @@ namespace pOmmes
 
         private async void FillEventList()
         {
+            this.mpnl_refreshButton.Visible = false;
+            this.mps_spinner.Visible = true;            
+
             var query = new ParseQuery<Event>();
             IEnumerable<Event> eventCollection = await query.FindAsync();
+
+            this.mtp_EventList.Invoke(new Action(delegate ()
+            {
+                foreach (Control control in mtp_EventList.Controls)
+                {
+                    mtp_EventList.Controls.Remove(control);
+                    control.Dispose();
+                }
+            }));
 
             int location = 0;
             foreach (Event poEvent in eventCollection)
@@ -67,6 +79,9 @@ namespace pOmmes
                         break;
                 }
             }
+
+            this.mpnl_refreshButton.Visible = true;
+            this.mps_spinner.Visible = false;
         }
 
         private async void EventListUserControl_Clicked(object sender, EventUserControlEventArgs e)
@@ -241,6 +256,11 @@ namespace pOmmes
             {
                 this.EventUserControl_Select(this, eventArgs);
             }
+        }
+
+        private void mPnl_Main_Click(object sender, EventArgs e)
+        {
+            FillEventList();
         }
     }
 }

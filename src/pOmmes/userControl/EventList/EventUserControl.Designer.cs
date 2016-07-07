@@ -30,13 +30,14 @@
         {
             this.mtc_EventList = new MetroFramework.Controls.MetroTabControl();
             this.mtp_EventList = new MetroFramework.Controls.MetroTabPage();
+            this.mpnl_refreshButton = new MetroFramework.Controls.MetroPanel();
+            this.mps_spinner = new MetroFramework.Controls.MetroProgressSpinner();
             this.mtc_EventList.SuspendLayout();
             this.SuspendLayout();
             // 
             // mtc_EventList
             // 
             this.mtc_EventList.Controls.Add(this.mtp_EventList);
-            this.mtc_EventList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mtc_EventList.Location = new System.Drawing.Point(0, 0);
             this.mtc_EventList.Name = "mtc_EventList";
             this.mtc_EventList.SelectedIndex = 0;
@@ -58,11 +59,39 @@
             this.mtp_EventList.VerticalScrollbarHighlightOnWheel = false;
             this.mtp_EventList.VerticalScrollbarSize = 10;
             // 
+            // mpnl_refreshButton
+            // 
+            this.mpnl_refreshButton.BackgroundImage = global::pOmmes.Properties.Resources.ic_autorenew_black_48dp;
+            this.mpnl_refreshButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.mpnl_refreshButton.HorizontalScrollbarBarColor = true;
+            this.mpnl_refreshButton.HorizontalScrollbarHighlightOnWheel = false;
+            this.mpnl_refreshButton.HorizontalScrollbarSize = 10;
+            this.mpnl_refreshButton.Location = new System.Drawing.Point(369, 7);
+            this.mpnl_refreshButton.Name = "mpnl_refreshButton";
+            this.mpnl_refreshButton.Size = new System.Drawing.Size(27, 27);
+            this.mpnl_refreshButton.TabIndex = 2;
+            this.mpnl_refreshButton.VerticalScrollbarBarColor = true;
+            this.mpnl_refreshButton.VerticalScrollbarHighlightOnWheel = false;
+            this.mpnl_refreshButton.VerticalScrollbarSize = 10;
+            this.mpnl_refreshButton.Click += new System.EventHandler(this.mPnl_Main_Click);
+            // 
+            // mps_spinner
+            // 
+            this.mps_spinner.Location = new System.Drawing.Point(170, 270);
+            this.mps_spinner.Maximum = 100;
+            this.mps_spinner.Name = "mps_spinner";
+            this.mps_spinner.Size = new System.Drawing.Size(60, 60);
+            this.mps_spinner.TabIndex = 2;
+            this.mps_spinner.UseSelectable = true;
+            this.mps_spinner.Value = 25;
+            // 
             // EventUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.mps_spinner);
+            this.Controls.Add(this.mpnl_refreshButton);
             this.Controls.Add(this.mtc_EventList);
             this.Name = "EventUserControl";
             this.Size = new System.Drawing.Size(400, 600);
@@ -76,5 +105,7 @@
 
         private MetroFramework.Controls.MetroTabControl mtc_EventList;
         private MetroFramework.Controls.MetroTabPage mtp_EventList;
+        private MetroFramework.Controls.MetroPanel mpnl_refreshButton;
+        private MetroFramework.Controls.MetroProgressSpinner mps_spinner;
     }
 }

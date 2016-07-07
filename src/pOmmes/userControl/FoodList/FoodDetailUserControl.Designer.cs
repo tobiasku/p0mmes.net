@@ -1,4 +1,6 @@
-﻿namespace pOmmes
+﻿using pOmmes.Properties;
+
+namespace pOmmes
 {
     partial class FoodDetailUserControl
     {
@@ -161,7 +163,7 @@
             // mbtn_order
             // 
             this.mbtn_order.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(6)))), ((int)(((byte)(19)))));
-            this.mbtn_order.BackgroundImage = global::pOmmes.Resources.pOmmes_Resources.ic_shopping_cart_white_48dp;
+            this.mbtn_order.BackgroundImage = Resources.ic_shopping_cart_white_48dp;
             this.mbtn_order.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.mbtn_order.Location = new System.Drawing.Point(180, 334);
             this.mbtn_order.Name = "mbtn_order";

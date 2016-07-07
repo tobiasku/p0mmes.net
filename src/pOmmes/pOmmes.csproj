@@ -118,9 +118,9 @@
     </Compile>
     <Compile Include="EventBusEvent\UserControlChangeEvent.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="State.cs" />
     <Compile Include="userControl\EventList\EventUserControl.cs">
@@ -195,17 +195,8 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\pOmmes_Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>pOmmes_Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Compile Include="Resources\pOmmes_Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>pOmmes_Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="userControl\EventList\EventListUserControl.resx">
       <DependentUpon>EventListUserControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -270,7 +261,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ic_launcher.png" />
-    <Content Include="Resources\ic_settings_black_48dp.png" />
+    <Content Include="Resources\ic_autorenew_black_48dp.png" />
     <Content Include="Resources\ic_shopping_cart_white_48dp.png" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,6 @@
-﻿namespace pOmmes
+﻿using pOmmes.Properties;
+
+namespace pOmmes
 {
     partial class ArticleForm
     {
@@ -369,7 +371,7 @@
             this.AcceptButton = this.mbtn_Save;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackImage = Resources.pOmmes_Resources.ic_launcher;
+            this.BackImage = Resources.ic_launcher;
             this.BackImagePadding = new System.Windows.Forms.Padding(115, 12, 0, 0);
             this.BackMaxSize = 50;
             this.CancelButton = this.mbtn_Cancel;

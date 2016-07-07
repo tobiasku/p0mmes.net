@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using MetroFramework.Controls;
 using pOmmes.Data;
 using Parse;
+using pOmmes.Properties;
 
 namespace pOmmes
 {
@@ -53,27 +54,27 @@ namespace pOmmes
                 switch ((EventState)pevent.EventState)
                 {
                     case EventState.Edit:
-                        pic_state.Image = Resources.pOmmes_Resources.ic_create_black_48dp;
+                        pic_state.Image = Resources.ic_create_black_48dp;
                         mlbl_description.Text = "Not published";
                         break;
                     case EventState.Vote:
-                        pic_state.Image = Resources.pOmmes_Resources.ic_announcement_black_48dp;
+                        pic_state.Image = Resources.ic_announcement_black_48dp;
                         mlbl_description.Text = "Please vote to: " + pevent.DateToVote.ToString("dd.MM.yy - hh.mm.ss");
                         break;
                     case EventState.Order:
-                        pic_state.Image = Resources.pOmmes_Resources.ic_announcement_black_48dp;
+                        pic_state.Image = Resources.ic_announcement_black_48dp;
                         mlbl_description.Text = "Please order to: " + pevent.DateToVote.ToString("dd.MM.yy - hh.mm.ss");
                         break;
                     case EventState.ReadyToSent:
-                        pic_state.Image = Resources.pOmmes_Resources.ic_input_black_48dp;
+                        pic_state.Image = Resources.ic_input_black_48dp;
                         mlbl_description.Text = "Please place order at restaurant";
                         break;
                     case EventState.Sent:
-                        pic_state.Image = Resources.pOmmes_Resources.ic_done_black_48dp;
+                        pic_state.Image = Resources.ic_done_black_48dp;
                         mlbl_description.Text = "Sent to restaurant";
                         break;
                     case EventState.Closed:
-                        pic_state.Image = Resources.pOmmes_Resources.ic_block_black_48dp;
+                        pic_state.Image = Resources.ic_block_black_48dp;
                         mlbl_description.Text = "Event closed";
                         break;
                     default:

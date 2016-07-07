@@ -111,7 +111,6 @@ C:\Users\VM_TK\Source\Repos\p0mmes.net\src\pOmmes\obj\Debug\pOmmes.MainForm.reso
 C:\Users\VM_TK\Source\Repos\p0mmes.net\src\pOmmes\obj\Debug\pOmmes.RegisterForm.resources
 C:\Users\VM_TK\Source\Repos\p0mmes.net\src\pOmmes\obj\Debug\pOmmes.ResetPasswordForm.resources
 C:\Users\VM_TK\Source\Repos\p0mmes.net\src\pOmmes\obj\Debug\pOmmes.Properties.Resources.resources
-C:\Users\VM_TK\Source\Repos\p0mmes.net\src\pOmmes\obj\Debug\pOmmes.Resources.pOmmes_Resources.resources
 C:\Users\VM_TK\Source\Repos\p0mmes.net\src\pOmmes\obj\Debug\pOmmes.EventListUserControl.resources
 C:\Users\VM_TK\Source\Repos\p0mmes.net\src\pOmmes\obj\Debug\pOmmes.EventUserControl.resources
 C:\Users\VM_TK\Source\Repos\p0mmes.net\src\pOmmes\obj\Debug\pOmmes.FoodBasketUserControl.resources

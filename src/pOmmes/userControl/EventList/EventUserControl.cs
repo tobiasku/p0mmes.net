@@ -93,7 +93,7 @@ namespace pOmmes
                 case EventState.Vote:
                     if (e.Event != null)
                     {
-                        if (e.Event.DateToVote <= DateTime.Now)
+                        if (DateTime.Now <= e.Event.DateToVote)
                         {
                             var votesQuery = from votes in new ParseQuery<Vote>()
                                              where votes["Event"] == e.Event && votes["User"] == ParseUser.CurrentUser

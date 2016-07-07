@@ -262,6 +262,10 @@
   <ItemGroup>
     <None Include="Resources\ic_launcher.png" />
     <Content Include="Resources\ic_autorenew_black_48dp.png" />
+    <Content Include="Resources\ic_home_black_48dp.png" />
+    <Content Include="Resources\ic_keyboard_return_black_48dp.png" />
+    <Content Include="Resources\ic_menu_black_48dp.png" />
+    <Content Include="Resources\ic_more_horiz_black_48dp.png" />
     <Content Include="Resources\ic_shopping_cart_white_48dp.png" />
   </ItemGroup>
   <ItemGroup>

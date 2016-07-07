@@ -26,6 +26,7 @@ namespace pOmmes
         }
 
         Stack<UserControl> userControlBackStack = new Stack<UserControl>();
+        System.Windows.Forms.Timer timMouseLocation = new System.Windows.Forms.Timer();
 
         public void OnEvent(UserControlChangeEvent e)
         {
@@ -66,10 +67,14 @@ namespace pOmmes
                 this.mpnl_Main.Controls.Add(userControlBackStack.Peek());
             }
         }
-        
+
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            timMouseLocation.Interval = 50;
+            timMouseLocation.Tick += TimMouseLocation_Tick;
+            timMouseLocation.Start();
+
             if (ParseUser.CurrentUser == null)
             {
                 this.Hide();
@@ -92,6 +97,21 @@ namespace pOmmes
                 mlink_CurrentUser.Text = "Logged in as " + ParseUser.CurrentUser["username"];
 
                 EventBus.Instance.PostEvent(new UserControlChangeEvent(new EventUserControl(), UserControlChangeState.Push));
+            }
+        }
+
+        private void TimMouseLocation_Tick(object sender, EventArgs e)
+        {
+            Point p = this.PointToClient(Cursor.Position);
+            if (p.Y > 600)
+            {
+                mpnlControls.Visible = true;
+                this.Size = new System.Drawing.Size(440, 723);
+            }
+            else
+            {
+                mpnlControls.Visible = false;
+                this.Size = new System.Drawing.Size(440, 674);
             }
         }
 
@@ -138,6 +158,32 @@ namespace pOmmes
             {
                 mlink_CurrentUser.Text = "Logged in as " + ParseUser.CurrentUser["username"];
             }
+        }
+        
+        private void mpnlMenu_Click(object sender, EventArgs e)
+        {
+            //TODO Menü als Panel für die entsprechende offene Seite
+        }
+
+        private void mpnlHome_Click_1(object sender, EventArgs e)
+        {
+            for (int i = userControlBackStack.Count; i > 1; i--)
+            {
+                EventBus.Instance.PostEvent(new UserControlChangeEvent(null, UserControlChangeState.Pop));
+            }
+        }
+
+        private void mpnlReturn_Click(object sender, EventArgs e)
+        {
+            if (userControlBackStack.Count > 1)
+            {
+                EventBus.Instance.PostEvent(new UserControlChangeEvent(null, UserControlChangeState.Pop));
+            }
+        }
+
+        private void metroPanel1_MouseHover(object sender, EventArgs e)
+        {
+
         }
     }
 }

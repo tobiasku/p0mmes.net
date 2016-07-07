@@ -133,9 +133,29 @@ namespace pOmmes.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ic_home_black_48dp {
+            get {
+                object obj = ResourceManager.GetObject("ic_home_black_48dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ic_input_black_48dp {
             get {
                 object obj = ResourceManager.GetObject("ic_input_black_48dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ic_keyboard_return_black_48dp {
+            get {
+                object obj = ResourceManager.GetObject("ic_keyboard_return_black_48dp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -156,6 +176,26 @@ namespace pOmmes.Properties {
         internal static System.Drawing.Bitmap ic_markunread_black_48dp {
             get {
                 object obj = ResourceManager.GetObject("ic_markunread_black_48dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ic_menu_black_48dp {
+            get {
+                object obj = ResourceManager.GetObject("ic_menu_black_48dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ic_more_horiz_black_48dp {
+            get {
+                object obj = ResourceManager.GetObject("ic_more_horiz_black_48dp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
